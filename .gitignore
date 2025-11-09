@@ -1,0 +1,4 @@
+assets/
+zdump/
+__pycache__/
+.venv/
