@@ -4,10 +4,13 @@
 from __future__ import annotations
 import hashlib, os, re, stat, subprocess, zipfile
 from pathlib import Path
-from typing import Iterable, Optional, Tuple
+from typing import Iterable, Optional, Tuple, Callable
 from urllib.parse import urljoin, unquote
 import requests
 from bs4 import BeautifulSoup
+
+
+# ----------------------- ModDB helpers -----------------------
 
 
 def _fetch_html(session: requests.Session, url: str, timeout: int = 30) -> str:
@@ -17,6 +20,7 @@ def _fetch_html(session: requests.Session, url: str, timeout: int = 30) -> str:
 
 
 def find_downloads_page(session: requests.Session, mod_root_url: str) -> str:
+    """Return absolute URL of the mod's Downloads listing."""
     html = _fetch_html(session, mod_root_url)
     soup = BeautifulSoup(html, "html.parser")
     candidates: list[str] = []
@@ -35,6 +39,7 @@ def find_downloads_page(session: requests.Session, mod_root_url: str) -> str:
 
 
 def newest_filepage(session: requests.Session, downloads_url: str) -> str:
+    """Return newest file page URL from the Downloads listing (ModDB is newest-first)."""
     html = _fetch_html(session, downloads_url)
     soup = BeautifulSoup(html, "html.parser")
     file_links: list[str] = []
@@ -55,29 +60,41 @@ def newest_filepage(session: requests.Session, downloads_url: str) -> str:
 def parse_filepage_for_md5_and_start(
     session: requests.Session, filepage_url: str
 ) -> Tuple[str, Optional[str], Optional[str]]:
+    """
+    Return (start_url, md5_or_None, suggested_filename_or_None).
+    start_url is the /downloads/start/<id> page that exposes the real mirror.
+    """
     html = _fetch_html(session, filepage_url)
     soup = BeautifulSoup(html, "html.parser")
+
+    # MD5 hash from page text if present
     text = soup.get_text(" ", strip=True)
     md5 = None
     m = re.search(r"MD5 Hash\s*([a-fA-F0-9]{32})", text)
     if m:
         md5 = m.group(1).lower()
+
+    # "Filename <name>"
     suggested = None
     m2 = re.search(r"Filename\s+([^\s]+)", text)
     if m2:
         suggested = m2.group(1)
+
+    # Find "Download Now" link → /downloads/start/<id>
     start_url = None
     for a in soup.find_all("a", href=True):
         href = urljoin(filepage_url, a["href"])
         if "/downloads/start/" in href:
             start_url = href
             break
+
     if not start_url:
         raise RuntimeError("Could not find /downloads/start/<id> on the file page.")
     return start_url, md5, suggested
 
 
 def startpage_to_direct_url(session: requests.Session, start_url: str) -> str:
+    """Parse the start page to find the real mirror URL."""
     html = _fetch_html(session, start_url)
     soup = BeautifulSoup(html, "html.parser")
     a = soup.find("a", href=True)
@@ -86,18 +103,31 @@ def startpage_to_direct_url(session: requests.Session, start_url: str) -> str:
     return urljoin(start_url, a["href"])
 
 
+# -------------------- Download + payload pick --------------------
+
+
 def download_with_optional_md5(
-    session: requests.Session, url: str, out_path: Path, md5: Optional[str]
+    session: requests.Session,
+    url: str,
+    out_path: Path,
+    md5: Optional[str],
+    progress: Optional[Callable[[int, int], None]] = None,
 ) -> None:
     out_path.parent.mkdir(parents=True, exist_ok=True)
     tmp = out_path.with_suffix(out_path.suffix + ".part")
     with session.get(url, stream=True, timeout=120) as r:
         r.raise_for_status()
+        total = int(r.headers.get("Content-Length") or 0)
+        got = 0
         with tmp.open("wb") as f:
             for chunk in r.iter_content(chunk_size=1 << 20):
                 if chunk:
                     f.write(chunk)
+                    got += len(chunk)
+                    if progress:
+                        progress(got, total)
     tmp.rename(out_path)
+
     if md5:
         h = hashlib.md5()
         with out_path.open("rb") as f:
@@ -108,8 +138,13 @@ def download_with_optional_md5(
 
 
 def maybe_extract_and_pick_payload(archive_path: Path) -> Path:
+    """
+    If the file is a .zip, extract and choose a .pk3/.pk7/.wad payload.
+    Otherwise return the file itself.
+    """
     if archive_path.suffix.lower() != ".zip":
         return archive_path
+
     preferred_exts = [".pk3", ".pk7", ".wad"]
     with zipfile.ZipFile(archive_path, "r") as zf:
         members = [m for m in zf.namelist() if not m.endswith("/")]
@@ -138,7 +173,11 @@ def ensure_mod_payload(
     mods_dir: Path,
     force_redownload: bool = False,
     session: Optional[requests.Session] = None,
+    progress: Optional[Callable[[int, int], None]] = None,
 ) -> Path:
+    """
+    From a ModDB *mod root* URL, fetch newest file and return payload path (.pk3/.pk7/.wad).
+    """
     mods_dir.mkdir(parents=True, exist_ok=True)
     close = False
     if session is None:
@@ -151,9 +190,11 @@ def ensure_mod_payload(
             session, filepage_url
         )
         direct_url = startpage_to_direct_url(session, start_url)
+
         server_filename = unquote(direct_url.split("/")[-1])
         local_name = suggested or server_filename
         local_path = (mods_dir / local_name).resolve()
+
         need = force_redownload or (not local_path.exists())
         if md5 and local_path.exists() and not force_redownload:
             h = hashlib.md5()
@@ -161,12 +202,19 @@ def ensure_mod_payload(
                 for chunk in iter(lambda: f.read(1 << 20), b""):
                     h.update(chunk)
             need = h.hexdigest().lower() != md5.lower()
+
         if need:
-            download_with_optional_md5(session, direct_url, local_path, md5)
+            download_with_optional_md5(
+                session, direct_url, local_path, md5, progress=progress
+            )
+
         return maybe_extract_and_pick_payload(local_path)
     finally:
         if close:
             session.close()
+
+
+# ----------------------- Launch helpers -----------------------
 
 
 def is_executable(p: Path) -> bool:
@@ -196,6 +244,7 @@ def launch_gzdoom(
     config_path: Path,
     extra_args: Optional[Iterable[str]] = None,
 ) -> None:
+    """Spawn GZDoom with the given IWAD and mod files; doesn’t wait."""
     cmd = [str(gzdoom_executable), "-iwad", str(iwad_path)]
     for f in mod_files:
         cmd += ["-file", str(f)]
