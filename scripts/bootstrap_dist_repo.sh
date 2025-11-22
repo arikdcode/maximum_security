@@ -5,13 +5,7 @@
 
 set -e  # Exit on any error
 
-# Check if DIST_REPO_REMOTE is set
-if [ -z "$DIST_REPO_REMOTE" ]; then
-    echo "Error: DIST_REPO_REMOTE environment variable is not set."
-    echo "Please set it to the git URL of the maximum_security_dist repository."
-    echo "Example: export DIST_REPO_REMOTE=https://github.com/username/maximum_security_dist.git"
-    exit 1
-fi
+DIST_REPO_REMOTE="git@github.com:arikdcode/maximum_security_dist.git"
 
 DIST_REPO_DIR=".dist_repo"
 
