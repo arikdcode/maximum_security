@@ -1,0 +1,27 @@
+{
+  "appId": "com.maximumsecurity.launcher",
+  "productName": "Maximum Security Launcher",
+  "directories": {
+    "output": "dist-electron"
+  },
+  "files": [
+    "dist/**/*",
+    "electron.js",
+    "package.json"
+  ],
+  "mac": {
+    "category": "public.app-category.games"
+  },
+  "win": {
+    "target": "nsis",
+    "icon": "assets/icon.ico"
+  },
+  "linux": {
+    "target": "AppImage",
+    "category": "Game"
+  },
+  "nsis": {
+    "oneClick": false,
+    "allowToChangeInstallationDirectory": true
+  }
+}
