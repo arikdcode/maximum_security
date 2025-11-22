@@ -2,3 +2,4 @@ assets/
 zdump/
 __pycache__/
 .venv/
+.dist_repo/
