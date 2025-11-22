@@ -17,6 +17,9 @@ $SRC   = Join-Path $BUILD "src"
 $IWADS = Join-Path $BUILD "iwads"
 $VENV  = Join-Path $BUILD ".venv"
 
+# Optional assets directory (mirrored from Linux ./assets -> build/assets)
+$ASSETS_DIR = Join-Path $BUILD "assets"
+
 Write-Host "==> Root:  $ROOT"
 Write-Host "==> Build: $BUILD"
 
@@ -39,7 +42,7 @@ if (-not (Test-Path $VENV)) {
   & $pythonCmd -m venv $VENV
 }
 
-$PY = Join-Path $VENV "Scripts\python.exe"
+$PY  = Join-Path $VENV "Scripts\python.exe"
 $PIP = Join-Path $VENV "Scripts\pip.exe"
 
 Write-Host "==> Upgrading pip and installing build deps (requests, bs4, pyinstaller)…"
@@ -49,13 +52,11 @@ Write-Host "==> Upgrading pip and installing build deps (requests, bs4, pyinstal
 # ---------------- Build EXE ----------------
 Push-Location $SRC
 try {
-  # We expect main.py and mod_launcher.py to be present in $SRC (pushed from Linux).
   $mainPath = Join-Path $SRC "main.py"
   if (-not (Test-Path $mainPath)) {
     throw "main.py not found in $SRC (make sure Linux side copied app_src/* to build/src)."
   }
 
-  # Put final EXE next to $BUILD, keep PyInstaller temps in build\pyi_build, spec in build\src
   $distPath = $BUILD
   $workPath = Join-Path $BUILD "pyi_build"
   $specPath = $SRC
@@ -74,6 +75,12 @@ try {
   if (-not (Test-Path $exe)) {
     throw "PyInstaller did not produce $exe (see $workPath for logs)."
   }
+
+  if (Test-Path $ASSETS_DIR) {
+    Write-Host "==> Assets directory present at $ASSETS_DIR (installer background, etc.)."
+  } else {
+    Write-Host "==> No assets directory found at $ASSETS_DIR (installer will fall back to solid background)."
+  }
 }
 finally {
   Pop-Location
@@ -86,7 +93,7 @@ if ($Launch.IsPresent) {
   $taskPath = "\MaximumSecurity\"
   $taskName = "Launch"
 
-  # Action runs EXE in the build directory so relative iwads/bin paths work.
+  # Action runs EXE in the build directory so relative iwads/bin/assets paths work.
   $action    = New-ScheduledTaskAction -Execute $exe -WorkingDirectory $BUILD
   $principal = New-ScheduledTaskPrincipal -UserId $env:USERNAME -LogonType Interactive -RunLevel Highest
   $desc      = "Run Maximum Security portable build"

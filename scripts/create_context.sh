@@ -22,6 +22,12 @@ for path in "${ctx_paths[@]}"; do
     echo "" >> zdump/context.txt
 done
 
+# Send "tree" output to context as well
+echo "---- Directory tree ----" >> zdump/context.txt
+tree -a -I 'zdump|__pycache__|*.pyc|*.pyo|.git' >> zdump/context.txt || echo "(tree command failed)" >> zdump/context.txt
+echo "" >> zdump/context.txt
+echo "" >> zdump/context.txt
+
 # Copy context to clipboard if possible with (xclip -selection clipboard zdump/context.txt)
 if command -v xclip &> /dev/null; then
     xclip -selection clipboard zdump/context.txt

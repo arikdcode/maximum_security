@@ -48,6 +48,10 @@ MODS_DIR = APP_DIR / "mods"
 SAVES_DIR = APP_DIR / "saves" / "MaximumSecurity"
 CFG_PATH = APP_DIR / "gzdoom-maximumsecurity.ini"
 
+# UI assets (optional)
+ASSETS_DIR = APP_DIR / "assets"
+BG_IMAGE_PATH = ASSETS_DIR / "installer_bg.png"
+
 DEFAULT_MOD_URL = "https://www.moddb.com/mods/maximum-security"
 
 
@@ -270,13 +274,92 @@ def _enable_hidpi_awareness():
             pass
 
 
+def _create_doom_style(root) -> "ttk.Style":
+    """
+    Configure a Doom-ish dark theme, including a flame-like progress bar.
+    """
+    style = ttk.Style(root)
+    # Use a theme that respects our custom colors
+    try:
+        style.theme_use("clam")
+    except tk.TclError:
+        pass
+
+    base_bg = "#050308"
+    accent = "#ff6200"
+    highlight = "#ffcc66"
+
+    # Default background / foreground for all ttk widgets
+    style.configure(".", background=base_bg, foreground="#f8f0e0")
+
+    # Outer frame that everything sits in
+    style.configure("MS.Outer.TFrame", background=base_bg)
+
+    # Group boxes
+    style.configure(
+        "MS.TLabelframe",
+        background="#120008",
+        foreground=highlight,
+        borderwidth=1,
+    )
+    style.configure(
+        "MS.TLabelframe.Label",
+        background="#120008",
+        foreground=highlight,
+    )
+
+    # Generic labels
+    style.configure(
+        "MS.TLabel",
+        background=base_bg,
+        foreground="#f8f0e0",
+    )
+
+    # Buttons with a “hot metal” look
+    style.configure(
+        "MS.TButton",
+        background="#551300",
+        foreground="#f8f0e0",
+        padding=(10, 4),
+        borderwidth=0,
+        focusthickness=0,
+    )
+    style.map(
+        "MS.TButton",
+        background=[
+            ("pressed", "#aa3300"),
+            ("active", "#aa3300"),
+            ("disabled", "#333333"),
+        ],
+        foreground=[
+            ("disabled", "#777777"),
+        ],
+    )
+
+    # Flame-ish horizontal progress bar
+    style.configure(
+        "MS.Horizontal.TProgressbar",
+        troughcolor="#1a0000",
+        bordercolor="#000000",
+        background=accent,  # fill color
+        lightcolor=highlight,  # top highlight (gives a “glow”)
+        darkcolor="#550000",  # bottom shade
+        thickness=18,
+    )
+
+    return style
+
+
 def _scrolling_frame(parent):
-    canvas = tk.Canvas(parent, highlightthickness=0)
+    # Match the top-level background so the scroll area blends in
+    top_bg = parent.winfo_toplevel().cget("bg")
+    canvas = tk.Canvas(parent, highlightthickness=0, bg=top_bg, borderwidth=0)
     vbar = ttk.Scrollbar(parent, orient="vertical", command=canvas.yview)
     canvas.configure(yscrollcommand=vbar.set)
     vbar.pack(side="right", fill="y")
     canvas.pack(side="left", fill="both", expand=True)
-    inner = ttk.Frame(canvas)
+
+    inner = ttk.Frame(canvas, style="MS.Outer.TFrame")
     win = canvas.create_window(0, 0, window=inner, anchor="nw")
 
     def _cfg(_e=None):
@@ -298,27 +381,59 @@ def show_preflight_and_run(plan: dict, worker_func) -> bool:
     root = tk.Tk()
     root.title("Maximum Security – Setup")
 
+    # Apply Doom-style ttk theme
+    style = _create_doom_style(root)
+    base_bg = style.lookup("MS.Outer.TFrame", "background") or "#050308"
+    root.configure(bg=base_bg)
+
+    # Optional background image (PNG placed in app_dir/assets/installer_bg.png)
+    container = root
+    if BG_IMAGE_PATH.exists():
+        try:
+            # If you ever run unfrozen from a console, this helps debug:
+            print(f"Loading background from: {BG_IMAGE_PATH}")
+            bg_img = tk.PhotoImage(file=str(BG_IMAGE_PATH))
+            # Keep a reference on the root to avoid GC
+            root._bg_img = bg_img  # type: ignore[attr-defined]
+
+            bg_label = tk.Label(root, image=bg_img, borderwidth=0)
+            bg_label.place(x=0, y=0, relwidth=1, relheight=1)
+        except Exception as e:
+            # Fallback: solid color only
+            print(f"Failed to load background image {BG_IMAGE_PATH}: {e}")
+
     sw, sh = root.winfo_screenwidth(), root.winfo_screenheight()
     w = max(820, int(sw * 0.5))
     h = max(600, int(sh * 0.6))
     root.geometry(f"{w}x{h}")
     root.minsize(680, 520)
 
-    outer = ttk.Frame(root, padding=12)
-    outer.pack(fill="both", expand=True)
+    # Outer content frame; add padding so some of the background art is visible
+    outer = ttk.Frame(container, padding=12, style="MS.Outer.TFrame")
+    outer.pack(fill="both", expand=True, padx=32, pady=32)
 
     # ---------- Preflight ----------
-    preflight = ttk.Frame(outer)
+    preflight = ttk.Frame(outer, style="MS.Outer.TFrame")
     preflight.pack(fill="both", expand=True)
     canvas, content = _scrolling_frame(preflight)
 
     def add_section(title, lines):
-        box = ttk.Labelframe(content, text=title, padding=(10, 10))
+        box = ttk.Labelframe(
+            content,
+            text=title,
+            padding=(10, 10),
+            style="MS.TLabelframe",
+        )
         box.pack(fill="x", expand=False, pady=(0, 10))
         for t in lines:
-            ttk.Label(box, text=t, anchor="w", justify="left", wraplength=w - 80).pack(
-                fill="x"
-            )
+            ttk.Label(
+                box,
+                text=t,
+                anchor="w",
+                justify="left",
+                wraplength=w - 80,
+                style="MS.TLabel",
+            ).pack(fill="x")
 
     gz = plan["gzdoom"]
     add_section(
@@ -347,7 +462,7 @@ def show_preflight_and_run(plan: dict, worker_func) -> bool:
         ],
     )
 
-    pre_btns = ttk.Frame(outer)
+    pre_btns = ttk.Frame(outer, style="MS.Outer.TFrame")
     pre_btns.pack(fill="x", pady=(8, 0))
     proceed = {"go": False}
 
@@ -361,23 +476,28 @@ def show_preflight_and_run(plan: dict, worker_func) -> bool:
         pre_btns.pack_forget()
         progress_page()
 
-    ttk.Button(pre_btns, text="Exit", command=on_exit).pack(side="right")
-    ttk.Button(pre_btns, text="Continue", command=on_continue).pack(
+    ttk.Button(pre_btns, text="Exit", command=on_exit, style="MS.TButton").pack(
+        side="right"
+    )
+    ttk.Button(pre_btns, text="Continue", command=on_continue, style="MS.TButton").pack(
         side="right", padx=(0, 8)
     )
     root.bind("<Escape>", lambda e: on_exit())
     root.bind("<Return>", lambda e: on_continue())
 
     # ---------- Progress page ----------
-    bars = {}
-    status_vars = {}
+    bars: dict[str, ttk.Progressbar] = {}
+    status_vars: dict[str, tk.StringVar] = {}
 
     def progress_page():
-        page = ttk.Frame(outer)
+        page = ttk.Frame(outer, style="MS.Outer.TFrame")
         page.pack(fill="both", expand=True)
 
         hdr = ttk.Label(
-            page, text="Downloading / Preparing assets…", font=("", 12, "bold")
+            page,
+            text="Downloading / Preparing assets…",
+            font=("", 12, "bold"),
+            style="MS.TLabel",
         )
         hdr.pack(anchor="w", pady=(0, 8))
 
@@ -386,23 +506,48 @@ def show_preflight_and_run(plan: dict, worker_func) -> bool:
             ("iwad", "IWAD"),
             ("mod", "Mod payload"),
         ):
-            frame = ttk.Labelframe(page, text=label, padding=(10, 10))
+            frame = ttk.Labelframe(
+                page,
+                text=label,
+                padding=(10, 10),
+                style="MS.TLabelframe",
+            )
             frame.pack(fill="x", pady=(0, 10))
+
             pb = ttk.Progressbar(
-                frame, orient="horizontal", mode="determinate", maximum=100
+                frame,
+                orient="horizontal",
+                mode="determinate",
+                maximum=100,
+                style="MS.Horizontal.TProgressbar",
             )
             pb.pack(fill="x")
+
             txt = tk.StringVar(value="Waiting…")
-            ttk.Label(frame, textvariable=txt).pack(anchor="w", pady=(6, 0))
+            ttk.Label(frame, textvariable=txt, style="MS.TLabel").pack(
+                anchor="w", pady=(6, 0)
+            )
+
             bars[key] = pb
             status_vars[key] = txt
 
-        log_box = ttk.Labelframe(page, text="Log", padding=(10, 10))
+        log_box = ttk.Labelframe(
+            page,
+            text="Log",
+            padding=(10, 10),
+            style="MS.TLabelframe",
+        )
         log_box.pack(fill="both", expand=True)
-        text = tk.Text(log_box, height=10)
-        text.pack(fill="both", expand=True)
 
-        def log(msg):
+        text = tk.Text(log_box, height=10, borderwidth=0, highlightthickness=0)
+        text.pack(fill="both", expand=True)
+        text.configure(
+            bg=base_bg,
+            fg="#f8f0e0",
+            insertbackground="#f8f0e0",  # cursor color
+        )
+
+        def log(msg: str):
             text.insert("end", msg + "\n")
             text.see("end")
             text.update_idletasks()
@@ -412,8 +557,10 @@ def show_preflight_and_run(plan: dict, worker_func) -> bool:
                 frac = min(100, int(got * 100 / total))
                 bars[stage]["value"] = frac
             else:
+                # Spinner-ish behaviour when total is unknown
                 val = (bars[stage]["value"] + 3) % 100
                 bars[stage]["value"] = val
+
             if note:
                 status_vars[stage].set(note)
             else:
@@ -439,8 +586,10 @@ def show_preflight_and_run(plan: dict, worker_func) -> bool:
                 root.destroy()
             else:
                 log(f"ERROR: {done['err']}")
-                status_vars["gzdoom"].set("Failed")
-                # Window remains open for inspection.
+                # Mark all stages failed for clarity
+                for k in status_vars:
+                    status_vars[k].set("Failed")
+                # Window stays open for inspection.
 
         threading.Thread(target=_work, daemon=True).start()
 

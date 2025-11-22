@@ -2,7 +2,7 @@
 set -euo pipefail
 
 # === CONFIG ===
-WIN_HOST="${WIN_HOST:-winbox}"  # ssh alias for your Windows box (in ~/.ssh/config)
+WIN_HOST="${WIN_HOST:-winbox}"  # ssh alias or raw IP for your Windows box
 MOD_URL="${1:-https://www.moddb.com/mods/maximum-security}"
 
 # Remote paths (POSIX-style for scp; PowerShell uses backslashes inside)
@@ -23,15 +23,25 @@ ssh "$WIN_HOST" 'pwsh -NoProfile -Command "
   New-Item -ItemType Directory -Force -Path $HOME\Home\Code\MaximumSecurity\build\iwads | Out-Null
 "'
 
-
 echo "==> Pushing source (app_src/)…"
 # Everything that will be bundled into the exe lives in app_src/
 scp -r app_src/* "$WIN_HOST:$REMOTE_SRC_POSIX/"
 
-echo "==> Pushing IWAD assets (assets/* -> build/iwads)…"
-# Optional local IWAD(s) you want pre-shipped (e.g. DOOM2.WAD)
-if compgen -G "assets/*" >/dev/null; then
-  scp assets/* "$WIN_HOST:$REMOTE_IWADS_POSIX/" || true
+echo "==> Pushing assets directory (assets/ -> build/assets)…"
+# Mirror the entire local assets tree; scp will create build/assets if needed
+if [ -d assets ]; then
+  scp -r assets "$WIN_HOST:$REMOTE_BUILD_POSIX"
+fi
+
+echo "==> Pushing IWAD assets (assets/*.wad -> build/iwads)…"
+# Optionally ship any WADs found in assets/ (e.g. DOOM2.WAD)
+if [ -d assets ]; then
+  shopt -s nullglob
+  wads=(assets/*.wad assets/*.WAD)
+  if ((${#wads[@]})); then
+    scp "${wads[@]}" "$WIN_HOST:$REMOTE_IWADS_POSIX/" || true
+  fi
+  shopt -u nullglob
 fi
 
 echo "==> Pushing Windows build script…"
