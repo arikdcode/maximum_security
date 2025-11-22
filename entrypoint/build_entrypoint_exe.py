@@ -32,7 +32,7 @@ def build_exe():
     cmd = [
         "pyinstaller",
         "--onefile",  # Single exe file
-        # Removed --windowed so users can see download progress
+        "--windowed",  # GUI app, no console window
         "--name", "MaximumSecurity",
         "entrypoint.py"
     ]
@@ -43,7 +43,7 @@ def build_exe():
     # Check if exe was created
     exe_path = Path("dist") / "MaximumSecurity.exe"
     if exe_path.exists():
-        print(f"✓ Exe created at: {exe_path.absolute()}")
+        print(f"[SUCCESS] Exe created at: {exe_path.absolute()}")
         print(f"  File size: {exe_path.stat().st_size} bytes")
         print(f"  Ready for distribution: {exe_path.name}")
     else:

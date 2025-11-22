@@ -5,21 +5,37 @@ This is the dead-simple entrypoint executable that customers will download and r
 ## How It Works
 
 1. **Fetches Latest Release**: Calls GitHub API to get the latest launcher release from `arikdcode/maximum_security_dist`
-2. **Downloads Launcher**: Downloads the `Maximum.Security.Launcher.exe` asset
-3. **Verifies Download**: Checks file size matches expected size from GitHub
-4. **Runs Launcher**: Starts the downloaded launcher and exits
+2. **Shows Progress**: Displays a clean progress bar window showing download status
+3. **Downloads Launcher**: Downloads the `Maximum.Security.Launcher.exe` asset to `%APPDATA%/MaximumSecurity/`
+4. **Verifies Download**: Checks file size matches expected size from GitHub
+5. **Runs Launcher**: Starts the downloaded launcher and closes the progress window
 
 ## Key Features
 
 - **Never Changes**: This entrypoint code never needs to be updated
 - **Always Current**: Will always download and run the latest launcher version
+- **Clean UI**: Minimal progress bar window instead of ugly console
+- **Persistent Storage**: Downloads to user app data directory so dependencies are available
 - **Secure**: Verifies download integrity via file size
 - **Simple**: Single-purpose, minimal code
-- **Shows Progress**: Console window displays download progress for user feedback
 
 ## Building the Executable
 
-### On Windows
+### From Linux (Recommended - Remote Build)
+
+If you're developing on Linux but have SSH access to a Windows PC:
+
+```bash
+# From the project root
+./scripts/build_entrypoint_remote.sh
+```
+
+This will:
+- Copy the entrypoint folder to your Windows PC at `~/Home/Code/MaximumSecurity/entrypoint`
+- Run the build remotely
+- Leave `MaximumSecurity.exe` ready for testing
+
+### On Windows Directly
 
 **Option 1: Python Build Script (Recommended)**
 1. Install Python 3.8+ from python.org

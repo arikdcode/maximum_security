@@ -1,1 +1,2 @@
 requests==2.31.0
+# tkinter comes with Python, no need to install separately
