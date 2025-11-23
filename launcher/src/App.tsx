@@ -49,12 +49,32 @@ function App() {
     setGameStatus('downloading');
 
     try {
+      // 1. Download Game
       await window.api.downloadGame(url, latest.version);
+
+      // 2. Setup GZDoom
+      setLog("Checking GZDoom...");
+      await window.api.downloadGZDoom();
+
       setGameStatus('installed');
-      setLog('Game installed successfully.');
+      setLog('Ready to play.');
     } catch (e) {
       setLog('Installation failed.');
       setGameStatus('error');
+      console.error(e);
+    }
+  };
+
+  const launchGame = async () => {
+    if (!manifest) return;
+    const latest = manifest.game_builds[manifest.game_builds.length - 1];
+    setLog("Launching...");
+    try {
+      await window.api.launchGame({ version: latest.version });
+      // Maybe close launcher?
+    } catch (e) {
+      setLog("Launch failed.");
+      console.error(e);
     }
   };
 
@@ -104,6 +124,7 @@ function App() {
 
           {gameStatus === 'installed' && (
             <button
+              onClick={launchGame}
               className="w-full py-3 px-6 bg-emerald-700 hover:bg-emerald-600 text-white font-bold rounded border border-emerald-500 shadow-lg hover:shadow-emerald-900/20 transition-all uppercase tracking-widest"
             >
               Launch Game
