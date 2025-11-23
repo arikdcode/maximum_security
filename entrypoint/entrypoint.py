@@ -105,12 +105,10 @@ def get_launcher_dir():
     else:
         base_path = Path(__file__).parent
 
-    # The user said: "download the launcher and launcher version as a sibling into ./app"
-    # If the entrypoint is at /foo/MaximumSecurity.exe, it should use /foo/app/
+    # The user said: "install the launcher and the version file directly to the app root"
+    # So we return the base_path directly.
 
-    app_dir = base_path / "app"
-    app_dir.mkdir(parents=True, exist_ok=True)
-    return app_dir
+    return base_path
 
 def load_local_version(version_file):
     """Load the locally installed version info."""

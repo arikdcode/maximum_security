@@ -12,11 +12,36 @@ const isDev = process.argv.includes('--dev') || process.env.NODE_ENV === 'develo
 
 // Paths
 const MANIFEST_URL = "https://raw.githubusercontent.com/arikdcode/maximum_security_dist/refs/heads/master/manifest.json";
-const APP_DATA = app.getPath('userData');
-const GAME_DIR = path.join(APP_DATA, 'game');
-const BIN_DIR = path.join(APP_DATA, 'bin');
-const GZDOOM_DIR = path.join(BIN_DIR, 'gzdoom');
-const IWADS_DIR = path.join(APP_DATA, 'iwads');
+
+// We need to be portable. Everything should be relative to the executable.
+// On Windows, process.execPath is the .exe.
+// In production (portable), we want a 'game' folder next to the launcher exe.
+let ROOT_DIR;
+if (isDev) {
+  ROOT_DIR = app.getPath('userData');
+} else {
+  // In portable mode, "MaximumSecurityLauncher.exe" is in a temp dir when running?
+  // No, if it's a portable exe from electron-builder, it extracts to temp.
+  // BUT we want the data to persist next to the EXE the user downloaded.
+  //
+  // Electron-builder portable apps set process.env.PORTABLE_EXECUTABLE_DIR
+  const LAUNCHER_EXE_DIR = process.env.PORTABLE_EXECUTABLE_DIR || path.dirname(process.execPath);
+  // Structure:
+  // Root/
+  //   MaximumSecurity.exe (Entrypoint)
+  //   MaximumSecurityLauncher.exe (Launcher)
+  //   game/
+  //
+  // So ROOT_DIR is the same as the launcher executable directory
+  ROOT_DIR = LAUNCHER_EXE_DIR;
+}
+
+const GAME_DIR = path.join(ROOT_DIR, 'game');
+const BIN_DIR = GAME_DIR; // Flat structure
+const GZDOOM_DIR = GAME_DIR; // Flat structure
+const IWADS_DIR = GAME_DIR; // Flat structure
+const SAVES_DIR = path.join(GAME_DIR, 'saves');
+const CONFIG_PATH = path.join(GAME_DIR, 'gzdoom.ini');
 
 // Ensure directories exist
 [GAME_DIR, BIN_DIR, GZDOOM_DIR, IWADS_DIR].forEach(dir => {
@@ -106,13 +131,37 @@ ipcMain.handle('fetch-manifest', async () => {
 
 ipcMain.handle('download-game', async (event, url, version) => {
   const win = BrowserWindow.getFocusedWindow();
+  // Use a temporary name for the zip
   const destPath = path.join(GAME_DIR, `game-${version}.zip`);
-  const extractPath = path.join(GAME_DIR, version);
+  // Extract directly to GAME_DIR (flattened)
+  // We use a marker file to detect version? Or just trust manifest?
+  // Let's check if the version folder exists as a marker, or check manifest content?
+  // Since the user requested flattening: "all gzdoom files need to be in 'game' in the root of 'game' as does the WAD file"
 
-  // If already installed, return true
-  if (fs.existsSync(extractPath)) {
-    return { status: 'installed', path: extractPath };
-  }
+  // Actually, the user said: "The all gzdoom files need to be in 'game' in the root of 'game' as does the WAD file."
+  // But wait, they also said: "game folder has to contain everything together... No separate iwads."
+  // This implies GZDoom, IWAD, and Mod files all in ONE folder: `game/`.
+  // My previous path setup:
+  // GAME_DIR = ROOT/game
+  // GZDOOM_DIR = GAME_DIR (merged)
+  // IWADS_DIR = GAME_DIR (merged)
+
+  // Let's readjust the constants first.
+  // If everything is siblings in `game/`:
+  // GZDOOM_DIR should be GAME_DIR
+  // IWADS_DIR should be GAME_DIR
+
+  // But wait, GZDoom download logic currently extracts to GZDOOM_DIR.
+  // If I set GZDOOM_DIR = GAME_DIR, it extracts there. Perfect.
+
+  // Game download:
+  // The zip contains the mod files.
+  // If we extract to GAME_DIR, they sit there.
+
+  // Re-reading the instruction carefully:
+  // "The all gzdoom files need to be in 'game' in the root of 'game' as does the WAD file. No separate iwads. And the MaximumSecurity mod files also have to be in there... They all have to be siblings"
+
+  // So yes, flat structure in `game/`.
 
   try {
     if (win) win.webContents.send('fromMain', { type: 'status', message: 'Downloading game...' });
@@ -120,10 +169,16 @@ ipcMain.handle('download-game', async (event, url, version) => {
 
     if (win) win.webContents.send('fromMain', { type: 'status', message: 'Extracting game...' });
     const zip = new AdmZip(destPath);
-    zip.extractAllTo(extractPath, true);
+
+    // Extract all to GAME_DIR
+    zip.extractAllTo(GAME_DIR, true);
 
     fs.unlinkSync(destPath);
-    return { status: 'complete', path: extractPath };
+
+    // Create a marker file for the version
+    fs.writeFileSync(path.join(GAME_DIR, `version-${version}.txt`), 'installed');
+
+    return { status: 'complete', path: GAME_DIR };
 
   } catch (error) {
     console.error("Game download/install failed:", error);
@@ -136,7 +191,7 @@ ipcMain.handle('download-gzdoom', async () => {
 
   // Detect Platform
   // Only implementing Windows logic fully as per requirements
-  if (process.platform !== 'win32') {
+  if (process.platform !== 'win32' && !isDev) {
     console.log("GZDoom download only fully implemented for Windows for now.");
     return { status: 'skipped', message: 'Linux GZDoom setup not automated' };
   }
@@ -180,7 +235,8 @@ ipcMain.handle('download-gzdoom', async () => {
 ipcMain.handle('launch-game', async (event, args) => {
   // args: { version: string }
   const version = args.version;
-  const gamePath = path.join(GAME_DIR, version);
+  // gamePath is just GAME_DIR now
+  const gamePath = GAME_DIR;
 
   // 1. Locate GZDoom
   let gzdoomExe = path.join(GZDOOM_DIR, 'gzdoom.exe');
@@ -190,7 +246,7 @@ ipcMain.handle('launch-game', async (event, args) => {
   }
 
   // 2. Locate IWAD
-  // Logic: Check IWADS_DIR for *.wad.
+  // Logic: Check IWADS_DIR (which is GAME_DIR) for *.wad.
   let iwadPath = null;
   const localWads = fs.existsSync(IWADS_DIR) ? fs.readdirSync(IWADS_DIR).filter(f => f.toLowerCase().endsWith('.wad')) : [];
 
@@ -211,27 +267,25 @@ ipcMain.handle('launch-game', async (event, args) => {
   }
 
   if (!iwadPath) {
-    // If we still haven't found an IWAD, we can't launch.
-    // The UI should have handled this check before calling launch,
-    // but as a failsafe we throw an error here.
     throw new Error("MISSING_IWAD");
   }
 
   // 3. Identify Game WAD/PK3
-  // The game zip extracts to GAME_DIR/version/
-  // We need to pass these files to -file
+  // We need to find the mod files in GAME_DIR
+  // BUT exclude the IWAD we just found so we don't double load it (GZDoom might handle it but better safe)
   let gameFiles = [];
   if (fs.existsSync(gamePath)) {
     gameFiles = fs.readdirSync(gamePath)
       .filter(f => f.match(/\.(wad|pk3|pk7)$/i))
-      .map(f => path.join(gamePath, f));
+      .map(f => path.join(gamePath, f))
+      .filter(f => f !== iwadPath); // Exclude the chosen IWAD
   }
 
   // 4. Launch
   const launchArgs = [
     '-iwad', iwadPath,
-    '-savedir', path.join(APP_DATA, 'saves'),
-    '-config', path.join(APP_DATA, 'gzdoom.ini')
+    '-savedir', SAVES_DIR,
+    '-config', CONFIG_PATH
   ];
 
   if (gameFiles.length > 0) {
