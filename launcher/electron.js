@@ -131,49 +131,13 @@ ipcMain.handle('fetch-manifest', async () => {
 
 ipcMain.handle('download-game', async (event, url, version) => {
   const win = BrowserWindow.getFocusedWindow();
-  // Use a temporary name for the zip
-  const destPath = path.join(GAME_DIR, `game-${version}.zip`);
-  // Extract directly to GAME_DIR (flattened)
-  // We use a marker file to detect version? Or just trust manifest?
-  // Let's check if the version folder exists as a marker, or check manifest content?
-  // Since the user requested flattening: "all gzdoom files need to be in 'game' in the root of 'game' as does the WAD file"
 
-  // Actually, the user said: "The all gzdoom files need to be in 'game' in the root of 'game' as does the WAD file."
-  // But wait, they also said: "game folder has to contain everything together... No separate iwads."
-  // This implies GZDoom, IWAD, and Mod files all in ONE folder: `game/`.
-  // My previous path setup:
-  // GAME_DIR = ROOT/game
-  // GZDOOM_DIR = GAME_DIR (merged)
-  // IWADS_DIR = GAME_DIR (merged)
-
-  // Let's readjust the constants first.
-  // If everything is siblings in `game/`:
-  // GZDOOM_DIR should be GAME_DIR
-  // IWADS_DIR should be GAME_DIR
-
-  // But wait, GZDoom download logic currently extracts to GZDOOM_DIR.
-  // If I set GZDOOM_DIR = GAME_DIR, it extracts there. Perfect.
-
-  // Game download:
-  // The zip contains the mod files.
-  // If we extract to GAME_DIR, they sit there.
-
-  // Re-reading the instruction carefully:
-  // "The all gzdoom files need to be in 'game' in the root of 'game' as does the WAD file. No separate iwads. And the MaximumSecurity mod files also have to be in there... They all have to be siblings"
-
-  // So yes, flat structure in `game/`.
+  // We are now downloading a .pk3 directly, not a zip
+  const destPath = path.join(GAME_DIR, `Maximum_Security_v${version}.pk3`);
 
   try {
-    if (win) win.webContents.send('fromMain', { type: 'status', message: 'Downloading game...' });
+    if (win) win.webContents.send('fromMain', { type: 'status', message: 'Downloading game data...' });
     await downloadFile(url, destPath, win);
-
-    if (win) win.webContents.send('fromMain', { type: 'status', message: 'Extracting game...' });
-    const zip = new AdmZip(destPath);
-
-    // Extract all to GAME_DIR
-    zip.extractAllTo(GAME_DIR, true);
-
-    fs.unlinkSync(destPath);
 
     // Create a marker file for the version
     fs.writeFileSync(path.join(GAME_DIR, `version-${version}.txt`), 'installed');
