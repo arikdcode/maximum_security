@@ -21,4 +21,5 @@ contextBridge.exposeInMainWorld('api', {
   downloadGame: (url, version) => ipcRenderer.invoke('download-game', url, version),
   downloadGZDoom: () => ipcRenderer.invoke('download-gzdoom'),
   launchGame: (args) => ipcRenderer.invoke('launch-game', args),
+  checkIWAD: () => ipcRenderer.invoke('check-iwad'),
 });

@@ -67,6 +67,15 @@ function App() {
 
   const launchGame = async () => {
     if (!manifest) return;
+
+    // Check for IWAD first
+    const hasIwad = await window.api.checkIWAD();
+    if (!hasIwad) {
+      setLog("Error: No valid IWAD found (DOOM2.WAD, etc).");
+      setGameStatus('missing_iwad');
+      return;
+    }
+
     const latest = manifest.game_builds[manifest.game_builds.length - 1];
     setLog("Launching...");
     try {
@@ -129,6 +138,21 @@ function App() {
             >
               Launch Game
             </button>
+          )}
+
+          {gameStatus === 'missing_iwad' && (
+            <div className="text-center p-4 bg-red-900/50 border border-red-500 rounded">
+              <p className="text-sm mb-2">MISSING IWAD FILE</p>
+              <p className="text-xs text-gray-300 mb-4">
+                Please copy a valid DOOM2.WAD to the 'iwads' folder in the app directory.
+              </p>
+              <button
+                onClick={launchGame}
+                className="px-4 py-2 bg-red-700 hover:bg-red-600 rounded text-xs"
+              >
+                Retry
+              </button>
+            </div>
           )}
         </div>
 

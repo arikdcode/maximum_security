@@ -190,16 +190,19 @@ ipcMain.handle('launch-game', async (event, args) => {
   }
 
   // 2. Locate IWAD
-  // Logic: Check IWADS_DIR for *.wad. If none, download Freedoom (ported from python)
+  // Logic: Check IWADS_DIR for *.wad.
   let iwadPath = null;
-  const localWads = fs.readdirSync(IWADS_DIR).filter(f => f.toLowerCase().endsWith('.wad'));
+  const localWads = fs.existsSync(IWADS_DIR) ? fs.readdirSync(IWADS_DIR).filter(f => f.toLowerCase().endsWith('.wad')) : [];
+
   if (localWads.length > 0) {
-    // Sort preference: doom2 > freedoom2 > others
+    // Sort preference: doom2 > tnt > plutonia > doom
     localWads.sort((a, b) => {
       const score = (name) => {
         const n = name.toLowerCase();
         if (n === 'doom2.wad') return 0;
-        if (n === 'freedoom2.wad') return 1;
+        if (n === 'tnt.wad') return 1;
+        if (n === 'plutonia.wad') return 2;
+        if (n === 'doom.wad') return 3;
         return 10;
       };
       return score(a) - score(b);
@@ -208,42 +211,11 @@ ipcMain.handle('launch-game', async (event, args) => {
   }
 
   if (!iwadPath) {
-    const win = BrowserWindow.getFocusedWindow();
-    try {
-      if (win) win.webContents.send('fromMain', { type: 'status', message: 'Downloading Freedoom (IWAD)...' });
-
-      // Fetch Freedoom release
-      const fdUrl = "https://api.github.com/repos/freedoom/freedoom/releases/latest";
-      const fdResp = await axios.get(fdUrl);
-      const asset = fdResp.data.assets.find(a => a.name.endsWith('.zip') && a.name.toLowerCase().includes('freedoom'));
-      if (!asset) throw new Error("Freedoom zip not found");
-
-      const destZip = path.join(IWADS_DIR, 'freedoom.zip');
-      await downloadFile(asset.browser_download_url, destZip, win);
-
-      const zip = new AdmZip(destZip);
-      zip.extractAllTo(IWADS_DIR, true); // This might create a subdir
-      fs.unlinkSync(destZip);
-
-      // Find wad recursively if needed, but freedoom zip usually has a subdir
-      // Simplest: just flatten or find first wad in IWADS_DIR again
-      // Re-scan
-      const newWads = fs.readdirSync(IWADS_DIR).flatMap(f => {
-         const full = path.join(IWADS_DIR, f);
-         if (fs.statSync(full).isDirectory()) {
-             return fs.readdirSync(full).map(sub => path.join(full, sub));
-         }
-         return [full];
-      }).filter(f => f.toLowerCase().endsWith('.wad'));
-
-      if (newWads.length > 0) iwadPath = newWads.find(w => w.toLowerCase().includes('doom2')) || newWads[0];
-    } catch (e) {
-      console.error("Freedoom download failed:", e);
-      throw e;
-    }
+    // If we still haven't found an IWAD, we can't launch.
+    // The UI should have handled this check before calling launch,
+    // but as a failsafe we throw an error here.
+    throw new Error("MISSING_IWAD");
   }
-
-  if (!iwadPath) throw new Error("No IWAD found or downloaded.");
 
   // 3. Identify Game WAD/PK3
   // The game zip extracts to GAME_DIR/version/
@@ -272,4 +244,10 @@ ipcMain.handle('launch-game', async (event, args) => {
   child.unref();
 
   return { status: 'launched' };
+});
+
+ipcMain.handle('check-iwad', async () => {
+  if (!fs.existsSync(IWADS_DIR)) return false;
+  const wads = fs.readdirSync(IWADS_DIR).filter(f => f.toLowerCase().endsWith('.wad'));
+  return wads.length > 0;
 });
