@@ -13,6 +13,31 @@
     text-shadow: 0 0 10px rgba(220, 20, 60, 0.6), 0 0 20px rgba(139, 0, 0, 0.4);
   }
 
+  /* Chain link simulation - Cold */
+  .chain-pattern-cold {
+    background-color: #111;
+    background-image:
+      repeating-linear-gradient(90deg, transparent 0px, transparent 4px, #000 5px, #000 6px),
+      linear-gradient(180deg, #222 25%, #000 25%, #000 75%, #222 75%),
+      radial-gradient(circle at 50% 50%, #333 2px, transparent 3px);
+    background-size: 10px 100%, 20px 20px, 10px 10px;
+    opacity: 0.3;
+  }
+
+  /* Chain link simulation - Hot/Fire */
+  .chain-pattern-hot {
+    background:
+      linear-gradient(to right, rgba(255,0,0,0.5), rgba(255,165,0,0.8)),
+      repeating-linear-gradient(45deg, transparent, transparent 5px, rgba(255,0,0,0.2) 5px, rgba(255,0,0,0.2) 10px);
+    box-shadow: 0 0 10px #f00;
+    animation: fire-pulse 1s infinite alternate;
+  }
+
+  @keyframes fire-pulse {
+    from { filter: brightness(1); box-shadow: 0 0 5px #d00; }
+    to { filter: brightness(1.5); box-shadow: 0 0 15px #f50; }
+  }
+
   .custom-scrollbar::-webkit-scrollbar {
     width: 8px;
   }

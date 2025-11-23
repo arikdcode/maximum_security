@@ -69,6 +69,32 @@ function App() {
     setIsBusy(true);
     setProgress(0);
 
+    // Mock mode for Linux dev environment
+    if (window.api.isDev) {
+      setStatus("DEV MODE: Simulating actions...");
+      await new Promise(r => setTimeout(r, 1000));
+
+      if (!installedVersions.includes(selectedVersion)) {
+        setStatus("DEV: Mocking download...");
+        for (let i = 0; i <= 100; i += 5) {
+          setProgress(i);
+          await new Promise(r => setTimeout(r, 100));
+        }
+        setInstalledVersions(prev => [...prev, selectedVersion]);
+        setStatus("DEV: Mock install complete.");
+      } else {
+        setStatus("DEV: Mocking launch...");
+        await new Promise(r => setTimeout(r, 2000));
+        setStatus("DEV: Game running (mock)...");
+      }
+
+      setTimeout(() => {
+        setStatus("Ready.");
+        setIsBusy(false);
+      }, 2000);
+      return;
+    }
+
     try {
       // 1. Check/Install GZDoom (Shared)
       setStatus("Checking GZDoom...");
@@ -180,10 +206,17 @@ function App() {
                {/* Progress Bar */}
                {isBusy && progress > 0 && (
                 <div className="mb-4">
-                   <div className="w-full bg-gray-800 rounded-full h-2">
-                     <div className="bg-red-600 h-2 rounded-full transition-all duration-300" style={{ width: `${progress}%` }}></div>
+                   <div className="w-full h-6 bg-black/80 border border-white/10 relative overflow-hidden rounded-sm shadow-inner">
+                     {/* Cold Chain Background */}
+                     <div className="absolute inset-0 chain-pattern-cold"></div>
+
+                     {/* Hot Chain Foreground */}
+                     <div
+                        className="absolute inset-0 chain-pattern-hot transition-all duration-300 border-r-2 border-yellow-500"
+                        style={{ width: `${progress}%` }}
+                     ></div>
                    </div>
-                   <p className="text-right text-xs text-gray-500 mt-1 font-mono">{progress}%</p>
+                   <p className="text-right text-[10px] text-red-500/80 mt-1 font-mono tracking-widest">{progress}%</p>
                 </div>
               )}
             </div>
