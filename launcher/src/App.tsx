@@ -122,11 +122,11 @@ function App() {
       <div className="relative z-10 w-full max-w-2xl p-8">
         {/* Header */}
         <div className="text-center mb-8">
-          <h1 className="text-6xl font-black tracking-tighter text-red-600 drop-shadow-[0_4px_4px_rgba(0,0,0,1)]">
+          <h1 className="text-7xl grimdark-text mb-2 transform scale-y-110">
             MAXIMUM SECURITY
           </h1>
-          <div className="h-1 w-full bg-gradient-to-r from-transparent via-red-600 to-transparent my-4 opacity-50"></div>
-          <p className="text-gray-400 tracking-widest text-sm">LAUNCHER V{version}</p>
+          <div className="h-px w-full bg-gradient-to-r from-transparent via-red-900 to-transparent my-4 opacity-50 shadow-[0_0_10px_red]"></div>
+          <p className="text-gray-500 tracking-[0.5em] text-xs font-mono uppercase">Prisoner Intake System v{version}</p>
         </div>
 
         {/* Main Content Grid */}
@@ -140,34 +140,40 @@ function App() {
                 <div
                   key={build.version}
                   onClick={() => !isBusy && setSelectedVersion(build.version)}
-                  className={`p-3 rounded border cursor-pointer transition-all ${
+                  className={`relative overflow-hidden group p-3 border cursor-pointer transition-all duration-300 ${
                     selectedVersion === build.version
-                      ? 'bg-zinc-700 border-zinc-500 text-white shadow-lg'
-                      : 'bg-black/20 border-white/5 text-gray-400 hover:bg-white/5'
+                      ? 'bg-zinc-800 border-red-800 shadow-[0_0_15px_rgba(139,0,0,0.3)]'
+                      : 'bg-black/40 border-white/5 hover:border-red-900/50 hover:bg-black/60'
                   } ${isBusy ? 'opacity-50 pointer-events-none' : ''}`}
                 >
-                  <div className="flex justify-between items-center">
-                    <span className="font-bold">{build.label}</span>
+                  {/* Selection indicator strip */}
+                  {selectedVersion === build.version && (
+                    <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-red-600 to-red-900"></div>
+                  )}
+
+                  <div className="flex justify-between items-center pl-2">
+                    <span className={`font-bold tracking-wide ${selectedVersion === build.version ? 'text-white' : 'text-gray-300'}`}>{build.label}</span>
                     {isInstalled(build.version) ? (
-                      <span className="text-xs bg-emerald-900/50 text-emerald-400 px-2 py-1 rounded border border-emerald-800">INSTALLED</span>
+                      <span className="text-[10px] bg-emerald-900/30 text-emerald-400 px-2 py-0.5 rounded border border-emerald-800/50 uppercase tracking-wider">Ready</span>
                     ) : (
-                      <span className="text-xs text-gray-600">NOT INSTALLED</span>
+                      <span className="text-[10px] text-gray-600 uppercase tracking-wider">Available</span>
                     )}
                   </div>
-                  <div className="text-xs mt-1 opacity-70 font-mono">v{build.version}</div>
+                  <div className="text-[10px] mt-1 opacity-50 font-mono text-gray-400">BUILD: v{build.version}</div>
                 </div>
               ))}
             </div>
           </div>
 
           {/* Right Col: Info & Action */}
-          <div className="flex flex-col justify-between bg-black/40 border border-white/10 rounded-lg p-6 backdrop-blur-sm">
+          <div className="flex flex-col justify-between bg-black/60 border border-white/10 rounded-sm p-6 backdrop-blur-md shadow-2xl relative overflow-hidden">
+            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-white/10 to-transparent"></div>
 
             <div>
-              <h3 className="text-gray-400 text-xs uppercase tracking-wider mb-3 font-bold">Status</h3>
-              <div className="bg-black/40 rounded p-3 border border-white/5 font-mono text-sm text-emerald-400 mb-4 h-[80px] overflow-hidden relative">
-                 <div className="absolute inset-0 p-3">
-                   &gt; {status}
+              <h3 className="text-gray-500 text-[10px] uppercase tracking-[0.2em] mb-3 font-bold border-b border-white/5 pb-1">System Status</h3>
+              <div className="bg-black/80 border border-white/10 p-3 font-mono text-xs text-red-500/90 mb-6 h-[80px] overflow-hidden relative shadow-inner">
+                 <div className="absolute inset-0 p-3 typing-effect">
+                   <span className="opacity-50 mr-2">&gt;</span>{status}<span className="animate-pulse">_</span>
                  </div>
               </div>
 
@@ -187,17 +193,20 @@ function App() {
                 <button
                   onClick={handleAction}
                   disabled={isBusy}
-                  className={`w-full py-4 font-bold text-lg uppercase tracking-widest transition-all rounded shadow-lg border ${
+                  className={`w-full py-4 font-black text-xl uppercase tracking-[0.2em] transition-all duration-300 border relative overflow-hidden group ${
                     isInstalled(selectedVersion)
-                      ? 'bg-emerald-700 hover:bg-emerald-600 border-emerald-500 text-white hover:shadow-emerald-900/20'
-                      : 'bg-red-700 hover:bg-red-600 border-red-500 text-white hover:shadow-red-900/20'
-                  } ${isBusy ? 'opacity-50 cursor-not-allowed' : ''}`}
+                      ? 'bg-gradient-to-b from-zinc-800 to-black border-zinc-600 text-emerald-500 hover:text-emerald-400 hover:border-emerald-500 shadow-[0_0_10px_rgba(0,0,0,0.5)]'
+                      : 'bg-gradient-to-b from-red-900 to-black border-red-700 text-red-500 hover:text-red-400 hover:border-red-500 shadow-[0_0_20px_rgba(139,0,0,0.3)]'
+                  } ${isBusy ? 'opacity-50 cursor-not-allowed grayscale' : ''}`}
                 >
-                  {isBusy ? 'Working...' : (isInstalled(selectedVersion) ? 'LAUNCH GAME' : 'INSTALL & PLAY')}
+                  <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/diagmonds-light.png')] opacity-10"></div>
+                  <span className="relative z-10 drop-shadow-md">
+                    {isBusy ? 'WORKING...' : (isInstalled(selectedVersion) ? 'LAUNCH PROTOCOL' : 'INITIATE INSTALL')}
+                  </span>
                 </button>
               )}
 
-              <div className="mt-4 text-center text-xs text-gray-600 font-mono">
+              <div className="mt-4 text-center text-[10px] text-gray-600 font-mono tracking-widest">
                 {selectedVersion && getBuildByVersion(selectedVersion)?.windows.size_bytes
                   ? `SIZE: ${(getBuildByVersion(selectedVersion)!.windows.size_bytes / 1024 / 1024).toFixed(1)} MB`
                   : 'SELECT A VERSION'}

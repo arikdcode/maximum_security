@@ -1,3 +1,33 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .grimdark-text {
+    @apply font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-red-500 via-red-700 to-black drop-shadow-[0_5px_5px_rgba(0,0,0,1)];
+    -webkit-text-stroke: 1px rgba(150, 0, 0, 0.5);
+    filter: drop-shadow(0 0 10px rgba(255, 0, 0, 0.3));
+  }
+
+  .grimdark-glow {
+    text-shadow: 0 0 10px rgba(220, 20, 60, 0.6), 0 0 20px rgba(139, 0, 0, 0.4);
+  }
+
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 4px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #444;
+    border-radius: 4px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #666;
+  }
+}
