@@ -1,163 +1,210 @@
 import { useState, useEffect } from 'react';
 import bgImage from './assets/installer_bg.png';
 
+interface GameBuild {
+  version: string;
+  label: string;
+  channel: string;
+  windows: {
+    url: string;
+    size_bytes: number;
+  }
+}
+
 function App() {
-  const [version] = useState<string>('0.1.0'); // Launcher version
+  const [version] = useState<string>('0.2.0'); // Launcher version
   const [manifest, setManifest] = useState<any>(null);
-  const [gameStatus, setGameStatus] = useState<string>('idle'); // idle, downloading, installed
+  const [installedVersions, setInstalledVersions] = useState<string[]>([]);
+  const [selectedVersion, setSelectedVersion] = useState<string | null>(null);
+  const [status, setStatus] = useState<string>('Initializing...');
   const [progress, setProgress] = useState<number>(0);
-  const [log, setLog] = useState<string>('Initializing...');
+  const [isBusy, setIsBusy] = useState<boolean>(false);
 
   useEffect(() => {
     // Listen for IPC messages
     window.api.receive('fromMain', (data: any) => {
       if (data.type === 'download-progress') {
         setProgress(data.percent);
-        setGameStatus('downloading');
       } else if (data.type === 'status') {
-        setLog(data.message);
+        setStatus(data.message);
       }
     });
 
-    // Fetch manifest on load
-    loadManifest();
+    // Initial load
+    loadData();
   }, []);
 
-  const loadManifest = async () => {
+  const loadData = async () => {
     try {
-      setLog('Fetching manifest...');
+      setStatus('Checking installation...');
+      const installed = await window.api.checkInstalledVersions();
+      setInstalledVersions(installed);
+
+      setStatus('Fetching manifest...');
       const data = await window.api.fetchManifest();
       setManifest(data);
-      setLog('Manifest loaded.');
-      // Here we would verify if game is installed
+
+      // Select latest version by default
+      if (data && data.game_builds && data.game_builds.length > 0) {
+        const latest = data.game_builds[data.game_builds.length - 1];
+        setSelectedVersion(latest.version);
+      }
+
+      setStatus('Ready.');
     } catch (e) {
-      setLog('Failed to load manifest.');
+      setStatus('Error loading data.');
       console.error(e);
     }
   };
 
-  const installGame = async () => {
-    if (!manifest || !manifest.game_builds || manifest.game_builds.length === 0) {
-      setLog('No game builds found.');
-      return;
-    }
+  const getBuildByVersion = (v: string): GameBuild | undefined => {
+    return manifest?.game_builds?.find((b: GameBuild) => b.version === v);
+  };
 
-    const latest = manifest.game_builds[manifest.game_builds.length - 1];
-    const url = latest.windows.url; // Assume windows for now
+  const handleAction = async () => {
+    if (!selectedVersion || !manifest) return;
+    const build = getBuildByVersion(selectedVersion);
+    if (!build) return;
 
-    setLog(`Downloading game v${latest.version}...`);
-    setGameStatus('downloading');
+    setIsBusy(true);
+    setProgress(0);
 
     try {
-      // 1. Download Game
-      await window.api.downloadGame(url, latest.version);
-
-      // 2. Setup GZDoom
-      setLog("Checking GZDoom...");
+      // 1. Check/Install GZDoom (Shared)
+      setStatus("Checking GZDoom...");
       await window.api.downloadGZDoom();
 
-      setGameStatus('installed');
-      setLog('Ready to play.');
+      // 2. Install Game if needed
+      if (!installedVersions.includes(selectedVersion)) {
+        setStatus(`Downloading v${selectedVersion}...`);
+        await window.api.downloadGame(build.windows.url, selectedVersion);
+
+        // Refresh installed list
+        const installed = await window.api.checkInstalledVersions();
+        setInstalledVersions(installed);
+      }
+
+      // 3. Check IWAD
+      const hasIwad = await window.api.checkIWAD();
+      if (!hasIwad) {
+        setStatus("Error: Missing DOOM2.WAD in game folder.");
+        setIsBusy(false);
+        return;
+      }
+
+      // 4. Launch
+      setStatus("Launching...");
+      await window.api.launchGame({ version: selectedVersion });
+      setStatus("Game running...");
+
+      // Reset after a bit
+      setTimeout(() => {
+        setStatus("Ready.");
+        setIsBusy(false);
+      }, 3000);
+
     } catch (e) {
-      setLog('Installation failed.');
-      setGameStatus('error');
+      setStatus('Error occurred.');
       console.error(e);
+      setIsBusy(false);
     }
   };
 
-  const launchGame = async () => {
-    if (!manifest) return;
-
-    // Check for IWAD first
-    const hasIwad = await window.api.checkIWAD();
-    if (!hasIwad) {
-      setLog("Error: No valid IWAD found (DOOM2.WAD, etc).");
-      setGameStatus('missing_iwad');
-      return;
-    }
-
-    const latest = manifest.game_builds[manifest.game_builds.length - 1];
-    setLog("Launching...");
-    try {
-      await window.api.launchGame({ version: latest.version });
-      // Maybe close launcher?
-    } catch (e) {
-      setLog("Launch failed.");
-      console.error(e);
-    }
-  };
+  const isInstalled = (v: string) => installedVersions.includes(v);
 
   return (
     <div
-      className="min-h-screen flex flex-col items-center justify-center text-white bg-cover bg-center bg-no-repeat font-sans"
+      className="min-h-screen flex flex-col items-center justify-center text-white bg-cover bg-center bg-no-repeat font-sans select-none"
       style={{ backgroundImage: `url(${bgImage})` }}
     >
-      <div className="absolute inset-0 bg-black/50 z-0"></div>
+      <div className="absolute inset-0 bg-black/60 z-0"></div>
 
-      <div className="relative z-10 text-center p-8 rounded-lg border border-white/10 bg-black/60 backdrop-blur-sm max-w-md w-full shadow-2xl">
-        <h1 className="text-5xl font-extrabold mb-2 tracking-wider text-red-600 drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)]">
-          MAXIMUM SECURITY
-        </h1>
-
-        <div className="w-full h-px bg-gradient-to-r from-transparent via-red-600 to-transparent my-6 opacity-50"></div>
-
-        <p className="text-gray-300 text-lg mb-4">
-          LAUNCHER V{version}
-        </p>
-
-        {/* Status Display */}
-        <div className="bg-black/40 rounded p-4 mb-6 border border-white/5 text-left font-mono text-sm min-h-[80px]">
-           <p className="text-emerald-400">&gt; {log}</p>
+      <div className="relative z-10 w-full max-w-2xl p-8">
+        {/* Header */}
+        <div className="text-center mb-8">
+          <h1 className="text-6xl font-black tracking-tighter text-red-600 drop-shadow-[0_4px_4px_rgba(0,0,0,1)]">
+            MAXIMUM SECURITY
+          </h1>
+          <div className="h-1 w-full bg-gradient-to-r from-transparent via-red-600 to-transparent my-4 opacity-50"></div>
+          <p className="text-gray-400 tracking-widest text-sm">LAUNCHER V{version}</p>
         </div>
 
-        {/* Progress Bar */}
-        {gameStatus === 'downloading' && (
-          <div className="mb-6">
-             <div className="w-full bg-gray-800 rounded-full h-2.5 mb-1">
-               <div className="bg-red-600 h-2.5 rounded-full transition-all duration-300" style={{ width: `${progress}%` }}></div>
-             </div>
-             <p className="text-right text-xs text-gray-400">{progress}%</p>
-          </div>
-        )}
+        {/* Main Content Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
-        {/* Action Button */}
-        <div className="space-y-4">
-          {gameStatus === 'idle' && (
-            <button
-              onClick={installGame}
-              className="w-full py-3 px-6 bg-red-700 hover:bg-red-600 text-white font-bold rounded border border-red-500 shadow-lg hover:shadow-red-900/20 transition-all uppercase tracking-widest"
-            >
-              Install Game
-            </button>
-          )}
-
-          {gameStatus === 'installed' && (
-            <button
-              onClick={launchGame}
-              className="w-full py-3 px-6 bg-emerald-700 hover:bg-emerald-600 text-white font-bold rounded border border-emerald-500 shadow-lg hover:shadow-emerald-900/20 transition-all uppercase tracking-widest"
-            >
-              Launch Game
-            </button>
-          )}
-
-          {gameStatus === 'missing_iwad' && (
-            <div className="text-center p-4 bg-red-900/50 border border-red-500 rounded">
-              <p className="text-sm mb-2">MISSING IWAD FILE</p>
-              <p className="text-xs text-gray-300 mb-4">
-                Please copy a valid DOOM2.WAD to the 'iwads' folder in the app directory.
-              </p>
-              <button
-                onClick={launchGame}
-                className="px-4 py-2 bg-red-700 hover:bg-red-600 rounded text-xs"
-              >
-                Retry
-              </button>
+          {/* Left Col: Build List */}
+          <div className="bg-black/40 border border-white/10 rounded-lg p-4 backdrop-blur-sm h-[300px] overflow-y-auto custom-scrollbar">
+            <h3 className="text-gray-400 text-xs uppercase tracking-wider mb-3 font-bold">Select Version</h3>
+            <div className="space-y-2">
+              {manifest?.game_builds?.slice().reverse().map((build: GameBuild) => (
+                <div
+                  key={build.version}
+                  onClick={() => !isBusy && setSelectedVersion(build.version)}
+                  className={`p-3 rounded border cursor-pointer transition-all ${
+                    selectedVersion === build.version
+                      ? 'bg-red-900/40 border-red-500 text-white'
+                      : 'bg-black/20 border-white/5 text-gray-400 hover:bg-white/5'
+                  } ${isBusy ? 'opacity-50 pointer-events-none' : ''}`}
+                >
+                  <div className="flex justify-between items-center">
+                    <span className="font-bold">{build.label}</span>
+                    {isInstalled(build.version) ? (
+                      <span className="text-xs bg-emerald-900/50 text-emerald-400 px-2 py-1 rounded border border-emerald-800">INSTALLED</span>
+                    ) : (
+                      <span className="text-xs text-gray-600">NOT INSTALLED</span>
+                    )}
+                  </div>
+                  <div className="text-xs mt-1 opacity-70 font-mono">v{build.version}</div>
+                </div>
+              ))}
             </div>
-          )}
-        </div>
+          </div>
 
-        <div className="mt-10 pt-6 border-t border-white/10 text-xs text-gray-500 font-mono">
-          SECURE CONNECTION // ENCRYPTED
+          {/* Right Col: Info & Action */}
+          <div className="flex flex-col justify-between bg-black/40 border border-white/10 rounded-lg p-6 backdrop-blur-sm">
+
+            <div>
+              <h3 className="text-gray-400 text-xs uppercase tracking-wider mb-3 font-bold">Status</h3>
+              <div className="bg-black/40 rounded p-3 border border-white/5 font-mono text-sm text-emerald-400 mb-4 h-[80px] overflow-hidden relative">
+                 <div className="absolute inset-0 p-3">
+                   &gt; {status}
+                 </div>
+              </div>
+
+               {/* Progress Bar */}
+               {isBusy && progress > 0 && (
+                <div className="mb-4">
+                   <div className="w-full bg-gray-800 rounded-full h-2">
+                     <div className="bg-red-600 h-2 rounded-full transition-all duration-300" style={{ width: `${progress}%` }}></div>
+                   </div>
+                   <p className="text-right text-xs text-gray-500 mt-1 font-mono">{progress}%</p>
+                </div>
+              )}
+            </div>
+
+            <div>
+              {selectedVersion && (
+                <button
+                  onClick={handleAction}
+                  disabled={isBusy}
+                  className={`w-full py-4 font-bold text-lg uppercase tracking-widest transition-all rounded shadow-lg border ${
+                    isInstalled(selectedVersion)
+                      ? 'bg-emerald-700 hover:bg-emerald-600 border-emerald-500 text-white hover:shadow-emerald-900/20'
+                      : 'bg-red-700 hover:bg-red-600 border-red-500 text-white hover:shadow-red-900/20'
+                  } ${isBusy ? 'opacity-50 cursor-not-allowed' : ''}`}
+                >
+                  {isBusy ? 'Working...' : (isInstalled(selectedVersion) ? 'LAUNCH GAME' : 'INSTALL & PLAY')}
+                </button>
+              )}
+
+              <div className="mt-4 text-center text-xs text-gray-600 font-mono">
+                {selectedVersion && getBuildByVersion(selectedVersion)?.windows.size_bytes
+                  ? `SIZE: ${(getBuildByVersion(selectedVersion)!.windows.size_bytes / 1024 / 1024).toFixed(1)} MB`
+                  : 'SELECT A VERSION'}
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>

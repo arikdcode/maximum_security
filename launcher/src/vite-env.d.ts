@@ -10,6 +10,7 @@ interface Window {
     downloadGZDoom: () => Promise<any>;
     launchGame: (args: any) => Promise<any>;
     checkIWAD: () => Promise<boolean>;
+    checkInstalledVersions: () => Promise<string[]>;
     receive: (channel: string, func: (...args: any[]) => void) => void;
   }
 }

@@ -20,31 +20,19 @@ let ROOT_DIR;
 if (isDev) {
   ROOT_DIR = app.getPath('userData');
 } else {
-  // In portable mode, "MaximumSecurityLauncher.exe" is in a temp dir when running?
-  // No, if it's a portable exe from electron-builder, it extracts to temp.
-  // BUT we want the data to persist next to the EXE the user downloaded.
-  //
   // Electron-builder portable apps set process.env.PORTABLE_EXECUTABLE_DIR
   const LAUNCHER_EXE_DIR = process.env.PORTABLE_EXECUTABLE_DIR || path.dirname(process.execPath);
-  // Structure:
-  // Root/
-  //   MaximumSecurity.exe (Entrypoint)
-  //   MaximumSecurityLauncher.exe (Launcher)
-  //   game/
-  //
-  // So ROOT_DIR is the same as the launcher executable directory
   ROOT_DIR = LAUNCHER_EXE_DIR;
 }
 
-const GAME_DIR = path.join(ROOT_DIR, 'game');
-const BIN_DIR = GAME_DIR; // Flat structure
-const GZDOOM_DIR = GAME_DIR; // Flat structure
-const IWADS_DIR = GAME_DIR; // Flat structure
-const SAVES_DIR = path.join(GAME_DIR, 'saves');
-const CONFIG_PATH = path.join(GAME_DIR, 'gzdoom.ini');
+// Base directories
+const GAME_BASE_DIR = path.join(ROOT_DIR, 'game');
+const GZDOOM_DIR = path.join(GAME_BASE_DIR, 'gzdoom'); // Shared GZDoom installation
+const SAVES_DIR = path.join(GAME_BASE_DIR, 'saves');
+const CONFIG_PATH = path.join(GAME_BASE_DIR, 'gzdoom.ini');
 
-// Ensure directories exist
-[GAME_DIR, BIN_DIR, GZDOOM_DIR, IWADS_DIR].forEach(dir => {
+// Ensure base directories exist
+[GAME_BASE_DIR, GZDOOM_DIR, SAVES_DIR].forEach(dir => {
   if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
 });
 
@@ -129,23 +117,61 @@ ipcMain.handle('fetch-manifest', async () => {
   }
 });
 
+// Check if a specific version is installed
+ipcMain.handle('check-installed-versions', async () => {
+  if (!fs.existsSync(GAME_BASE_DIR)) return [];
+
+  // Look for folders that might correspond to versions
+  // We trust folders that have the pk3 file inside
+  const versions = [];
+  const entries = fs.readdirSync(GAME_BASE_DIR, { withFileTypes: true });
+
+  for (const entry of entries) {
+    if (entry.isDirectory() && entry.name !== 'gzdoom' && entry.name !== 'saves') {
+      const versionPath = path.join(GAME_BASE_DIR, entry.name);
+      const pk3Path = path.join(versionPath, `Maximum_Security_v${entry.name}.pk3`);
+      if (fs.existsSync(pk3Path)) {
+        versions.push(entry.name);
+      }
+    }
+  }
+
+  return versions;
+});
+
 ipcMain.handle('download-game', async (event, url, version) => {
   const win = BrowserWindow.getFocusedWindow();
 
-  // We are now downloading a .pk3 directly, not a zip
-  const destPath = path.join(GAME_DIR, `Maximum_Security_v${version}.pk3`);
+  // Create version-specific folder: game/0.3b
+  const versionDir = path.join(GAME_BASE_DIR, version);
+  if (!fs.existsSync(versionDir)) {
+    fs.mkdirSync(versionDir, { recursive: true });
+  }
+
+  // Check if already installed (skip if pk3 exists)
+  const destPath = path.join(versionDir, `Maximum_Security_v${version}.pk3`);
+  if (fs.existsSync(destPath)) {
+    return { status: 'complete', path: versionDir };
+  }
 
   try {
-    if (win) win.webContents.send('fromMain', { type: 'status', message: 'Downloading game data...' });
+    // Download PK3
+    if (win) win.webContents.send('fromMain', { type: 'status', message: `Downloading game v${version}...` });
     await downloadFile(url, destPath, win);
 
-    // Create a marker file for the version
-    fs.writeFileSync(path.join(GAME_DIR, `version-${version}.txt`), 'installed');
+    // Copy DOOM2.WAD from base game dir if it exists
+    // This allows sharing the IWAD across versions
+    const baseIwad = path.join(GAME_BASE_DIR, 'DOOM2.WAD');
+    if (fs.existsSync(baseIwad)) {
+      fs.copyFileSync(baseIwad, path.join(versionDir, 'DOOM2.WAD'));
+    }
 
-    return { status: 'complete', path: GAME_DIR };
+    return { status: 'complete', path: versionDir };
 
   } catch (error) {
     console.error("Game download/install failed:", error);
+    // Clean up partial download
+    if (fs.existsSync(destPath)) fs.unlinkSync(destPath);
     throw error;
   }
 });
@@ -179,7 +205,7 @@ ipcMain.handle('download-gzdoom', async () => {
 
     // 2. Download
     if (win) win.webContents.send('fromMain', { type: 'status', message: 'Downloading GZDoom...' });
-    const destZip = path.join(BIN_DIR, 'gzdoom.zip');
+    const destZip = path.join(GAME_BASE_DIR, 'gzdoom.zip');
     await downloadFile(asset.browser_download_url, destZip, win);
 
     // 3. Extract
@@ -199,10 +225,9 @@ ipcMain.handle('download-gzdoom', async () => {
 ipcMain.handle('launch-game', async (event, args) => {
   // args: { version: string }
   const version = args.version;
-  // gamePath is just GAME_DIR now
-  const gamePath = GAME_DIR;
+  const versionDir = path.join(GAME_BASE_DIR, version);
 
-  // 1. Locate GZDoom
+  // 1. Locate GZDoom (Shared)
   let gzdoomExe = path.join(GZDOOM_DIR, 'gzdoom.exe');
   if (process.platform !== 'win32') {
      // Fallback for linux dev env
@@ -210,62 +235,43 @@ ipcMain.handle('launch-game', async (event, args) => {
   }
 
   // 2. Locate IWAD
-  // Logic: Check IWADS_DIR (which is GAME_DIR) for *.wad.
-  let iwadPath = null;
-  const localWads = fs.existsSync(IWADS_DIR) ? fs.readdirSync(IWADS_DIR).filter(f => f.toLowerCase().endsWith('.wad')) : [];
+  // Logic: Check version dir first, then base dir
+  let iwadPath = path.join(versionDir, 'DOOM2.WAD');
 
-  if (localWads.length > 0) {
-    // Sort preference: doom2 > tnt > plutonia > doom
-    localWads.sort((a, b) => {
-      const score = (name) => {
-        const n = name.toLowerCase();
-        if (n === 'doom2.wad') return 0;
-        if (n === 'tnt.wad') return 1;
-        if (n === 'plutonia.wad') return 2;
-        if (n === 'doom.wad') return 3;
-        return 10;
-      };
-      return score(a) - score(b);
-    });
-    iwadPath = path.join(IWADS_DIR, localWads[0]);
+  // Fallback: Check if user put it in base dir but it wasn't copied yet
+  if (!fs.existsSync(iwadPath)) {
+      const baseIwad = path.join(GAME_BASE_DIR, 'DOOM2.WAD');
+      if (fs.existsSync(baseIwad)) {
+          fs.copyFileSync(baseIwad, iwadPath); // Lazy copy
+      } else {
+          throw new Error("MISSING_IWAD");
+      }
   }
 
-  if (!iwadPath) {
-    throw new Error("MISSING_IWAD");
-  }
-
-  // 3. Identify Game WAD/PK3
-  // We need to find the mod files in GAME_DIR
-  // BUT exclude the IWAD we just found so we don't double load it (GZDoom might handle it but better safe)
-  let gameFiles = [];
-  if (fs.existsSync(gamePath)) {
-    gameFiles = fs.readdirSync(gamePath)
-      .filter(f => f.match(/\.(wad|pk3|pk7)$/i))
-      .map(f => path.join(gamePath, f))
-      .filter(f => f !== iwadPath); // Exclude the chosen IWAD
+  // 3. Identify Game PK3
+  const pk3Path = path.join(versionDir, `Maximum_Security_v${version}.pk3`);
+  if (!fs.existsSync(pk3Path)) {
+      throw new Error("MISSING_GAME_FILES");
   }
 
   // 4. Launch
   const launchArgs = [
     '-iwad', iwadPath,
+    '-file', pk3Path,
     '-savedir', SAVES_DIR,
     '-config', CONFIG_PATH
   ];
 
-  if (gameFiles.length > 0) {
-    launchArgs.push('-file', ...gameFiles);
-  }
-
   console.log(`Launching: ${gzdoomExe} ${launchArgs.join(' ')}`);
 
-  const child = spawn(gzdoomExe, launchArgs, { detached: true, stdio: 'ignore' });
+  const child = spawn(gzdoomExe, launchArgs, { detached: true, stdio: 'ignore', cwd: versionDir });
   child.unref();
 
   return { status: 'launched' };
 });
 
 ipcMain.handle('check-iwad', async () => {
-  if (!fs.existsSync(IWADS_DIR)) return false;
-  const wads = fs.readdirSync(IWADS_DIR).filter(f => f.toLowerCase().endsWith('.wad'));
-  return wads.length > 0;
+    // Check base dir for DOOM2.WAD
+    const baseIwad = path.join(GAME_BASE_DIR, 'DOOM2.WAD');
+    return fs.existsSync(baseIwad);
 });
