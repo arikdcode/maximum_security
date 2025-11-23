@@ -42,6 +42,7 @@ function createWindow() {
     height: 700,
     minWidth: 800,
     minHeight: 600,
+    autoHideMenuBar: true, // Hide menu bar (File, Edit, etc.)
     webPreferences: {
       nodeIntegration: false,
       contextIsolation: true,
@@ -51,6 +52,11 @@ function createWindow() {
     title: 'Maximum Security Launcher',
     icon: path.join(__dirname, 'assets/icon.png'),
   });
+
+  // Specifically remove menu for production
+  if (!isDev) {
+    mainWindow.removeMenu();
+  }
 
   if (isDev) {
     mainWindow.loadURL('http://localhost:5173');

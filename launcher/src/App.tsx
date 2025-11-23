@@ -142,7 +142,7 @@ function App() {
                   onClick={() => !isBusy && setSelectedVersion(build.version)}
                   className={`p-3 rounded border cursor-pointer transition-all ${
                     selectedVersion === build.version
-                      ? 'bg-red-900/40 border-red-500 text-white'
+                      ? 'bg-zinc-700 border-zinc-500 text-white shadow-lg'
                       : 'bg-black/20 border-white/5 text-gray-400 hover:bg-white/5'
                   } ${isBusy ? 'opacity-50 pointer-events-none' : ''}`}
                 >
