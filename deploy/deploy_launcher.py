@@ -28,7 +28,7 @@ from dist_utils import (
 
 # Launcher directory and build settings
 LAUNCHER_DIR = REPO_ROOT / "launcher"
-BUILD_COMMAND = ["npm", "run", "build"]
+DOCKER_BUILD_SCRIPT = REPO_ROOT / "scripts" / "build_launcher_docker.sh"
 DIST_DIR = LAUNCHER_DIR / "dist-electron"
 
 
@@ -36,7 +36,9 @@ def find_launcher_exe() -> Path:
     """
     Find the launcher .exe file in the dist directory.
 
-    Returns the most recently modified .exe file.
+    For portable builds, looks for the main exe file (not in win-unpacked).
+
+    Returns the most recently modified .exe file outside win-unpacked.
 
     Raises:
         FileNotFoundError: If no .exe files are found.
@@ -44,28 +46,48 @@ def find_launcher_exe() -> Path:
     if not DIST_DIR.exists():
         raise FileNotFoundError(f"Dist directory not found: {DIST_DIR}")
 
-    exe_files = list(DIST_DIR.glob("**/*.exe"))
+    # Look for exe files, but exclude those in win-unpacked since we want portable
+    exe_files = []
+    for exe_path in DIST_DIR.glob("**/*.exe"):
+        if "win-unpacked" not in str(exe_path):
+            exe_files.append(exe_path)
 
     if not exe_files:
-        raise FileNotFoundError(f"No .exe files found in {DIST_DIR}")
+        raise FileNotFoundError(f"No .exe files found in {DIST_DIR} (excluding win-unpacked)")
 
     # Return the most recently modified .exe file
     return max(exe_files, key=lambda p: p.stat().st_mtime)
 
 
 def build_launcher():
-    """Build the launcher using npm run build."""
+    """
+    Build the launcher.
+
+    If scripts/build_launcher_docker.sh exists, use it (Docker + Wine).
+    Otherwise, fall back to 'npm run build' (local).
+    """
     print("Building launcher...")
+
+    if DOCKER_BUILD_SCRIPT.exists():
+        print(f"Using Docker build script: {DOCKER_BUILD_SCRIPT}")
+        cmd = [str(DOCKER_BUILD_SCRIPT)]
+        # The script handles its own CWD/paths
+        cwd = REPO_ROOT
+    else:
+        print("Docker build script not found, falling back to local npm run build...")
+        cmd = ["npm", "run", "build"]
+        cwd = LAUNCHER_DIR
 
     try:
         result = subprocess.run(
-            BUILD_COMMAND,
-            cwd=LAUNCHER_DIR,
+            cmd,
+            cwd=cwd,
             capture_output=True,
             text=True,
             check=True
         )
         print("Launcher build completed successfully.")
+        print(result.stdout)
     except subprocess.CalledProcessError as e:
         print(f"Error: Build failed with exit code {e.returncode}", file=sys.stderr)
         print(f"stdout: {e.stdout}", file=sys.stderr)

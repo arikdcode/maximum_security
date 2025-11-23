@@ -26,7 +26,7 @@ except ImportError as e:
 
 # Configuration - these should never change
 GITHUB_REPO = "arikdcode/maximum_security_dist"
-LAUNCHER_FILENAME = "Maximum.Security.Launcher.exe"
+LAUNCHER_FILENAME = "Maximum Security Launcher.exe"
 GITHUB_API_URL = f"https://api.github.com/repos/{GITHUB_REPO}/releases/latest"
 
 class ProgressWindow:

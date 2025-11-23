@@ -13,7 +13,7 @@
     "category": "public.app-category.games"
   },
   "win": {
-    "target": "nsis",
+    "target": "portable",
     "icon": "assets/icon.ico"
   },
   "linux": {
