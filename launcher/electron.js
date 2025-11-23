@@ -11,7 +11,7 @@ const { spawn } = require('child_process');
 const isDev = process.argv.includes('--dev') || process.env.NODE_ENV === 'development';
 
 // Paths
-const MANIFEST_URL = "https://raw.githubusercontent.com/arikdcode/maximum_security_dist/main/manifest.json";
+const MANIFEST_URL = "https://raw.githubusercontent.com/arikdcode/maximum_security_dist/refs/heads/master/manifest.json";
 const APP_DATA = app.getPath('userData');
 const GAME_DIR = path.join(APP_DATA, 'game');
 const BIN_DIR = path.join(APP_DATA, 'bin');
