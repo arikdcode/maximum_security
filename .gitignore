@@ -4,3 +4,5 @@ __pycache__/
 .venv/
 .dist_repo/
 launcher/dist-electron/
+entrypoint/dist/
+entrypoint/build/

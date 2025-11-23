@@ -58,8 +58,8 @@ def main():
         install_dependencies()
         install_pyinstaller()
         build_exe()
-        print("\n✓ Build completed successfully!")
-        print("📦 The MaximumSecurity.exe file is ready for distribution.")
+        print("\n[DONE] Build completed successfully!")
+        print("The MaximumSecurity.exe file is ready for distribution.")
         print("   This is the entrypoint customers will download and run.")
     except subprocess.CalledProcessError as e:
         print(f"Error: Build failed: {e}")

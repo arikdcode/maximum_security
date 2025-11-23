@@ -115,6 +115,15 @@ def main():
         launcher_exe = find_launcher_exe()
         print(f"Found launcher artifact: {launcher_exe}")
 
+        # Rename to fixed filename for release consistency
+        # This ensures the entrypoint always knows what file to download
+        FIXED_FILENAME = "MaximumSecurityLauncher.exe"
+        if launcher_exe.name != FIXED_FILENAME:
+            new_path = launcher_exe.parent / FIXED_FILENAME
+            print(f"Renaming artifact to fixed name: {FIXED_FILENAME}")
+            launcher_exe.replace(new_path)
+            launcher_exe = new_path
+
         # Step 5: Compute metadata
         print("Computing file metadata...")
         sha256 = compute_sha256(launcher_exe)
