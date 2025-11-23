@@ -29,7 +29,7 @@ docker run --rm \
   -v "$HOME/.cache/electron-builder":/root/.cache/electron-builder \
   -w /project \
   electronuserland/builder:wine \
-  /bin/bash -c "npm install && npm run build -- --win"
+  /bin/bash -c "if [ ! -d node_modules ]; then npm install; fi && npm run build -- --win"
 
 echo "=========================================="
 echo "Build complete."

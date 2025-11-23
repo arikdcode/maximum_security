@@ -16,9 +16,26 @@ try:
 except ImportError:
     requests = None
 
+# Helper to load .env manually since we can't install dotenv easily
+def load_dotenv(path):
+    if not path.exists():
+        return
+    with open(path, 'r') as f:
+        for line in f:
+            line = line.strip()
+            if not line or line.startswith('#'):
+                continue
+            if '=' in line:
+                k, v = line.split('=', 1)
+                os.environ[k.strip()] = v.strip()
 
 # Repository root path (resolved relative to this script)
 REPO_ROOT = Path(__file__).parent.parent
+
+# Load creds
+load_dotenv(REPO_ROOT / "zdump" / ".creds.env")
+
+# Dist repo path
 
 # Dist repo path
 DIST_REPO_DIR = REPO_ROOT / ".dist_repo"
