@@ -145,6 +145,24 @@ ipcMain.handle('check-installed-versions', async () => {
   return versions;
 });
 
+// Check for save files
+ipcMain.handle('get-saves', async () => {
+  if (!fs.existsSync(SAVES_DIR)) return [];
+
+  const files = fs.readdirSync(SAVES_DIR)
+    .filter(f => f.endsWith('.zds'))
+    .map(f => {
+      const stat = fs.statSync(path.join(SAVES_DIR, f));
+      return {
+        name: f,
+        mtime: stat.mtime.getTime()
+      };
+    })
+    .sort((a, b) => b.mtime - a.mtime); // Newest first
+
+  return files.map(f => f.name);
+});
+
 ipcMain.handle('download-game', async (event, url, version) => {
   const win = BrowserWindow.getFocusedWindow();
 
@@ -267,6 +285,22 @@ ipcMain.handle('launch-game', async (event, args) => {
     '-savedir', SAVES_DIR,
     '-config', CONFIG_PATH
   ];
+
+  if (args.quickStart) {
+    launchArgs.push('+map', 'MAP01');
+  }
+
+  if (args.saveGame) {
+    launchArgs.push('-loadgame', path.join(SAVES_DIR, args.saveGame));
+  }
+
+  if (args.difficulty !== undefined) {
+    launchArgs.push('+skill', args.difficulty);
+  }
+
+  if (args.warp) {
+    launchArgs.push('+map', args.warp);
+  }
 
   console.log(`Launching: ${gzdoomExe} ${launchArgs.join(' ')}`);
 

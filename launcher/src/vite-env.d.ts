@@ -11,6 +11,7 @@ interface Window {
     launchGame: (args: any) => Promise<any>;
     checkIWAD: () => Promise<boolean>;
     checkInstalledVersions: () => Promise<string[]>;
+    getSaves: () => Promise<string[]>;
     receive: (channel: string, func: (...args: any[]) => void) => void;
     isDev: boolean;
   }

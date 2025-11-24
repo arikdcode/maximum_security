@@ -23,5 +23,6 @@ contextBridge.exposeInMainWorld('api', {
   launchGame: (args) => ipcRenderer.invoke('launch-game', args),
   checkIWAD: () => ipcRenderer.invoke('check-iwad'),
   checkInstalledVersions: () => ipcRenderer.invoke('check-installed-versions'),
+  getSaves: () => ipcRenderer.invoke('get-saves'),
   isDev: process.env.NODE_ENV === 'development',
 });
