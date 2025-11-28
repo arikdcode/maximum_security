@@ -15,11 +15,14 @@ import subprocess
 import json
 from pathlib import Path
 import hashlib
+import logging
+import traceback
 
 try:
     import requests
     import tkinter as tk
     from tkinter import ttk
+    from tkinter import messagebox
 except ImportError as e:
     print(f"Error: Missing required library: {e}")
     print("Install with: pip install requests")
@@ -29,7 +32,8 @@ except ImportError as e:
 GITHUB_REPO = "arikdcode/maximum_security_dist"
 LAUNCHER_FILENAME = "MaximumSecurityLauncher.exe"
 VERSION_FILENAME = "launcher_version.json"
-GITHUB_API_URL = f"https://api.github.com/repos/{GITHUB_REPO}/releases/latest"
+GITHUB_LATEST_RELEASE_URL = f"https://api.github.com/repos/{GITHUB_REPO}/releases/latest"
+GITHUB_RELEASES_URL = f"https://api.github.com/repos/{GITHUB_REPO}/releases"
 
 class ProgressWindow:
     """Simple GUI progress window for downloads."""
@@ -71,27 +75,51 @@ class ProgressWindow:
 def get_latest_launcher_info():
     """Get the download URL, size, and tag_name for the latest launcher from GitHub releases."""
     try:
-        response = requests.get(GITHUB_API_URL, timeout=30)
+        # First try the 'latest' endpoint
+        logging.info(f"Checking latest release at: {GITHUB_LATEST_RELEASE_URL}")
+        response = requests.get(GITHUB_LATEST_RELEASE_URL, timeout=30)
         response.raise_for_status()
-        release_data = response.json()
+        latest_release = response.json()
 
-        tag_name = release_data.get("tag_name", "0")
+        # Check if the launcher is in the latest release
+        info = extract_launcher_info(latest_release)
+        if info:
+            logging.info(f"Found launcher in latest release: {latest_release.get('tag_name')}")
+            return info
 
-        # Find the launcher asset
-        for asset in release_data.get("assets", []):
-            if asset["name"] == LAUNCHER_FILENAME:
-                return {
-                    "url": asset["browser_download_url"],
-                    "size": asset["size"],
-                    "tag_name": tag_name
-                }
+        logging.info("Launcher not found in latest release (probably a game asset release). Checking recent releases...")
 
-        raise RuntimeError(f"Could not find launcher asset '{LAUNCHER_FILENAME}' in latest release")
+        # If not, fetch recent releases list
+        response = requests.get(GITHUB_RELEASES_URL, params={"per_page": 5}, timeout=30)
+        response.raise_for_status()
+        releases = response.json()
+
+        for release in releases:
+            info = extract_launcher_info(release)
+            if info:
+                logging.info(f"Found launcher in release: {release.get('tag_name')}")
+                return info
+
+        raise RuntimeError(f"Could not find launcher asset '{LAUNCHER_FILENAME}' in any recent releases")
 
     except requests.RequestException as e:
         # If we can't reach GitHub, we might still want to run the local version if it exists
+        logging.warning(f"Failed to fetch release info: {e}")
         print(f"Warning: Failed to fetch release info: {e}")
         return None
+
+def extract_launcher_info(release_data):
+    """Extract launcher info from a release object if present."""
+    tag_name = release_data.get("tag_name", "0")
+
+    for asset in release_data.get("assets", []):
+        if asset["name"] == LAUNCHER_FILENAME:
+            return {
+                "url": asset["browser_download_url"],
+                "size": asset["size"],
+                "tag_name": tag_name
+            }
+    return None
 
 def get_launcher_dir():
     """Get the directory where the launcher should be stored."""
@@ -109,6 +137,31 @@ def get_launcher_dir():
     # So we return the base_path directly.
 
     return base_path
+
+def setup_logging(base_path):
+    """Setup file and console logging."""
+    log_file = base_path / "debug.log"
+
+    # Configure logging to file
+    logging.basicConfig(
+        filename=str(log_file),
+        filemode='w', # Overwrite each run to keep it clean, or 'a' to append
+        level=logging.DEBUG,
+        format='%(asctime)s - %(levelname)s - %(message)s',
+        datefmt='%Y-%m-%d %H:%M:%S'
+    )
+
+    # Also log to stderr for console visibility
+    console = logging.StreamHandler(sys.stderr)
+    console.setLevel(logging.DEBUG)
+    formatter = logging.Formatter('%(levelname)s: %(message)s')
+    console.setFormatter(formatter)
+    logging.getLogger('').addHandler(console)
+
+    logging.info("Entrypoint started")
+    logging.info(f"Log file: {log_file}")
+    logging.info(f"Python version: {sys.version}")
+    logging.info(f"Executable: {sys.executable}")
 
 def load_local_version(version_file):
     """Load the locally installed version info."""
@@ -176,65 +229,111 @@ def run_launcher(launcher_path):
 
 def main():
     """Main entrypoint logic."""
-    launcher_dir = get_launcher_dir()
-    launcher_path = launcher_dir / LAUNCHER_FILENAME
-    version_path = launcher_dir / VERSION_FILENAME
+    try:
+        launcher_dir = get_launcher_dir()
+        setup_logging(launcher_dir)
 
-    # 1. Check for updates
-    latest_info = get_latest_launcher_info()
-    local_info = load_local_version(version_path)
+        launcher_path = launcher_dir / LAUNCHER_FILENAME
+        version_path = launcher_dir / VERSION_FILENAME
 
-    needs_update = False
+        logging.info(f"Launcher directory: {launcher_dir}")
+        logging.info(f"Launcher path: {launcher_path}")
 
-    if latest_info:
-        if not launcher_path.exists():
-            needs_update = True
-            print("Launcher not found locally. Downloading...")
-        elif not local_info:
-            needs_update = True
-            print("Local version info missing. Downloading...")
-        elif local_info.get("tag_name") != latest_info["tag_name"]:
-            needs_update = True
-            print(f"New version available ({latest_info['tag_name']}). Updating...")
-        else:
-            # Tag matches, check if file size matches (sanity check)
-            try:
-                if launcher_path.stat().st_size != latest_info["size"]:
-                    needs_update = True
-                    print("File size mismatch. Repairing...")
-            except OSError:
+        # 1. Check for updates
+        logging.info("Checking for updates...")
+        latest_info = get_latest_launcher_info()
+        local_info = load_local_version(version_path)
+
+        needs_update = False
+
+        if latest_info:
+            logging.info(f"Latest version info: {latest_info.get('tag_name')}")
+            if not launcher_path.exists():
                 needs_update = True
-    else:
-        # Offline or GitHub API failure
-        if launcher_path.exists():
-            print("Could not check for updates. Launching local version...")
+                logging.info("Launcher not found locally. Downloading...")
+                print("Launcher not found locally. Downloading...")
+            elif not local_info:
+                needs_update = True
+                logging.info("Local version info missing. Downloading...")
+                print("Local version info missing. Downloading...")
+            elif local_info.get("tag_name") != latest_info["tag_name"]:
+                needs_update = True
+                logging.info(f"New version available ({latest_info['tag_name']}). Updating...")
+                print(f"New version available ({latest_info['tag_name']}). Updating...")
+            else:
+                # Tag matches, check if file size matches (sanity check)
+                try:
+                    current_size = launcher_path.stat().st_size
+                    if current_size != latest_info["size"]:
+                        needs_update = True
+                        logging.info(f"File size mismatch (local: {current_size}, remote: {latest_info['size']}). Repairing...")
+                        print("File size mismatch. Repairing...")
+                    else:
+                        logging.info("Launcher is up to date.")
+                except OSError as e:
+                    needs_update = True
+                    logging.error(f"Error checking file size: {e}")
         else:
-            # No local version and no internet
-            # Create a simple error window since we can't proceed
+            # Offline or GitHub API failure
+            logging.warning("Could not fetch latest info (offline or API error).")
+            if launcher_path.exists():
+                logging.info("Launching local version...")
+                print("Could not check for updates. Launching local version...")
+            else:
+                # No local version and no internet
+                # Create a simple error window since we can't proceed
+                logging.critical("Offline and no local launcher found. Cannot proceed.")
+                root = tk.Tk()
+                root.withdraw()
+                messagebox.showerror("Error", "Could not connect to update server and no local launcher found.\nCheck your internet connection.")
+                sys.exit(1)
+
+        # 2. Update if needed
+        if needs_update and latest_info:
+            logging.info("Starting update process...")
+            progress_window = ProgressWindow()
+            try:
+                download_launcher(latest_info["url"], launcher_path, latest_info["size"], progress_window)
+                save_local_version(version_path, latest_info)
+                logging.info("Update complete.")
+                progress_window.root.after(1000, progress_window.close)
+                progress_window.root.mainloop()
+            except Exception as e:
+                logging.error(f"Update failed: {e}", exc_info=True)
+                print(f"Update failed: {e}")
+                # If update failed but we have a local file, try to run it?
+                # Or just crash. Let's exit to be safe.
+                messagebox.showerror("Update Failed", f"Failed to update launcher:\n{e}")
+                sys.exit(1)
+
+        # 3. Run launcher
+        if launcher_path.exists():
+            logging.info(f"Running launcher: {launcher_path}")
+            run_launcher(launcher_path)
+        else:
+            logging.error("Launcher not found and update failed.")
+            print("Error: Launcher not found and update failed.")
+            sys.exit(1)
+
+    except Exception as e:
+        # Catch-all for any unhandled exceptions
+        error_msg = f"An unexpected error occurred:\n{e}\n\nSee debug.log for details."
+        print(error_msg)
+
+        # Try to log it if logging is set up
+        try:
+            logging.critical("Unhandled exception", exc_info=True)
+        except:
+            pass
+
+        # Try to show a GUI error
+        try:
             root = tk.Tk()
             root.withdraw()
-            tk.messagebox.showerror("Error", "Could not connect to update server and no local launcher found.")
-            sys.exit(1)
+            messagebox.showerror("Fatal Error", error_msg)
+        except:
+            pass
 
-    # 2. Update if needed
-    if needs_update and latest_info:
-        progress_window = ProgressWindow()
-        try:
-            download_launcher(latest_info["url"], launcher_path, latest_info["size"], progress_window)
-            save_local_version(version_path, latest_info)
-            progress_window.root.after(1000, progress_window.close)
-            progress_window.root.mainloop()
-        except Exception as e:
-            print(f"Update failed: {e}")
-            # If update failed but we have a local file, try to run it?
-            # Or just crash. Let's exit to be safe.
-            sys.exit(1)
-
-    # 3. Run launcher
-    if launcher_path.exists():
-        run_launcher(launcher_path)
-    else:
-        print("Error: Launcher not found and update failed.")
         sys.exit(1)
 
 if __name__ == "__main__":
