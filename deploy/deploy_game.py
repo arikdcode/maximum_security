@@ -37,7 +37,7 @@ def get_current_game_version(manifest: dict) -> str:
 def main():
     parser = argparse.ArgumentParser(description="Deploy game assets")
     parser.add_argument("--version", required=True, help="Version string (e.g. 0.3.1)")
-    parser.add_argument("--file", default="Maximum_Security_v0.4a.pk3", help="PK3 filename in assets dir (default: Maximum_Security_v0.4a.pk3)")
+    parser.add_argument("--file", default="Maximum_Security_v0.4b.pk3", help="PK3 filename in assets dir (default: Maximum_Security_v0.4b.pk3)")
     parser.add_argument("--label", default="Beta Release", help="Display label")
     parser.add_argument("--notes", default="", help="Release notes")
     args = parser.parse_args()

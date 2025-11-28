@@ -125,11 +125,11 @@ ipcMain.handle('fetch-manifest', async () => {
       // Actually, user has Maximum_Security_v0.3b.pk3 in assets/
       // Let's just inject a 'Dev' build
       const devBuild = {
-        version: '0.4a-dev',
+        version: '0.4b-dev',
         label: 'Local Dev Build',
         channel: 'dev',
         windows: {
-          url: `local://${path.join(localAssetPath, 'Maximum_Security_v0.4a.pk3')}`,
+          url: `local://${path.join(localAssetPath, 'Maximum_Security_v0.4b.pk3')}`,
           size_bytes: 0 // Ignored
         }
       };
