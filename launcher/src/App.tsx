@@ -75,7 +75,8 @@ function App() {
     setIsBusy(true);
     setProgress(0);
 
-    if (window.api.isDev) {
+    // Mock mode disabled for real local testing
+    /* if (window.api.isDev) {
       setStatus("DEV: Simulating install...");
       for (let i = 0; i <= 100; i += 5) {
         setProgress(i);
@@ -85,7 +86,7 @@ function App() {
       setStatus("DEV: Install complete.");
       setIsBusy(false);
       return;
-    }
+    } */
 
     try {
       setStatus("Checking GZDoom...");
@@ -111,21 +112,23 @@ function App() {
     setIsBusy(true);
     setStatus("Launching...");
 
-    if (window.api.isDev) {
+    // Mock mode disabled for real local testing
+    /* if (window.api.isDev) {
       setStatus(`DEV: Launching with options: ${JSON.stringify(options)}`);
       await new Promise(r => setTimeout(r, 2000));
       setStatus("DEV: Game running...");
       setIsBusy(false);
       return;
-    }
+    } */
 
     try {
-      const hasIwad = await window.api.checkIWAD();
+      // Skip the pre-check, let the main process handle it (it has recovery logic)
+      /* const hasIwad = await window.api.checkIWAD();
       if (!hasIwad) {
         setStatus("Error: Missing DOOM2.WAD in game folder.");
         setIsBusy(false);
         return;
-      }
+      } */
 
       await window.api.launchGame({
         version: selectedVersion,

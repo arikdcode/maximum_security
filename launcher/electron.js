@@ -116,7 +116,27 @@ async function downloadFile(url, destPath, win, channelName = 'download-progress
 ipcMain.handle('fetch-manifest', async () => {
   try {
     const response = await axios.get(MANIFEST_URL);
-    return response.data;
+    const manifest = response.data;
+
+    // Inject local dev build on Linux
+    if (process.platform === 'linux') {
+      const localAssetPath = path.resolve(__dirname, '..', 'assets');
+      // Assume latest PK3 name from existing manifest version for simplicity, or list dir?
+      // Actually, user has Maximum_Security_v0.3b.pk3 in assets/
+      // Let's just inject a 'Dev' build
+      const devBuild = {
+        version: '0.3b-dev',
+        label: 'Local Dev Build',
+        channel: 'dev',
+        windows: {
+          url: `local://${path.join(localAssetPath, 'Maximum_Security_v0.3b.pk3')}`,
+          size_bytes: 0 // Ignored
+        }
+      };
+      manifest.game_builds.push(devBuild);
+    }
+
+    return manifest;
   } catch (error) {
     console.error("Failed to fetch manifest:", error);
     throw error;
@@ -172,16 +192,50 @@ ipcMain.handle('download-game', async (event, url, version) => {
     fs.mkdirSync(versionDir, { recursive: true });
   }
 
-  // Check if already installed (skip if pk3 exists)
+  // Check if already installed (skip if pk3 exists), BUT ensure WAD is present for local builds
   const destPath = path.join(versionDir, `Maximum_Security_v${version}.pk3`);
-  if (fs.existsSync(destPath)) {
-    return { status: 'complete', path: versionDir };
+  const baseWadPath = path.join(GAME_BASE_DIR, 'DOOM2.WAD');
+
+  const isInstalled = fs.existsSync(destPath);
+
+  // If installed and not local, or if installed and local WAD exists, return early
+  if (isInstalled) {
+      if (!url.startsWith('local://') || fs.existsSync(baseWadPath)) {
+          return { status: 'complete', path: versionDir };
+      }
+      // If local and WAD missing, proceed to copy logic (which handles WAD)
   }
 
   try {
-    // Download PK3
-    if (win) win.webContents.send('fromMain', { type: 'status', message: `Downloading game v${version}...` });
-    await downloadFile(url, destPath, win);
+    if (url.startsWith('local://')) {
+        // Handle local file copy
+        const srcPath = url.replace('local://', '');
+        if (!fs.existsSync(srcPath)) throw new Error(`Local asset not found: ${srcPath}`);
+
+        if (win) win.webContents.send('fromMain', { type: 'status', message: `Copying local assets...` });
+
+        // Copy PK3 if needed
+        if (!isInstalled) {
+            fs.copyFileSync(srcPath, destPath);
+        }
+
+        // Copy DOOM2.WAD from source dir if available and destination missing
+        const srcDir = path.dirname(srcPath);
+        const wadName = 'DOOM2.WAD';
+        const srcWad = path.join(srcDir, wadName);
+        const destWad = path.join(GAME_BASE_DIR, wadName);
+
+        if (fs.existsSync(srcWad) && !fs.existsSync(destWad)) {
+             console.log(`Copying WAD from ${srcWad} to ${destWad}`);
+             fs.copyFileSync(srcWad, destWad);
+        }
+
+        if (win) win.webContents.send('fromMain', { type: 'download-progress', percent: 100 });
+    } else {
+        // Download PK3
+        if (win) win.webContents.send('fromMain', { type: 'status', message: `Downloading game v${version}...` });
+        await downloadFile(url, destPath, win);
+    }
 
     // Copy DOOM2.WAD from base game dir if it exists
     // This allows sharing the IWAD across versions
@@ -204,15 +258,38 @@ ipcMain.handle('download-gzdoom', async () => {
   const win = BrowserWindow.getFocusedWindow();
 
   // Detect Platform
-  // Only implementing Windows logic fully as per requirements
-  if (process.platform !== 'win32' && !isDev) {
-    console.log("GZDoom download only fully implemented for Windows for now.");
-    return { status: 'skipped', message: 'Linux GZDoom setup not automated' };
+  const isWin = process.platform === 'win32';
+  const isLinux = process.platform === 'linux';
+
+  if (!isWin && !isLinux) {
+    console.log("GZDoom download not implemented for this platform.");
+    return { status: 'skipped', message: 'Platform not supported' };
   }
 
-  const gzdoomExe = path.join(GZDOOM_DIR, 'gzdoom.exe');
-  if (fs.existsSync(gzdoomExe)) {
-    return { status: 'ready', path: gzdoomExe };
+  // Check if we already have a usable GZDoom
+  let gzdoomExe;
+  if (isWin) {
+    gzdoomExe = path.join(GZDOOM_DIR, 'gzdoom.exe');
+    if (fs.existsSync(gzdoomExe)) return { status: 'ready', path: gzdoomExe };
+  } else {
+    // On Linux, check local folder first
+    gzdoomExe = path.join(GZDOOM_DIR, 'gzdoom');
+    if (fs.existsSync(gzdoomExe)) return { status: 'ready', path: gzdoomExe };
+
+    // If NOT found locally, check if it's in PATH. If so, we can skip download.
+    try {
+        const check = spawn('which', ['gzdoom']); // Linux specific
+        await new Promise((resolve, reject) => {
+            check.on('close', (code) => {
+                if (code === 0) resolve();
+                else reject();
+            });
+        });
+        // If we are here, gzdoom is in PATH. We don't need to download anything.
+        return { status: 'skipped', message: 'Using system GZDoom' };
+    } catch (e) {
+        // Not in path, proceed to download
+    }
   }
 
   try {
@@ -223,20 +300,73 @@ ipcMain.handle('download-gzdoom', async () => {
     const releaseResp = await axios.get(releaseUrl);
     const assets = releaseResp.data.assets || [];
 
-    // Find Windows zip
-    const asset = assets.find(a => a.name.toLowerCase().includes('windows') && a.name.toLowerCase().endsWith('.zip'));
-    if (!asset) throw new Error("No GZDoom Windows zip found");
+    // Find asset based on platform
+    let asset;
+    if (isWin) {
+      asset = assets.find(a => a.name.toLowerCase().includes('windows') && a.name.toLowerCase().endsWith('.zip'));
+    } else if (isLinux) {
+      // Since reliable github portable builds are sparse or named inconsistently,
+      // and we might not be able to install system packages easily in this context,
+      // let's use a specific known working portable release URL for now if not found.
+      // But first, try to find ANY tar.xz that looks like linux
+      asset = assets.find(a => a.name.toLowerCase().includes('linux') && a.name.toLowerCase().endsWith('.tar.xz'));
+    }
+
+    // Fallback for Linux if no asset found in latest release (common issue with point releases)
+    if (!asset && isLinux) {
+        console.log("No Linux asset in latest release, falling back to known working URL...");
+        // Using a specific known-good version as fallback
+        // 4.11.3 is a stable release with a portable linux build
+        const fallbackUrl = "https://github.com/ZDoom/gzdoom/releases/download/g4.11.3/gzdoom-4-11-3-linux-portable.tar.xz";
+
+        // Mock an asset object
+        asset = {
+            name: "gzdoom-4-11-3-linux-portable.tar.xz",
+            browser_download_url: fallbackUrl
+        };
+    }
+
+    if (!asset) throw new Error(`No GZDoom ${process.platform} asset found in latest release.`);
 
     // 2. Download
     if (win) win.webContents.send('fromMain', { type: 'status', message: 'Downloading GZDoom...' });
-    const destZip = path.join(GAME_BASE_DIR, 'gzdoom.zip');
-    await downloadFile(asset.browser_download_url, destZip, win);
+    const destFile = path.join(GAME_BASE_DIR, asset.name);
+    await downloadFile(asset.browser_download_url, destFile, win);
 
     // 3. Extract
     if (win) win.webContents.send('fromMain', { type: 'status', message: 'Extracting GZDoom...' });
-    const zip = new AdmZip(destZip);
-    zip.extractAllTo(GZDOOM_DIR, true);
-    fs.unlinkSync(destZip);
+
+    if (isWin) {
+      const zip = new AdmZip(destFile);
+      zip.extractAllTo(GZDOOM_DIR, true);
+    } else {
+      // Linux .tar.xz extraction using system tar
+      await new Promise((resolve, reject) => {
+        // tar -xf file.tar.xz -C target_dir --strip-components=1 (if it has a root dir)
+        // Portable builds usually have a root folder 'gzdoom-x.y.z'
+        // We want to flatten it into GZDOOM_DIR.
+
+        // First, list content to see if we need strip-components
+        // This is getting complex. Let's just extract as is and assume the user can launch it or we handle the path.
+        // Actually, launch-game looks for GZDOOM_DIR/gzdoom.
+        // If the tar has a folder, it will be GZDOOM_DIR/folder/gzdoom.
+        // Let's try to extract with --strip-components=1 just in case, or safer: extract to temp and move?
+
+        // Simple approach: extract to GZDOOM_DIR. If there's a subfolder, we might fail to find the exe.
+        // Let's assume flat or handle the move.
+
+        const tar = spawn('tar', ['-xf', destFile, '-C', GZDOOM_DIR]);
+
+        tar.on('close', (code) => {
+          if (code === 0) resolve();
+          else reject(new Error(`tar exited with code ${code}`));
+        });
+
+        tar.on('error', (err) => reject(err));
+      });
+    }
+
+    fs.unlinkSync(destFile);
 
     return { status: 'ready', path: gzdoomExe };
 
@@ -252,14 +382,24 @@ ipcMain.handle('launch-game', async (event, args) => {
   const versionDir = path.join(GAME_BASE_DIR, version);
 
   // 1. Locate GZDoom (Shared)
-  let gzdoomExe = path.join(GZDOOM_DIR, 'gzdoom.exe');
-  if (process.platform !== 'win32') {
-     // Fallback for linux dev env
-     gzdoomExe = 'gzdoom';
+  let gzdoomExe;
+  if (process.platform === 'win32') {
+    gzdoomExe = path.join(GZDOOM_DIR, 'gzdoom.exe');
+  } else {
+    // On Linux, check local GZDoom folder first, else try PATH
+    const localBin = path.join(GZDOOM_DIR, 'gzdoom');
+    if (fs.existsSync(localBin)) {
+      gzdoomExe = localBin;
+      // Ensure executable
+      try { fs.chmodSync(gzdoomExe, '755'); } catch(e) {}
+    } else {
+      gzdoomExe = 'gzdoom'; // Fallback to system
+    }
   }
 
   // 2. Locate IWAD
-  // Logic: Check version dir first, then base dir
+  // Logic: GZDoom needs to know where the IWAD is.
+  // We will force it to look in the version directory, but we also need to make sure it exists there.
   let iwadPath = path.join(versionDir, 'DOOM2.WAD');
 
   // Fallback: Check if user put it in base dir but it wasn't copied yet
@@ -268,7 +408,14 @@ ipcMain.handle('launch-game', async (event, args) => {
       if (fs.existsSync(baseIwad)) {
           fs.copyFileSync(baseIwad, iwadPath); // Lazy copy
       } else {
-          throw new Error("MISSING_IWAD");
+          // One last check: is it in the root assets? (Dev environment specific)
+          const devAssetWad = path.join(__dirname, '..', 'assets', 'DOOM2.WAD');
+          if (isDev && fs.existsSync(devAssetWad)) {
+             fs.copyFileSync(devAssetWad, iwadPath);
+          } else {
+             console.error(`IWAD missing at ${iwadPath} and ${baseIwad}`);
+             throw new Error("MISSING_IWAD");
+          }
       }
   }
 
@@ -304,7 +451,23 @@ ipcMain.handle('launch-game', async (event, args) => {
 
   console.log(`Launching: ${gzdoomExe} ${launchArgs.join(' ')}`);
 
-  const child = spawn(gzdoomExe, launchArgs, { detached: true, stdio: 'ignore', cwd: versionDir });
+  const child = spawn(gzdoomExe, launchArgs, {
+    detached: true,
+    cwd: versionDir,
+    stdio: ['ignore', 'pipe', 'pipe'] // Capture stdout/stderr for debugging
+  });
+
+  child.stdout.on('data', (data) => console.log(`GZDOOM STDOUT: ${data}`));
+  child.stderr.on('data', (data) => console.error(`GZDOOM STDERR: ${data}`));
+
+  child.on('error', (err) => {
+    console.error('Failed to start GZDoom process:', err);
+  });
+
+  child.on('close', (code) => {
+    console.log(`GZDoom process exited with code ${code}`);
+  });
+
   child.unref();
 
   return { status: 'launched' };

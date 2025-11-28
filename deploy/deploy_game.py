@@ -26,8 +26,6 @@ from dist_utils import (
 )
 
 ASSETS_DIR = REPO_ROOT / "assets"
-GAME_PK3_NAME = "Maximum_Security_v0.3b.pk3"
-GAME_PK3_PATH = ASSETS_DIR / GAME_PK3_NAME
 
 def get_current_game_version(manifest: dict) -> str:
     """Get the current game version from manifest."""
@@ -39,13 +37,16 @@ def get_current_game_version(manifest: dict) -> str:
 def main():
     parser = argparse.ArgumentParser(description="Deploy game assets")
     parser.add_argument("--version", required=True, help="Version string (e.g. 0.3.1)")
+    parser.add_argument("--file", default="Maximum_Security_v0.4a.pk3", help="PK3 filename in assets dir (default: Maximum_Security_v0.4a.pk3)")
     parser.add_argument("--label", default="Beta Release", help="Display label")
     parser.add_argument("--notes", default="", help="Release notes")
     args = parser.parse_args()
 
+    game_pk3_path = ASSETS_DIR / args.file
+
     try:
-        if not GAME_PK3_PATH.exists():
-            raise FileNotFoundError(f"Game pk3 not found: {GAME_PK3_PATH}")
+        if not game_pk3_path.exists():
+            raise FileNotFoundError(f"Game pk3 not found: {game_pk3_path}")
 
         # Step 1: Ensure dist repo is ready
         print("Ensuring dist repo is ready...")
@@ -53,9 +54,9 @@ def main():
 
         # Step 2: Compute metadata
         print("Computing file metadata...")
-        sha256 = compute_sha256(GAME_PK3_PATH)
-        size_bytes = compute_size_bytes(GAME_PK3_PATH)
-        print(f"File: {GAME_PK3_NAME}")
+        sha256 = compute_sha256(game_pk3_path)
+        size_bytes = compute_size_bytes(game_pk3_path)
+        print(f"File: {args.file}")
         print(f"SHA256: {sha256}")
         print(f"Size: {size_bytes} bytes")
 
@@ -96,8 +97,8 @@ def main():
         print(f"Release created: {release['html_url']}")
 
         # Step 5: Upload release asset
-        print(f"Uploading {GAME_PK3_NAME}...")
-        asset = upload_release_asset(repo, release_id, GAME_PK3_PATH, token)
+        print(f"Uploading {args.file}...")
+        asset = upload_release_asset(repo, release_id, game_pk3_path, token)
         download_url = asset["browser_download_url"]
         print(f"Asset uploaded: {download_url}")
 
@@ -117,7 +118,7 @@ def main():
                 "url": download_url,
                 "sha256": sha256,
                 "size_bytes": size_bytes,
-                "filename": GAME_PK3_NAME
+                "filename": args.file
             },
             "changelog": args.notes
         }
