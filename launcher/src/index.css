@@ -6,7 +6,16 @@
   .grimdark-text {
     @apply font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-red-500 via-red-700 to-black drop-shadow-[0_5px_5px_rgba(0,0,0,1)];
     -webkit-text-stroke: 1px rgba(150, 0, 0, 0.5);
-    filter: drop-shadow(0 0 10px rgba(255, 0, 0, 0.3));
+    animation: title-pulse 3s ease-in-out infinite;
+  }
+
+  @keyframes title-pulse {
+    0%, 100% {
+      filter: drop-shadow(0 0 10px rgba(255, 0, 0, 0.3));
+    }
+    50% {
+      filter: drop-shadow(0 0 30px rgba(255, 0, 0, 0.8));
+    }
   }
 
   .grimdark-glow {
