@@ -26,5 +26,6 @@ contextBridge.exposeInMainWorld('api', {
   getSaves: () => ipcRenderer.invoke('get-saves'),
   getConfig: () => ipcRenderer.invoke('get-config'),
   saveConfig: (config) => ipcRenderer.invoke('save-config', config),
+  uninstallGame: (version) => ipcRenderer.invoke('uninstall-game', version),
   isDev: process.env.NODE_ENV === 'development',
 });

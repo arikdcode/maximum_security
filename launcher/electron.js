@@ -323,6 +323,22 @@ ipcMain.handle('download-game', async (event, url, version) => {
   }
 });
 
+ipcMain.handle('uninstall-game', async (event, version) => {
+  const versionDir = path.join(GAME_BASE_DIR, version);
+
+  if (!fs.existsSync(versionDir)) {
+    return { status: 'not_found' };
+  }
+
+  try {
+    fs.rmSync(versionDir, { recursive: true, force: true });
+    return { status: 'success' };
+  } catch (error) {
+    console.error("Uninstall failed:", error);
+    throw error;
+  }
+});
+
 ipcMain.handle('download-gzdoom', async () => {
   const win = BrowserWindow.getFocusedWindow();
 

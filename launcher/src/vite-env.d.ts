@@ -14,6 +14,7 @@ interface Window {
     getSaves: () => Promise<string[]>;
     getConfig: () => Promise<any>;
     saveConfig: (config: any) => Promise<any>;
+    uninstallGame: (version: string) => Promise<any>;
     receive: (channel: string, func: (...args: any[]) => void) => void;
     isDev: boolean;
   }

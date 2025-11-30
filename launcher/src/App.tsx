@@ -128,6 +128,38 @@ function App() {
     }
   };
 
+  const uninstallGame = async () => {
+    if (!selectedVersion) return;
+
+    // Simple confirmation
+    // In a real app we might use a modal, but for now we'll trust the button placement
+    setIsBusy(true);
+    setStatus(`Uninstalling v${selectedVersion}...`);
+
+    try {
+      await window.api.uninstallGame(selectedVersion);
+
+      // Refresh list
+      const installed = await window.api.checkInstalledVersions();
+      setInstalledVersions(installed);
+
+      // Reset selection if needed or just go back to main
+      setStatus("Uninstalled.");
+      setShowLaunchControls(false);
+
+      // Short delay to show status
+      setTimeout(() => {
+        setStatus("Ready.");
+        setIsBusy(false);
+      }, 1000);
+
+    } catch (e) {
+      setStatus('Uninstall failed.');
+      console.error(e);
+      setIsBusy(false);
+    }
+  };
+
   const launchGame = async (options: any = {}) => {
     if (!selectedVersion) return;
     setIsBusy(true);
@@ -276,15 +308,6 @@ function App() {
                   </div>
                 ) : (
                   <div className="flex flex-col h-full">
-                    <div className="flex justify-between items-center mb-4 border-b border-white/10 pb-2">
-                      <h3 className="text-red-500 text-sm uppercase tracking-widest font-bold">Launch Protocols</h3>
-                      <button
-                        onClick={() => setShowLaunchControls(false)}
-                        className="text-xs text-gray-500 hover:text-white uppercase"
-                      >
-                        [ Close ]
-                      </button>
-                    </div>
 
                     <div className="grid grid-cols-1 gap-3 overflow-y-auto pr-2 custom-scrollbar flex-grow">
 
@@ -356,6 +379,16 @@ function App() {
                         Access Main Menu (Standard Boot)
                       </button>
 
+                    </div>
+
+                    <div className="mt-2 pt-2 border-t border-white/10 flex justify-center">
+                      <button
+                        onClick={uninstallGame}
+                        className="text-[10px] text-red-900 hover:text-red-500 uppercase tracking-widest border border-transparent hover:border-red-900/30 px-2 py-1 transition-all opacity-50 hover:opacity-100"
+                        title="Delete local files for this version"
+                      >
+                        [ UNINSTALL v{selectedVersion} ]
+                      </button>
                     </div>
                   </div>
                 )}
