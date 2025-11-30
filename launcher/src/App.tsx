@@ -242,10 +242,15 @@ function App() {
             {/* Settings Button (Left Column) */}
             <button
               onClick={() => setShowSettings(true)}
-              className="w-full py-3 bg-black/60 hover:bg-black/80 border border-white/10 hover:border-white/30 rounded-lg backdrop-blur-sm transition-all text-xs text-gray-400 hover:text-white uppercase tracking-widest flex items-center justify-center gap-2 group"
+              className="w-full py-3 bg-black/60 hover:bg-black/80 border border-white/10 hover:border-red-900/50 rounded-lg backdrop-blur-sm transition-all text-xs text-gray-400 hover:text-white uppercase tracking-widest flex items-center justify-center gap-2 group relative overflow-hidden"
             >
-              <span className="group-hover:rotate-90 transition-transform duration-500">⚙</span>
-              gzdoom configuration
+              {/* Subtle background flicker on hover */}
+              <div className="absolute inset-0 bg-red-900/0 group-hover:bg-red-900/10 transition-colors duration-500"></div>
+
+              <div className="relative flex items-center justify-center w-6 h-6 group-hover:rotate-[180deg] transition-transform duration-[1.5s]">
+                 <span className="text-xl leading-none transition-[filter] duration-300 [filter:sepia(1)_hue-rotate(-50deg)_saturate(6)_brightness(0.4)] group-hover:[filter:sepia(1)_hue-rotate(-50deg)_saturate(8)_brightness(0.8)_drop-shadow(0_0_5px_rgba(200,0,0,1))]">⚙</span>
+              </div>
+              <span className="relative group-hover:text-red-200 transition-colors duration-300">gzdoom configuration</span>
             </button>
           </div>
 
