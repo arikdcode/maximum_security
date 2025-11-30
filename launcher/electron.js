@@ -11,6 +11,20 @@ const ini = require('ini');
 // Check if we're in development by looking for the dev server
 const isDev = process.argv.includes('--dev') || process.env.NODE_ENV === 'development';
 
+// Dev mode: Redirect userData to project root/zdump/launcher
+if (isDev) {
+  const devUserData = path.join(__dirname, '..', 'zdump', 'launcher');
+  if (!fs.existsSync(devUserData)) {
+    try {
+      fs.mkdirSync(devUserData, { recursive: true });
+    } catch (e) {
+      console.error("Failed to create dev userData directory:", e);
+    }
+  }
+  app.setPath('userData', devUserData);
+  console.log(`Development mode: User Data redirected to ${devUserData}`);
+}
+
 // Paths
 const MANIFEST_URL = "https://raw.githubusercontent.com/arikdcode/maximum_security_dist/refs/heads/master/manifest.json";
 
@@ -178,6 +192,20 @@ ipcMain.handle('save-config', async (event, newConfig) => {
     return { status: 'success' };
   } catch (e) {
     console.error("Failed to save config:", e);
+    throw e;
+  }
+});
+
+ipcMain.handle('reset-config', async () => {
+  try {
+    if (fs.existsSync(DEFAULT_CONFIG_PATH)) {
+      fs.copyFileSync(DEFAULT_CONFIG_PATH, CONFIG_PATH);
+      return { status: 'success' };
+    } else {
+      throw new Error("Default config not found");
+    }
+  } catch (e) {
+    console.error("Failed to reset config:", e);
     throw e;
   }
 });

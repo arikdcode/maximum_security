@@ -88,11 +88,23 @@ function App() {
     setShowSettings(false);
   };
 
-  const updateConfig = (section: string, key: string, value: any) => {
+  // Updated to handle nested paths array
+  const updateConfig = (path: string[], value: any) => {
     setConfig((prev: any) => {
       const newConfig = { ...prev };
-      if (!newConfig[section]) newConfig[section] = {};
-      newConfig[section][key] = value;
+      let current = newConfig;
+
+      // Ensure path exists
+      for (let i = 0; i < path.length - 1; i++) {
+        const segment = path[i];
+        if (current[segment] === undefined) {
+          current[segment] = {};
+        }
+        current = current[segment];
+      }
+
+      // Set value
+      current[path[path.length - 1]] = value;
       return newConfig;
     });
   };
@@ -452,12 +464,50 @@ function App() {
                     <input
                       type="checkbox"
                       checked={config?.GlobalSettings?.r_dynlights === true || config?.GlobalSettings?.r_dynlights === 'true'}
-                      onChange={(e) => updateConfig('GlobalSettings', 'r_dynlights', e.target.checked)}
+                      onChange={(e) => updateConfig(['GlobalSettings', 'r_dynlights'], e.target.checked)}
                       className="sr-only peer"
                     />
                     <div className="w-11 h-6 bg-gray-700 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-red-800 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-red-600"></div>
                   </label>
                 </div>
+              </div>
+
+              {/* Bloom */}
+              <div className="flex items-center justify-between">
+                <div>
+                  <div className="text-gray-300 font-bold">Bloom Effect</div>
+                  <div className="text-xs text-gray-600">Glowing light halos</div>
+                </div>
+                <div className="flex items-center">
+                   <label className="relative inline-flex items-center cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={config?.['Doom.ConsoleVariables']?.gl_bloom === true || config?.['Doom.ConsoleVariables']?.gl_bloom === 'true'}
+                      onChange={(e) => updateConfig(['Doom.ConsoleVariables', 'gl_bloom'], e.target.checked)}
+                      className="sr-only peer"
+                    />
+                    <div className="w-11 h-6 bg-gray-700 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-red-800 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-red-600"></div>
+                  </label>
+                </div>
+              </div>
+
+              {/* Ambient Occlusion */}
+              <div className="flex items-center justify-between">
+                <div>
+                  <div className="text-gray-300 font-bold">Ambient Occlusion</div>
+                  <div className="text-xs text-gray-600">Corner shadows & depth</div>
+                </div>
+                 <select
+                    value={config?.GlobalSettings?.gl_ssao || 0}
+                    onChange={(e) => updateConfig(['GlobalSettings', 'gl_ssao'], parseInt(e.target.value))}
+                    className="bg-black border border-white/20 text-gray-300 text-xs p-1 w-32 focus:outline-none"
+                  >
+                    <option value={0}>Off</option>
+                    <option value={1}>Low</option>
+                    <option value={2}>Medium</option>
+                    <option value={3}>High</option>
+                    <option value={4}>Very High</option>
+                  </select>
               </div>
 
               {/* Texture Filter */}
@@ -468,7 +518,7 @@ function App() {
                 </div>
                  <select
                     value={config?.GlobalSettings?.gl_texture_filter || 0}
-                    onChange={(e) => updateConfig('GlobalSettings', 'gl_texture_filter', parseInt(e.target.value))}
+                    onChange={(e) => updateConfig(['GlobalSettings', 'gl_texture_filter'], parseInt(e.target.value))}
                     className="bg-black border border-white/20 text-gray-300 text-xs p-1 w-32 focus:outline-none"
                   >
                     <option value={0}>None (Pixelated)</option>
@@ -490,7 +540,45 @@ function App() {
                     <input
                       type="checkbox"
                       checked={config?.GlobalSettings?.vid_fullscreen === true || config?.GlobalSettings?.vid_fullscreen === 'true'}
-                      onChange={(e) => updateConfig('GlobalSettings', 'vid_fullscreen', e.target.checked)}
+                      onChange={(e) => updateConfig(['GlobalSettings', 'vid_fullscreen'], e.target.checked)}
+                      className="sr-only peer"
+                    />
+                    <div className="w-11 h-6 bg-gray-700 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-red-800 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-red-600"></div>
+                  </label>
+                </div>
+              </div>
+
+              {/* VSync */}
+               <div className="flex items-center justify-between">
+                <div>
+                  <div className="text-gray-300 font-bold">Vertical Sync</div>
+                  <div className="text-xs text-gray-600">Prevents screen tearing</div>
+                </div>
+                <div className="flex items-center">
+                   <label className="relative inline-flex items-center cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={config?.GlobalSettings?.vid_vsync === true || config?.GlobalSettings?.vid_vsync === 'true'}
+                      onChange={(e) => updateConfig(['GlobalSettings', 'vid_vsync'], e.target.checked)}
+                      className="sr-only peer"
+                    />
+                    <div className="w-11 h-6 bg-gray-700 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-red-800 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-red-600"></div>
+                  </label>
+                </div>
+              </div>
+
+              {/* Crosshair */}
+               <div className="flex items-center justify-between">
+                <div>
+                  <div className="text-gray-300 font-bold">Crosshair</div>
+                  <div className="text-xs text-gray-600">Aiming reticle</div>
+                </div>
+                <div className="flex items-center">
+                   <label className="relative inline-flex items-center cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={config?.GlobalSettings?.crosshairon === true || config?.GlobalSettings?.crosshairon === 'true'}
+                      onChange={(e) => updateConfig(['GlobalSettings', 'crosshairon'], e.target.checked)}
                       className="sr-only peer"
                     />
                     <div className="w-11 h-6 bg-gray-700 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-red-800 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-red-600"></div>
@@ -500,20 +588,43 @@ function App() {
 
             </div>
 
-            <div className="mt-8 flex justify-end space-x-4">
+            <div className="mt-8 flex justify-between space-x-4">
                <button
-                 onClick={() => setShowSettings(false)}
-                 className="px-4 py-2 text-xs uppercase tracking-widest text-gray-500 hover:text-white border border-transparent hover:border-white/20"
+                 onClick={async () => {
+                   if (confirm("Are you sure you want to reset all settings to default? This cannot be undone.")) {
+                     setIsSavingSettings(true);
+                     try {
+                       await window.api.resetConfig();
+                       const cfg = await window.api.getConfig();
+                       setConfig(cfg);
+                       setStatus('Settings reset to default.');
+                     } catch (e) {
+                        console.error(e);
+                        setStatus('Error resetting settings.');
+                     }
+                     setIsSavingSettings(false);
+                   }
+                 }}
+                 className="px-4 py-2 text-xs uppercase tracking-widest text-red-900 hover:text-red-500 border border-red-900/30 hover:border-red-500/50"
                >
-                 Cancel
+                 Reset Defaults
                </button>
-               <button
-                 onClick={saveSettings}
-                 disabled={isSavingSettings}
-                 className="px-6 py-2 bg-red-900 hover:bg-red-800 text-white text-xs uppercase tracking-widest font-bold border border-red-700 shadow-lg"
-               >
-                 {isSavingSettings ? 'Saving...' : 'Save Configuration'}
-               </button>
+
+               <div className="flex space-x-4">
+                 <button
+                   onClick={() => setShowSettings(false)}
+                   className="px-4 py-2 text-xs uppercase tracking-widest text-gray-500 hover:text-white border border-transparent hover:border-white/20"
+                 >
+                   Cancel
+                 </button>
+                 <button
+                   onClick={saveSettings}
+                   disabled={isSavingSettings}
+                   className="px-6 py-2 bg-red-900 hover:bg-red-800 text-white text-xs uppercase tracking-widest font-bold border border-red-700 shadow-lg"
+                 >
+                   {isSavingSettings ? 'Saving...' : 'Save Configuration'}
+                 </button>
+               </div>
             </div>
           </div>
         </div>
