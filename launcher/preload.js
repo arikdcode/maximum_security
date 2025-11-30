@@ -24,5 +24,7 @@ contextBridge.exposeInMainWorld('api', {
   checkIWAD: () => ipcRenderer.invoke('check-iwad'),
   checkInstalledVersions: () => ipcRenderer.invoke('check-installed-versions'),
   getSaves: () => ipcRenderer.invoke('get-saves'),
+  getConfig: () => ipcRenderer.invoke('get-config'),
+  saveConfig: (config) => ipcRenderer.invoke('save-config', config),
   isDev: process.env.NODE_ENV === 'development',
 });

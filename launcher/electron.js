@@ -6,6 +6,7 @@ const axios = require('axios');
 const AdmZip = require('adm-zip');
 const crypto = require('crypto');
 const { spawn } = require('child_process');
+const ini = require('ini');
 
 // Check if we're in development by looking for the dev server
 const isDev = process.argv.includes('--dev') || process.env.NODE_ENV === 'development';
@@ -30,11 +31,26 @@ const GAME_BASE_DIR = path.join(ROOT_DIR, 'game');
 const GZDOOM_DIR = path.join(GAME_BASE_DIR, 'gzdoom'); // Shared GZDoom installation
 const SAVES_DIR = path.join(GAME_BASE_DIR, 'saves');
 const CONFIG_PATH = path.join(GAME_BASE_DIR, 'gzdoom.ini');
+const DEFAULT_CONFIG_PATH = path.join(__dirname, 'gzdoom_default.ini');
 
 // Ensure base directories exist
 [GAME_BASE_DIR, GZDOOM_DIR, SAVES_DIR].forEach(dir => {
   if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
 });
+
+// Ensure config exists
+if (!fs.existsSync(CONFIG_PATH)) {
+  if (fs.existsSync(DEFAULT_CONFIG_PATH)) {
+    try {
+      fs.copyFileSync(DEFAULT_CONFIG_PATH, CONFIG_PATH);
+      console.log(`Initialized gzdoom.ini from default at ${DEFAULT_CONFIG_PATH}`);
+    } catch (e) {
+      console.error("Failed to copy default config:", e);
+    }
+  } else {
+      console.warn(`Default config not found at ${DEFAULT_CONFIG_PATH}`);
+  }
+}
 
 function createWindow() {
   const mainWindow = new BrowserWindow({
@@ -112,6 +128,59 @@ async function downloadFile(url, destPath, win, channelName = 'download-progress
 }
 
 // ------------------ IPC HANDLERS ------------------
+
+ipcMain.handle('get-config', async () => {
+  try {
+    if (!fs.existsSync(CONFIG_PATH)) return {};
+    const configStr = fs.readFileSync(CONFIG_PATH, 'utf-8');
+    return ini.parse(configStr);
+  } catch (e) {
+    console.error("Failed to read config:", e);
+    return {};
+  }
+});
+
+ipcMain.handle('save-config', async (event, newConfig) => {
+  try {
+    // We read the existing file first to avoid losing comments if possible,
+    // but the 'ini' library is destructive to comments and formatting.
+    // For GZDoom, it regenerates the file anyway, so we just write what we have.
+    // Ideally we should merge, but 'ini' doesn't support easy merging preserving comments.
+
+    // However, we want to only update specific keys if we can.
+    // But the request is to "take over control".
+    // Let's read current, merge, and write back.
+    let currentConfig = {};
+    if (fs.existsSync(CONFIG_PATH)) {
+      currentConfig = ini.parse(fs.readFileSync(CONFIG_PATH, 'utf-8'));
+    }
+
+    // Merge newConfig into currentConfig (deep merge ideally, but ini is simple object)
+    // We assume newConfig follows the structure.
+
+    // Helper for deep merge?
+    // Actually ini.parse returns objects with sections.
+
+    const merge = (target, source) => {
+      for (const key of Object.keys(source)) {
+        if (source[key] instanceof Object && !Array.isArray(source[key])) {
+          if (!target[key]) Object.assign(target, { [key]: {} });
+          merge(target[key], source[key]);
+        } else {
+          Object.assign(target, { [key]: source[key] });
+        }
+      }
+    };
+
+    merge(currentConfig, newConfig);
+
+    fs.writeFileSync(CONFIG_PATH, ini.stringify(currentConfig));
+    return { status: 'success' };
+  } catch (e) {
+    console.error("Failed to save config:", e);
+    throw e;
+  }
+});
 
 ipcMain.handle('fetch-manifest', async () => {
   try {

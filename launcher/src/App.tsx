@@ -26,6 +26,11 @@ function App() {
   const [selectedSave, setSelectedSave] = useState<string | null>(null);
   const [difficulty, setDifficulty] = useState<number>(2); // 2 = Hurt me plenty (default)
 
+  // Settings state
+  const [showSettings, setShowSettings] = useState<boolean>(false);
+  const [config, setConfig] = useState<any>({});
+  const [isSavingSettings, setIsSavingSettings] = useState<boolean>(false);
+
   useEffect(() => {
     window.api.receive('fromMain', (data: any) => {
       if (data.type === 'download-progress') {
@@ -56,11 +61,40 @@ function App() {
       const saves = await window.api.getSaves();
       setSaveFiles(saves);
 
+      // Load config
+      const cfg = await window.api.getConfig();
+      setConfig(cfg);
+
       setStatus('Ready.');
     } catch (e) {
       setStatus('Error loading data.');
       console.error(e);
     }
+  };
+
+  const saveSettings = async () => {
+    setIsSavingSettings(true);
+    try {
+      await window.api.saveConfig(config);
+      // Reload config to ensure consistency
+      const cfg = await window.api.getConfig();
+      setConfig(cfg);
+      setStatus('Settings saved.');
+    } catch (e) {
+      console.error('Failed to save settings:', e);
+      setStatus('Error saving settings.');
+    }
+    setIsSavingSettings(false);
+    setShowSettings(false);
+  };
+
+  const updateConfig = (section: string, key: string, value: any) => {
+    setConfig((prev: any) => {
+      const newConfig = { ...prev };
+      if (!newConfig[section]) newConfig[section] = {};
+      newConfig[section][key] = value;
+      return newConfig;
+    });
   };
 
   const getBuildByVersion = (v: string): GameBuild | undefined => {
@@ -74,19 +108,6 @@ function App() {
 
     setIsBusy(true);
     setProgress(0);
-
-    // Mock mode disabled for real local testing
-    /* if (window.api.isDev) {
-      setStatus("DEV: Simulating install...");
-      for (let i = 0; i <= 100; i += 5) {
-        setProgress(i);
-        await new Promise(r => setTimeout(r, 50));
-      }
-      setInstalledVersions(prev => [...prev, selectedVersion]);
-      setStatus("DEV: Install complete.");
-      setIsBusy(false);
-      return;
-    } */
 
     try {
       setStatus("Checking GZDoom...");
@@ -112,24 +133,7 @@ function App() {
     setIsBusy(true);
     setStatus("Launching...");
 
-    // Mock mode disabled for real local testing
-    /* if (window.api.isDev) {
-      setStatus(`DEV: Launching with options: ${JSON.stringify(options)}`);
-      await new Promise(r => setTimeout(r, 2000));
-      setStatus("DEV: Game running...");
-      setIsBusy(false);
-      return;
-    } */
-
     try {
-      // Skip the pre-check, let the main process handle it (it has recovery logic)
-      /* const hasIwad = await window.api.checkIWAD();
-      if (!hasIwad) {
-        setStatus("Error: Missing DOOM2.WAD in game folder.");
-        setIsBusy(false);
-        return;
-      } */
-
       await window.api.launchGame({
         version: selectedVersion,
         ...options
@@ -167,7 +171,7 @@ function App() {
 
       <div className="relative z-10 w-full max-w-4xl p-8">
         {/* Header */}
-        <div className="text-center mb-8">
+        <div className="text-center mb-8 relative">
           <h1 className="text-7xl grimdark-text mb-2 transform scale-y-110">
             MAXIMUM SECURITY
           </h1>
@@ -234,6 +238,15 @@ function App() {
                  </div>
                )}
             </div>
+
+            {/* Settings Button (Left Column) */}
+            <button
+              onClick={() => setShowSettings(true)}
+              className="w-full py-3 bg-black/60 hover:bg-black/80 border border-white/10 hover:border-white/30 rounded-lg backdrop-blur-sm transition-all text-xs text-gray-400 hover:text-white uppercase tracking-widest flex items-center justify-center gap-2 group"
+            >
+              <span className="group-hover:rotate-90 transition-transform duration-500">⚙</span>
+              gzdoom configuration
+            </button>
           </div>
 
           {/* Right Col: Action Panel */}
@@ -372,6 +385,102 @@ function App() {
 
         </div>
       </div>
+
+      {/* Settings Modal */}
+      {showSettings && (
+        <div className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4">
+          <div className="bg-zinc-900 border border-white/10 w-full max-w-lg rounded-lg shadow-2xl p-6 relative">
+            <button
+               onClick={() => setShowSettings(false)}
+               className="absolute top-4 right-4 text-gray-500 hover:text-white"
+            >
+              X
+            </button>
+
+            <h2 className="text-xl font-bold text-white uppercase tracking-widest mb-6 border-b border-white/10 pb-2">
+              Terminal Configuration
+            </h2>
+
+            <div className="space-y-6 font-mono text-sm">
+
+              {/* Dynamic Lights */}
+              <div className="flex items-center justify-between">
+                <div>
+                  <div className="text-gray-300 font-bold">Dynamic Lights</div>
+                  <div className="text-xs text-gray-600">Enable real-time lighting effects</div>
+                </div>
+                <div className="flex items-center">
+                   <label className="relative inline-flex items-center cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={config?.GlobalSettings?.r_dynlights === true || config?.GlobalSettings?.r_dynlights === 'true'}
+                      onChange={(e) => updateConfig('GlobalSettings', 'r_dynlights', e.target.checked)}
+                      className="sr-only peer"
+                    />
+                    <div className="w-11 h-6 bg-gray-700 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-red-800 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-red-600"></div>
+                  </label>
+                </div>
+              </div>
+
+              {/* Texture Filter */}
+              <div className="flex items-center justify-between">
+                <div>
+                  <div className="text-gray-300 font-bold">Texture Filtering</div>
+                  <div className="text-xs text-gray-600">Smoothes pixel textures</div>
+                </div>
+                 <select
+                    value={config?.GlobalSettings?.gl_texture_filter || 0}
+                    onChange={(e) => updateConfig('GlobalSettings', 'gl_texture_filter', parseInt(e.target.value))}
+                    className="bg-black border border-white/20 text-gray-300 text-xs p-1 w-32 focus:outline-none"
+                  >
+                    <option value={0}>None (Pixelated)</option>
+                    <option value={1}>Linear</option>
+                    <option value={2}>Bilinear</option>
+                    <option value={3}>Trilinear</option>
+                    <option value={4}>Trilinear (HQ)</option>
+                  </select>
+              </div>
+
+              {/* Fullscreen */}
+               <div className="flex items-center justify-between">
+                <div>
+                  <div className="text-gray-300 font-bold">Fullscreen</div>
+                  <div className="text-xs text-gray-600">Run in full screen mode</div>
+                </div>
+                <div className="flex items-center">
+                   <label className="relative inline-flex items-center cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={config?.GlobalSettings?.vid_fullscreen === true || config?.GlobalSettings?.vid_fullscreen === 'true'}
+                      onChange={(e) => updateConfig('GlobalSettings', 'vid_fullscreen', e.target.checked)}
+                      className="sr-only peer"
+                    />
+                    <div className="w-11 h-6 bg-gray-700 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-red-800 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-red-600"></div>
+                  </label>
+                </div>
+              </div>
+
+            </div>
+
+            <div className="mt-8 flex justify-end space-x-4">
+               <button
+                 onClick={() => setShowSettings(false)}
+                 className="px-4 py-2 text-xs uppercase tracking-widest text-gray-500 hover:text-white border border-transparent hover:border-white/20"
+               >
+                 Cancel
+               </button>
+               <button
+                 onClick={saveSettings}
+                 disabled={isSavingSettings}
+                 className="px-6 py-2 bg-red-900 hover:bg-red-800 text-white text-xs uppercase tracking-widest font-bold border border-red-700 shadow-lg"
+               >
+                 {isSavingSettings ? 'Saving...' : 'Save Configuration'}
+               </button>
+            </div>
+          </div>
+        </div>
+      )}
+
     </div>
   )
 }

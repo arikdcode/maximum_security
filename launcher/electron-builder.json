@@ -8,7 +8,8 @@
     "dist/**/*",
     "electron.js",
     "preload.js",
-    "package.json"
+    "package.json",
+    "gzdoom_default.ini"
   ],
   "mac": {
     "category": "public.app-category.games"

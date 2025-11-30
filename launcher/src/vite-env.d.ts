@@ -12,6 +12,8 @@ interface Window {
     checkIWAD: () => Promise<boolean>;
     checkInstalledVersions: () => Promise<string[]>;
     getSaves: () => Promise<string[]>;
+    getConfig: () => Promise<any>;
+    saveConfig: (config: any) => Promise<any>;
     receive: (channel: string, func: (...args: any[]) => void) => void;
     isDev: boolean;
   }
