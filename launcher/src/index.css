@@ -2,6 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  body {
+    @apply overflow-hidden m-0 p-0 w-screen h-screen bg-black;
+  }
+  #root {
+    @apply w-full h-full overflow-hidden;
+  }
+}
+
 @layer components {
   /* Font Face */
   @font-face {
@@ -175,5 +184,33 @@
   /* Blood Text Shadow */
   .text-shadow-blood {
     text-shadow: 0 0 5px #f00, 0 0 10px #800, 0 0 15px #400;
+  }
+
+  /* Hell Fire Overlay */
+  @keyframes hell-breathe {
+    0% {
+      filter: contrast(150%) saturate(150%) hue-rotate(-45deg) brightness(0.6) sepia(0);
+      transform: scale(1.0);
+    }
+    40% {
+      filter: contrast(180%) saturate(180%) hue-rotate(-30deg) brightness(1.0) sepia(0.2);
+      transform: scale(1.06);
+    }
+    50% {
+      filter: contrast(220%) saturate(220%) hue-rotate(-5deg) brightness(1.6) sepia(0.6); /* Extended surge ~1.6s */
+      transform: scale(1.08);
+    }
+    60% {
+        filter: contrast(180%) saturate(180%) hue-rotate(-30deg) brightness(1.0) sepia(0.2);
+        transform: scale(1.06);
+    }
+    100% {
+      filter: contrast(150%) saturate(150%) hue-rotate(-45deg) brightness(0.6) sepia(0);
+      transform: scale(1.0);
+    }
+  }
+
+  .animate-hell-fire {
+    animation: hell-breathe 8s ease-in-out infinite;
   }
 }

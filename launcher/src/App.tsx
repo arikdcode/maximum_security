@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import bgImage from './assets/installer_bg.png';
+import flameGif from './assets/flame.gif';
 
 interface GameBuild {
   version: string;
@@ -267,10 +268,18 @@ function App() {
 
   return (
     <div
-      className="min-h-screen flex flex-col items-center justify-center text-white bg-cover bg-center bg-no-repeat font-sans select-none"
+      className="min-h-screen flex flex-col items-center justify-center text-white bg-cover bg-center bg-no-repeat font-sans select-none overflow-hidden"
       style={{ backgroundImage: `url(${bgImage})` }}
     >
       <div className="absolute inset-0 bg-black/60 z-0"></div>
+
+      {/* Flame Overlay */}
+      <div className="absolute inset-0 z-0 pointer-events-none opacity-40 mix-blend-color-dodge">
+         <div
+           className="w-full h-full bg-cover opacity-60 animate-hell-fire"
+           style={{ backgroundImage: `url(${flameGif})` }}
+         ></div>
+      </div>
 
       <div className="relative z-10 w-full max-w-4xl p-8">
         {/* Header */}
