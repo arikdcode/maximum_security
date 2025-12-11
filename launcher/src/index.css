@@ -3,6 +3,14 @@
 @tailwind utilities;
 
 @layer components {
+  /* Font Face */
+  @font-face {
+    font-family: 'AmazDooMLeft';
+    src: url('./assets/fonts/AmazDooMLeft.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
+
   .grimdark-text {
     @apply font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-red-500 via-red-700 to-black drop-shadow-[0_5px_5px_rgba(0,0,0,1)];
     -webkit-text-stroke: 1px rgba(150, 0, 0, 0.5);
@@ -63,5 +71,109 @@
 
   .custom-scrollbar::-webkit-scrollbar-thumb:hover {
     background: #666;
+  }
+
+  /* Demonic Border Flare */
+  @property --angle {
+    syntax: '<angle>';
+    initial-value: 0deg;
+    inherits: false;
+  }
+
+  .demonic-flare {
+    position: relative;
+    /* Ensure no overflow clipping prevents the flare if we want it outside,
+       but we want it ON the border, so regular is fine. */
+  }
+
+  .demonic-flare::before {
+    content: "";
+    position: absolute;
+    inset: -2px; /* Slightly larger to be visible over existing border */
+    border-radius: inherit;
+    padding: 2px; /* Width of the flare path */
+    background: conic-gradient(from var(--angle), transparent 0%, transparent 70%, #500 85%, #f00 92%, #fa0 95%, #fff 98%, transparent 100%);
+    -webkit-mask:
+       linear-gradient(#fff 0 0) content-box,
+       linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    animation: rotate-angle 4s linear infinite;
+    z-index: 50;
+    opacity: 0.8;
+  }
+
+  .demonic-flare::after {
+    content: "";
+    position: absolute;
+    inset: -2px;
+    border-radius: inherit;
+    padding: 2px;
+    background: conic-gradient(from var(--angle), transparent 0%, transparent 70%, #500 85%, #f00 92%, #fa0 95%, #fff 98%, transparent 100%);
+    -webkit-mask:
+       linear-gradient(#fff 0 0) content-box,
+       linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    animation: rotate-angle 4s linear infinite;
+    z-index: 49;
+    filter: blur(4px); /* Glow effect */
+    opacity: 0.6;
+  }
+
+  @keyframes rotate-angle {
+    to {
+      --angle: 360deg;
+    }
+  }
+
+  /* Passive Pulse for Terminal Button */
+  @keyframes terminal-pulse {
+    0%, 100% {
+      box-shadow: 0 0 20px rgba(139, 0, 0, 0.3);
+      border-color: rgba(185, 28, 28, 0.5); /* red-700 */
+    }
+    50% {
+      box-shadow: 0 0 40px rgba(220, 20, 60, 0.6);
+      border-color: rgba(239, 68, 68, 0.8); /* red-500 */
+    }
+  }
+
+  .animate-terminal-pulse {
+    animation: terminal-pulse 3s infinite ease-in-out;
+  }
+
+  /* Ignite Flash for Terminal Button Click */
+  @keyframes ignite-flash {
+    0% {
+      background-color: rgba(255, 255, 255, 0.1);
+      box-shadow: 0 0 20px rgba(139, 0, 0, 0.3);
+      transform: scale(1);
+    }
+    10% {
+      background-color: #fff;
+      border-color: #fff;
+      box-shadow: 0 0 100px rgba(255, 200, 0, 1), 0 0 50px rgba(255, 0, 0, 1);
+      transform: scale(1.05);
+      color: #000;
+    }
+    100% {
+      background-color: #000;
+      border-color: #500;
+      box-shadow: 0 0 0 rgba(0,0,0,0);
+      transform: scale(1);
+      color: #500;
+    }
+  }
+
+  .animate-ignite {
+    animation: ignite-flash 0.5s cubic-bezier(0.1, 0.9, 0.2, 1) forwards;
+  }
+
+  /* Blood Text Shadow */
+  .text-shadow-blood {
+    text-shadow: 0 0 5px #f00, 0 0 10px #800, 0 0 15px #400;
   }
 }

@@ -83,10 +83,8 @@ function createWindow() {
     icon: path.join(__dirname, 'assets/icon.png'),
   });
 
-  // Specifically remove menu for production
-  if (!isDev) {
-    mainWindow.removeMenu();
-  }
+  // Remove menu bar (fixes "Alt" key showing menu)
+  mainWindow.removeMenu();
 
   if (isDev) {
     mainWindow.loadURL('http://localhost:5173');

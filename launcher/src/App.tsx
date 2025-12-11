@@ -11,6 +11,64 @@ interface GameBuild {
   }
 }
 
+// Custom Doom Dropdown Component
+interface DoomDropdownProps {
+  value: number;
+  options: { val: number; label: string }[];
+  onChange: (val: number) => void;
+}
+
+const DoomDropdown = ({ value, options, onChange }: DoomDropdownProps) => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const getLabel = (v: number) => options.find(o => o.val === v)?.label || '';
+
+  // Styles for each difficulty
+  const getStyle = (val: number) => {
+    switch (val) {
+      case 0: return "text-blue-200 drop-shadow-[0_0_2px_rgba(100,200,255,0.5)]";
+      case 1: return "text-yellow-200 drop-shadow-[0_0_2px_rgba(255,255,100,0.5)]";
+      case 2: return "text-orange-400 drop-shadow-[0_0_3px_rgba(255,165,0,0.6)]";
+      case 3: return "text-red-500 drop-shadow-[0_0_5px_rgba(255,0,0,0.8)] font-bold";
+      case 4: return "text-red-600 animate-pulse font-black tracking-widest drop-shadow-[0_0_8px_rgba(255,0,0,1)] text-shadow-blood";
+      default: return "text-gray-300";
+    }
+  };
+
+  return (
+    <div className="relative w-full font-['AmazDooMLeft'] z-40">
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="w-full bg-black/80 border border-white/20 text-left p-3 focus:outline-none focus:border-red-500 flex justify-between items-center group transition-all hover:border-red-500/50"
+      >
+        <span className={`text-xl uppercase tracking-wider transition-all duration-300 ${getStyle(value)}`}>{getLabel(value)}</span>
+        <span className="text-xs text-gray-500 group-hover:text-red-500 transition-colors transform group-hover:scale-125">▼</span>
+      </button>
+
+      {isOpen && (
+        <>
+          <div className="fixed inset-0 z-40 cursor-default" onClick={() => setIsOpen(false)}></div>
+          <div className="absolute z-50 w-full bg-black/95 border border-red-900/50 mt-1 max-h-80 overflow-y-auto shadow-[0_0_30px_rgba(0,0,0,0.9)] custom-scrollbar backdrop-blur-xl">
+            {options.map((opt) => (
+              <div
+                key={opt.val}
+                onClick={() => {
+                  onChange(opt.val);
+                  setIsOpen(false);
+                }}
+                className={`p-4 cursor-pointer border-b border-white/5 last:border-0 hover:bg-red-900/20 transition-all uppercase tracking-widest text-xl group relative overflow-hidden ${getStyle(opt.val)} ${value === opt.val ? 'bg-red-900/10' : ''}`}
+              >
+                <div className="absolute inset-0 bg-gradient-to-r from-red-900/0 via-red-900/0 to-red-900/0 group-hover:via-red-900/10 transition-all duration-500"></div>
+                <span className="relative z-10 transform group-hover:translate-x-2 transition-transform duration-300 inline-block">{opt.label}</span>
+              </div>
+            ))}
+          </div>
+        </>
+      )}
+    </div>
+  );
+};
+
 function App() {
   const [version] = useState<string>('0.3.0'); // Launcher version
   const [manifest, setManifest] = useState<any>(null);
@@ -19,6 +77,7 @@ function App() {
   const [status, setStatus] = useState<string>('Initializing...');
   const [progress, setProgress] = useState<number>(0);
   const [isBusy, setIsBusy] = useState<boolean>(false);
+  const [isIgniting, setIsIgniting] = useState<boolean>(false);
 
   // New state for launch controls
   const [showLaunchControls, setShowLaunchControls] = useState<boolean>(false);
@@ -229,9 +288,10 @@ function App() {
           {/* Left Col: Build List & Saves */}
           <div className="flex flex-col gap-4">
             {/* Version Selector */}
-            <div className="bg-black/40 border border-white/10 rounded-lg p-4 backdrop-blur-sm h-[200px] overflow-y-auto custom-scrollbar">
-              <h3 className="text-gray-400 text-xs uppercase tracking-wider mb-3 font-bold">Select Version</h3>
-              <div className="space-y-2">
+            <div className="bg-black/40 border border-white/10 rounded-lg backdrop-blur-sm h-[200px] relative flex flex-col">
+              {/* demonic-flare class removed for now, but can be re-added: className="... demonic-flare ..." */}
+              <h3 className="text-gray-400 text-xs uppercase tracking-wider mb-3 font-bold p-4 pb-0">Select Version</h3>
+              <div className="space-y-2 overflow-y-auto custom-scrollbar flex-1 p-4 pt-0">
                 {manifest?.game_builds?.slice().reverse().map((build: GameBuild) => (
                   <div
                     key={build.version}
@@ -265,7 +325,8 @@ function App() {
             </div>
 
             {/* Status Panel moved to left bottom */}
-            <div className="bg-black/60 border border-white/10 rounded-sm p-4 backdrop-blur-md shadow-2xl relative overflow-hidden">
+            <div className="bg-black/60 border border-white/10 rounded-sm p-4 backdrop-blur-md shadow-2xl relative">
+               {/* demonic-flare class removed for now, but can be re-added: className="... demonic-flare ..." */}
                <h3 className="text-gray-500 text-[10px] uppercase tracking-[0.2em] mb-2 font-bold border-b border-white/5 pb-1">System Status</h3>
                <div className="bg-black/80 border border-white/10 p-3 font-mono text-xs text-red-500/90 h-[60px] overflow-hidden relative shadow-inner mb-2">
                   <div className="absolute inset-0 p-3 typing-effect">
@@ -299,7 +360,7 @@ function App() {
           </div>
 
           {/* Right Col: Action Panel */}
-          <div className="flex flex-col bg-black/60 border border-white/10 rounded-lg p-6 backdrop-blur-sm h-[450px]">
+          <div className="flex flex-col bg-black/60 border border-white/10 rounded-lg p-6 backdrop-blur-sm h-[450px] demonic-flare">
             {selectedVersion && isInstalled(selectedVersion) ? (
               <>
                 {!showLaunchControls ? (
@@ -310,11 +371,19 @@ function App() {
                     </div>
 
                     <button
-                      onClick={() => setShowLaunchControls(true)}
-                      disabled={isBusy}
-                      className="w-full py-6 font-black text-2xl uppercase tracking-[0.2em] transition-all duration-300 border relative overflow-hidden group bg-gradient-to-b from-red-900 to-black border-red-700 text-red-500 hover:text-red-400 hover:border-red-500 shadow-[0_0_20px_rgba(139,0,0,0.3)]"
+                      onClick={() => {
+                        setIsIgniting(true);
+                        // Delay the state change to allow animation to play
+                        setTimeout(() => {
+                          setShowLaunchControls(true);
+                          setIsIgniting(false);
+                        }, 400); // Slightly less than animation duration to transition during the flash fade out
+                      }}
+                      disabled={isBusy || isIgniting}
+                      className={`w-full py-6 font-black text-2xl uppercase tracking-[0.2em] transition-all duration-300 border relative overflow-hidden group
+                        ${isIgniting ? 'animate-ignite z-50' : 'bg-gradient-to-b from-red-900 to-black border-red-700 text-red-500 hover:text-red-400 hover:border-red-500 animate-terminal-pulse'}`}
                     >
-                      <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/diagmonds-light.png')] opacity-10"></div>
+                      <div className={`absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/diagmonds-light.png')] opacity-10 ${isIgniting ? 'hidden' : ''}`}></div>
                       <span className="relative z-10 drop-shadow-md">ACCESS TERMINAL</span>
                     </button>
                   </div>
@@ -338,15 +407,11 @@ function App() {
                       <div className="p-4 border border-white/10 bg-white/5">
                         <div className="text-red-500 font-bold uppercase tracking-wider mb-3">New Assignment</div>
                         <div className="space-y-2">
-                          <select
+                          <DoomDropdown
                             value={difficulty}
-                            onChange={(e) => setDifficulty(parseInt(e.target.value))}
-                            className="w-full bg-black border border-white/20 text-gray-300 text-sm p-2 focus:outline-none focus:border-red-500 font-mono"
-                          >
-                            {difficulties.map(d => (
-                              <option key={d.val} value={d.val}>{d.label}</option>
-                            ))}
-                          </select>
+                            options={difficulties}
+                            onChange={(val) => setDifficulty(val)}
+                          />
                           <button
                             onClick={() => launchGame({ difficulty, quickStart: true })}
                             className="w-full py-2 bg-red-900/50 hover:bg-red-800/50 border border-red-800 text-red-200 text-xs uppercase tracking-widest transition-all"
