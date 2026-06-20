@@ -1,0 +1,64 @@
+Class SniperCommando : Actor
+{
+//$Category Monsters/Custom
+  Default
+  {
+    Obituary "%o was sniped by a zombie commando.";
+    Tag "Sniper Commando Zombie";
+    Health 70;
+    Radius 20;
+    Height 56;
+    Mass 100;
+    Speed 8;
+    PainChance 170;
+    SeeSound "chainguy/sight";
+    PainSound "chainguy/pain";
+    DeathSound "chainguy/death";
+    ActiveSound "chainguy/active";
+    //DropItem "M40Rifle";  //Add your mod's sniper rifle here
+    Monster;
+    +FloorClip
+  }
+
+  States
+  {
+  Spawn:
+    SCPS AB 10 A_Look();
+    Loop;
+  See:
+    SCPS AABBCCDD 3 A_Chase();
+    Loop;
+  Missile:
+    SCPS E 0 A_StartSound("M40Rifle/Scope");
+	SCPS E 15 A_FaceTarget();
+    SCPS F 0 A_StartSound("M40Rifle/Fire");
+    SCPS F 10 A_CustomBulletAttack (0.5, 0.5, 1, random(15,25));
+	SCPS E 15 A_FaceTarget();
+    SCPS E 2 A_StartSound("M40Rifle/Bolt1");
+	SCPS E 10;
+	SCPS A 2 A_StartSound("M40Rifle/Bolt2");
+	SCPS A 20;
+    Goto See;
+  Pain:
+    SCPS G 3;
+    SCPS G 3 A_Pain();
+    Goto See;
+  Death:
+    SCPS H 5;
+    SCPS I 5 A_Scream();
+    SCPS JKL 5;
+    SCPS M 5 A_NoBlocking();
+    SCPS N -1;
+    Stop;
+  XDeath:
+    SCPS O 5;
+    SCPS P 5 A_XScream();
+    SCPS Q 5 A_NoBlocking();
+    SCPS RS 5;
+    SCPS T -1;
+    Stop;
+  Raise:
+    SCPS MLKJIH 5;
+    Goto See;
+  }
+}

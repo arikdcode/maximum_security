@@ -1,0 +1,61 @@
+Class ZombieScientistPistol : Actor
+{
+	Default
+	{
+		//$Category Monsters/ZombieScientists
+		//$Title "Pistol"
+		obituary "%o was gunned down by a zombie scientist.";
+		health 18;
+		mass 70;
+		speed 10;
+		Radius 19;
+		Height 52;
+		painchance 200;
+		seesound "zombiescientistF/sight";
+		painsound "zombiescientistF/pain";
+		deathsound "zombiescientistF/death";
+		activesound "zombiescientistF/active";
+		Dropitem "Clip";
+		Decal "BulletChip";
+		MONSTER;
+		+FLOORCLIP;
+		+WINDTHRUST;
+	}
+	States
+	{
+	Spawn:
+		FSZP AB 10 A_Look();
+		loop;
+	See:
+		FSZP AABBCCDD 4 A_Chase();
+		loop;
+	Missile:
+		FSZP E 10 A_FaceTarget();
+		FSZP F 8 A_PosAttack();
+		FSZP E 8;
+		goto See;
+	Pain:
+		FSZP G 3;
+		FSZP G 3 A_Pain();
+		goto See;
+	Death:
+		FSZP H 5;
+		FSZP I 5 A_Scream();
+		FSZP J 5 A_NoBlocking();
+		FSZP K 5;
+		FSZP L 5;
+		FSZP M 5;
+		FSZP N -1;
+		stop;
+	XDeath:
+		FSZP O 5;
+		FSZP P 5 A_XScream();
+		FSZP Q 5 A_NoBlocking();
+		FSZP RSTUV 5;
+		FSZP W -1;
+		stop;
+	Raise:
+		FSZP MLKJIH 5;
+		goto See;
+	}
+}

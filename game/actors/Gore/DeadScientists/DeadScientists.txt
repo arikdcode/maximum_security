@@ -1,0 +1,25 @@
+Actor DeadMaleScientist
+{
+//$Category Gore/Corpses/
+  Radius 32
+  Height 16
+  States
+  {
+  Spawn:
+    MSCI N -1
+    Loop
+  }
+}
+
+Actor DeadFemaleScientist
+{
+//$Category Gore/Corpses/
+  Radius 32
+  Height 16
+  States
+  {
+  Spawn:
+    FSCI N -1
+    Loop
+  }
+}

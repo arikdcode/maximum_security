@@ -1,0 +1,54 @@
+//CEILING LIGHTS
+
+ACTOR HelgaChained 12500
+{
+//$Category Allies
+  Radius 32
+  Height 16
+  +NOGRAVITY
+  States
+  {
+  Spawn:
+  Active:
+	CHAI A 20 
+	CHAI B 10 
+	CHAI A 20
+	CHAI B 10
+	CHAI A 20 
+	CHAI B 10 
+	CHAI A 20
+	CHAI B 10
+	CHAI A 20 
+	CHAI B 10 
+	CHAI A 20
+	CHAI B 10
+	CHAI A 20 
+	CHAI B 10 
+	CHAI A 20
+	CHAI B 10
+	CHAI A 20 
+	CHAI B 10 
+	CHAI A 20
+	CHAI B 10
+	CHAI A 20
+	CHAI B 10
+	CHAI A 20
+	CHAI B 10
+	CHAI A 20
+	CHAI B 10
+	CHAI A 20
+	CHAI B 10
+	CHAI A 5
+	CHAI C 5
+	CHAI A 5
+	CHAI C 5
+	CHAI A 5
+	CHAI C 5
+	CHAI A 5
+	CHAI C 5
+    Loop
+  Inactive:
+    CHAI A -1
+	Stop
+  }
+}

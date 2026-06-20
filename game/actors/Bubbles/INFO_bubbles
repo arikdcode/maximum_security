@@ -1,0 +1,10 @@
+Information:
+Type: Underwater bubbles spawner
+Spawn Offsets: Arg[0] (radius)
+Summon: BubbleSpawner
+
+Credits:
+Code: Captain Toenail
+Sounds: freesounds.org
+Sprites: Unsplash.com
+Sprite Edit: Captain Toenail

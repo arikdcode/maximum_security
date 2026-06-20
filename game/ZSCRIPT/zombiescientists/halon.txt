@@ -1,0 +1,233 @@
+Class ZombieScientistHalon : Actor
+{
+	Default
+	{
+		//$Category Monsters/ZombieScientists
+		//$Title "Halon"
+		obituary "%o was put out by a zombie scientist.";
+		health 20;
+		mass 90;
+		speed 16;
+		Radius 20;
+		Height 52;
+		painchance 200;
+		seesound "zombiescientistM/sight";
+		painsound "zombiescientistM/pain";
+		deathsound "zombiescientistM/death";
+		activesound "zombiescientistM/active";
+		MeleeRange 112;
+		MONSTER;
+		+FLOORCLIP;
+		+WINDTHRUST;
+	}
+	States
+	{
+	Spawn:
+		SCFE AB 10 A_Look();
+		Loop;
+	See:
+		SCFE AABBCCDD 4 A_Chase("Halon");
+		Loop;
+	Halon:
+		SCFE E 8 A_FaceTarget();
+	HalonLoop:
+		SCFE F 5
+		{
+			if (!target || target.health < 1 || Distance3D(target) > 160) return ResolveState("HalonStop");
+			A_FaceTarget(); 
+			A_StartSound("zombiescientist/halonfire",0);
+			A_SpawnProjectile("ZombieScientistHalonProjectile", 33, 10, frandom(-1.5,1.5), CMF_OFFSETPITCH, frandom(-1.5,1.5));
+			return ResolveState(null);
+		}
+		SCFE F 5 
+		{
+			A_FaceTarget(); 
+			A_SpawnProjectile("ZombieScientistHalonProjectile", 33, 10, frandom(-1.5,1.5), CMF_OFFSETPITCH, frandom(-1.5,1.5));
+		}
+		Loop;
+	HalonStop:
+		SCFE E 8;
+		Goto See;
+	Pain:
+		SCFE G 3;
+		SCFE G 3 A_Pain();
+		Goto See;
+	Death:
+		SCFE H 5 A_SpawnItemEx("ZSFireExtinguisher",0,10,24,random(-2,2),random(-2,2),5,0,SXF_NOCHECKPOSITION|SXF_SETTARGET);
+		SCFE I 5 A_Scream();
+		SCFE J 5 A_NoBlocking();
+		SCFE K 5;
+		SCFE L 5;
+		SCFE M 5;
+		SCFE N -1;
+		Stop;
+	XDeath:
+		SCFE O 5 A_SpawnItemEx("ZSFireExtinguisher",0,10,24,random(-2,2),random(-2,2),5,0,SXF_NOCHECKPOSITION|SXF_SETTARGET);
+		SCFE P 5 A_XScream();
+		SCFE Q 5 A_NoBlocking();
+		SCFE RSTUV 5;
+		SCFE W -1;
+		Stop;
+	Raise:
+		SCFE MLKJIH 5;
+		Goto See;
+	}
+	
+}
+
+Class ZombieScientistHalonProjectile : Actor
+{
+	Default
+	{
+		Height 1;
+		Radius 1;
+		Speed 5;
+		RenderStyle "Add";
+		Damage 0;
+		DamageType "Ice";
+		Scale 0.05;
+		Alpha 0.2;
+		Projectile;
+		+BLOODLESSIMPACT;
+		+NODAMAGETHRUST;
+		+PAINLESS;
+	//	+ROLLSPRITE;
+	//	+ROLLCENTER;
+	}
+
+	States
+	{
+	Spawn:
+		TNT1 A random(5,6);
+	Halon:
+		SCFE X 1
+		{
+			A_Explode(randompick(0,0,0,1),20,XF_NOSPLASH|XF_THRUSTLESS,false,1);
+			double psize = 15+(scale.x*50);
+			SpawnHalonParticle(psize);
+			A_Fadeout(0.01);
+			scale.x += 0.03;
+			scale.y += 0.03;
+		//	roll = random(0,359);
+		}
+		Loop;
+	}
+	void SpawnHalonParticle(double psize)
+	{
+		A_SpawnParticleEx("FFFFFF",
+			TexMan.CheckForTexture("SCFFE0"),
+			style:STYLE_Add,
+			flags:SPF_ROLL,
+			lifetime:20,
+			size:psize,
+			startalphaf:0.6,
+			fadestepf:-1,
+			startroll:random(0,359),
+			rollvel:random(-20,20)
+		);
+	}
+	override int SpecialMissileHit(Actor victim) // handle slowdown and pain effects on the victim
+	{
+		if (victim && (!target || victim != target) && victim.bSHOOTABLE && victim.health > 0)
+		{
+			int df = victim.ApplyDamageFactor("Ice",1); // no slowdown if victim is resistant to Ice damage
+			if (df)
+			{
+				victim.A_GiveInventory("ZombieScientistHalonSlowdown"); // slow down victim
+				if (victim.bISMONSTER && victim.tics > 0)
+				{
+					int rnd =  random(1,500);
+					if (rnd > 490) victim.tics += 1; // chance to reduce anim speed
+					else if (rnd == 1 && victim.bNOPAIN == false && victim.painchance > 0) // chance to force pain
+					{
+						state painstate = victim.Findstate("Pain");
+						if (painstate) victim.SetState(painstate); 
+					}
+				}
+			}
+		}
+		return 1;
+	}
+}
+Class ZombieScientistHalonSlowdown : PowerSpeed
+{
+	Default
+	{
+		Powerup.Duration 5;
+		Speed 0.5;
+	}
+	override void InitEffect()
+	{
+		super.InitEffect();
+		if (owner && owner.bISMONSTER) owner.speed = owner.default.speed*0.5;
+	}
+	override void EndEffect()
+	{
+		super.EndEffect();
+		if (owner && owner.bISMONSTER) owner.speed = owner.default.speed;
+	}
+}
+Class ZSFireExtinguisher : Actor
+{
+	int delay;
+	int pzoff;
+	int pxvel;
+	int pyvel;
+	int pzvel;
+	Default
+	{
+		Height 15;
+		Radius 4;
+		Health 1;
+		+SOLID;
+		Obituary "%o did not adhere to UAC safety regulations.";
+	}
+	States
+	{
+	Spawn:
+		SCFF ABC 5;
+		SCFF D -1
+		{
+			pxvel = random(-5,5);
+			pyvel = random(-5,5);
+			pzvel = random(1,4);
+			pzoff = random(5,10);
+			delay = randompick(80,60,40);
+			bSHOOTABLE = true;
+		}
+		Stop;
+	Death:
+		SCFF D 1
+		{
+			if (delay % 10 == 0) A_StartSound("zombiescientist/halonfire",flags:CHANF_OVERLAP);
+			A_SpawnParticleEx("FFFFFF",
+				TexMan.CheckForTexture("SCFFE0"),
+				style:STYLE_Add,
+				flags:SPF_ROLL,
+				lifetime:20,
+				size:5,
+				zoff:pzoff,
+				velx:pxvel,
+				vely:pyvel,
+				velz:pzvel,
+				startalphaf:0.6,
+				fadestepf:-1,
+				sizestep:1,
+				startroll:random(0,359),
+				rollvel:random(-20,20)
+			);
+			delay--;
+			if (delay == 0) SetStateLabel("Explode");
+		}
+		Loop;
+	Explode:
+		MISL B 8 Bright
+		{
+			A_Explode(96,96,XF_NOTMISSILE);
+			A_StartSound("misc/brainexplode");
+		}
+		MISL C 6 Bright;
+		MISL D 4 Bright;
+		Stop;
+	}
+}

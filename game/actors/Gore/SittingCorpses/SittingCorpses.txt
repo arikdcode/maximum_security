@@ -1,0 +1,33 @@
+Actor CarcassSittingMarine
+{
++Solid
+Height 32
+Radius 20
+//Sprite SIT1
+//Frames "A"
+//$Category Gore/Corpses/
+
+		States
+		{
+			Spawn:
+				SIT1 A -1
+				Stop
+		}
+}
+
+Actor CarcassSittingMaintenance
+{
++Solid
+Height 32
+Radius 20
+//Sprite SIT2
+//Frames "A"
+//$Category Gore/Corpses/
+
+		States
+		{
+			Spawn:
+				SIT2 A -1
+				Stop
+		}
+}

@@ -1,0 +1,3330 @@
+namespace = "ZDoom";
+
+conversation //1 chained Roshaan 1
+{
+	ID = 1;
+	//SetFont ( "FON2" );
+    //actor = "HelgaChained"; // Not a number!
+    page //1 Hello
+
+    {
+         name = "Chained Prisoner";
+         dialog = "Wha...? Who are you?";
+		 panel = "MDIAGH";
+		 goodbye = "\c[gold][Leave]";
+
+		 choice
+         {
+             text = "I... hope I'm not interrupting.";
+             nextpage = 10;
+         }
+         choice
+         {
+             text = "I'm a prisoner, like yourself. Or at least, I was. Why did those men chain you up on this cave?";
+             nextpage = 2;
+         }
+		 choice
+         {
+             text = "It doesn't matter who I am. Who are you?";
+             nextpage = 3;
+         }
+    }
+
+    page //2
+    {
+         name = "Chained Prisoner";
+         dialog = "Is it not obvious? Those men... \c[red]*grunts in pain*... \c[Untranslated]They were going to... to kill me.";
+		 panel = "MDIAGH";
+		 goodbye = "\c[gold]This seems fishy. I'm leaving.";
+
+		 choice
+         {
+             text = "Kill you? Why?";
+             nextpage = 12;
+         }
+		 		 choice
+         {
+             text = "Are you hurt?";
+             nextpage = 4;
+         }
+    }
+
+    page //3
+    {
+         name = "Chained Prisoner";
+         dialog = "I am... I was a huntress from the nearby village. Sorry, but I am in no mood for sharing my name with a stranger, given my... current predicament.";
+		 panel = "MDIAGH";
+		 goodbye = "\c[gold]Well, I am not in the mood for talking any longer.";
+
+		 choice
+         {
+             text = "Alright. And how exactly did you end up in this predicament?";
+             nextpage = 2;
+		 }
+    }
+
+	    page //4
+    {
+         name = "Chained Prisoner";
+         dialog = "I will live. But those curs chained up me tight. Is there any chance that you found the key on one of them?";
+		 panel = "MDIAGH";
+		 goodbye = "\c[gold]No, and I'm not going to bother looking for one.";
+
+		 choice
+         {
+             text = "Uh... no?";
+             nextpage = 5;
+         }
+		 choice
+         {
+             text = "Key? Whoa, whoa, who said anything about freeing you?";
+             nextpage = 6;
+         }
+		 		 choice
+         {
+             text = "No, but I wasn't really looking for one. Want me to double check?";
+             nextpage = 5;
+         }
+    }
+
+	    page //5
+    {
+         name = "Chained Prisoner";
+         dialog = "Lord above! I was really hoping you had already found the key, but that was just wishful thinking. Do not waste time looking for it on the corpses of these vagabonds. \c[red]**sigh**\c[Untranslated] Their leader has the key. He chained me up tight and headed back towards their temple with it. Bakul!";
+		 panel = "MDIAGHA";
+		 goodbye = "\c[gold]That's really is too bad. Well, see ya!";
+
+		 choice
+         {
+             text = "What's the matter? At least we know where it is.";
+             nextpage = 7;
+         }
+		 choice
+         {
+             text = "Their temple, huh? Are there a lot of them there?";
+             nextpage = 13;
+         }
+		 choice
+         {
+             text = "Sucks to be you.";
+             nextpage = 6;
+         }
+    }
+
+		page //6
+    {
+         name = "Chained Prisoner";
+         dialog = "Did you only come here to torment me? When you attacked these jackanapes, I dared hope you were here to rescue me.";
+		 panel = "MDIAGHA";
+		 goodbye = "\c[gold]I'm on nobody's side. You're on your own.";
+
+		 choice
+         {
+             text = "Relax! I'll go look for your key. Keep your... uh, hunting trousers on. ";
+             nextpage = 7;
+         }
+    }
+
+		page //7
+    {
+         name = "Chained Prisoner";
+         dialog = "Listen, you have already helped me once, and I am grateful. But the key to these chains is probably in the middle of their temple. That place is overrun with these blackguards. If you entered in there, you would be slain for sure!";
+		 panel = "MDIAGH";
+		 goodbye = "\c[gold]Good point! I don't need to risk myself. Bye!";
+
+		 choice
+         {
+             text = "Now hold on, why do we need the key? Why don't I just break your chains?";
+             nextpage = 9;
+         }
+		 choice
+         {
+             text = "Don't worry about me. I can take care of myself.";
+             nextpage = 8;
+         }
+    }
+
+		page //8
+    {
+         name = "Chained Prisoner";
+         dialog = "You *are* serious about helping me, aren't you? Well, you certainly are a brave one. Or a fool. But... Listen, I know not why you are so willing to risk yourself for a stranger, but you may as well try the diplomatic approach. Walk up to their temple and introduce yourself as a new recruit. You certainly sound like one of them when you talk, mayhaps they will fall for the ruse. That way you can enter their temple without alerting an entire army.";
+		 panel = "MDIAGH";
+		 goodbye = "\c[gold]I'll keep that in mind. Sit tight.";
+
+    }
+
+		page //9
+    {
+         name = "Chained Prisoner";
+         dialog = "Ha! You can try breaking them all you want, but even your bulging muscles won't be enough, big man. These chains are soul-bound. They shall not break unless you slay the monster that empowers them... Wherever it is. It would be much simpler to find the key.";
+		 panel = "MDIAGH";
+		 goodbye = "\c[gold]I didn't come here to do your stupid fetch-quest.";
+
+		 choice
+         {
+             text = "So, getting the key is the only option then?";
+             nextpage = 8;
+		}
+
+    }
+
+		page //10
+    {
+         name = "Chained Prisoner";
+         dialog = "\c[red]**...**";
+		 panel = "MDIAGHA";
+		 goodbye = "\c[gold][Leave]";
+
+
+		 choice
+         {
+             text = "Why are you chained up in this cave?";
+             nextpage = 2;
+         }
+		 choice
+         {
+             text = "Who are you?";
+             nextpage = 3;
+         }
+		 choice
+         {
+             text = "So... Do you come here often?";
+             nextpage = 11;
+         }
+	}
+
+		page //11
+    {
+         name = "Chained Prisoner";
+         dialog = "Please tell me that was not an attempt at courtship...";
+		 panel = "MDIAGHA";
+		 goodbye = "\c[gold]Well, if you're not interested, I'm leaving.";
+
+
+		 choice
+         {
+             text = "So... Uh... Why were you chained up in this cave?";
+             nextpage = 2;
+         }
+		 choice
+         {
+             text = "Why don't you tell me your name, sweetheart?";
+             nextpage = 3;
+         }
+	}
+
+		page //12
+    {
+         name = "Chained Prisoner";
+         dialog = "If you cut me loose, I will be happy to tell you all about it. Right now, I am more concerned with making an escape before more of those knaves arrive. And for that, I need these chains off of me.";
+		 panel = "MDIAGH";
+		 goodbye = "\c[gold]Well, good luck with that. I'll be going now.";
+
+
+		 choice
+         {
+             text = "Alright. Well, I didn't see a key to your chains on any of them.";
+             nextpage = 5;
+         }
+	}
+
+		page //13
+    {
+         name = "Chained Prisoner";
+         dialog = "\c[red]**She nods, looking worried.** \c[Untranslated]And... creatures too. The elder says... he says that they are demons.";
+		 panel = "MDIAGH";
+		 goodbye = "\c[gold]You know what? I think it's time for me to leave.";
+
+		 choice
+         {
+             text = "So... how do we get the key from them, then?";
+             nextpage = 7;
+         }
+    }
+
+}
+
+conversation //generic guard 2
+{
+
+	ID = 2;
+    //actor = "ZSpecOpsMachineGun"; // Not a number!
+    page //1 Hello
+
+    {
+         name = "Sentry";
+		 //panel = "BDIAGB";
+		 voice = "ZSPCSIG3";
+         dialog = "RANDOM_BLACKGRD";
+
+		 goodbye = "\c[gold][Leave.]";
+
+    }
+}
+
+conversation //guard captain 3
+{
+	ID = 3;
+    //actor = "HelgaChained"; // Not a number!
+    page //1 Hello
+
+    {
+         name = "Guard Captain";
+         dialog = "Shit, you stink like dead demon guts. I guess that means you're one of the new guys.";
+		 panel = "BDIAGB";
+		 goodbye = "\c[gold]Nope, not me!. You got the wrong guy. Goodbye!";
+		 voice = "ZSPCSIG3";
+		 choice
+         {
+             text = "Yep, I'm new here. Got a fresh uniform? Mine is covered in, uh, sacrifical offerings.";
+             nextpage = 2;
+         }
+
+		  choice
+         {
+             text = "\c[white]*Say nothing*";
+             nextpage = 3;
+         }
+
+		choice
+         {
+             text = "\c[red]Eat lead and have a bullet for breakfast, asshole!";
+				special = 80; // ACS_Execute
+			    arg0 = 5; // Run script 5
+			    arg1 = 0; // Run on this map
+             nextpage = 4;
+         }
+
+    }
+
+
+	page //2
+
+    {
+         name = "Guard Captain";
+		 panel = "BDIAGB";
+         dialog = "I don't know where they find so many of you sick fucks. Just hand over your weapons and I'll let you inside. But don't fucking touch me.";
+		 goodbye = "Let me think about this.";
+		 choice
+         {
+             text = "Not happening.";
+             nextpage = 5;
+         }
+		 choice
+         {
+             text = "\c[orange]Alright, here you go.";
+             nextpage = 7;
+         }
+		 choice
+         {
+             text = "I go where I want. *With* my weapons.";
+             nextpage = 6;
+         }
+
+    }
+
+		page //3
+
+    {
+         name = "Guard Captain";
+		 panel = "BDIAGB";
+         dialog = "There is something funny about you. Hand over your guns and come inside. I think our boss is gonna want to talk to you.";
+		 goodbye = "[Leave.]";
+		 choice
+         {
+             text = "Not happening.";
+             nextpage = 8;
+         }
+		 choice
+		 {
+			text = "\c[orange][Hand over your weapons.]";
+             nextpage = 7;
+         }
+
+    }
+
+		 page //4
+
+    {
+         name = "Guard Captain";
+		 panel = "BDIAGB";
+         dialog = "\c[red]That was your last mistake!";
+
+		 goodbye = "\c[red][Attack!]";
+
+    }
+
+		page //5
+
+    {
+         name = "Guard Captain";
+		 panel = "BDIAGB";
+         dialog = "Oh, we've got a tough guy here, do we? Tell you what, tough guy. How about you get the fuck outta my face, and I don't gun you down where you stand.";
+		 goodbye = "\c[gold][Leave.]";
+		 choice
+         {
+             text = "Enough of this sham! \c[red][Attack]";
+			 			special = 80; // ACS_Execute
+						arg0 = 5; // Run script 5
+						arg1 = 0; // Run on this map
+             nextpage = 4;
+         }
+	     choice
+         {
+             text = "Surely you don't need to take my weapons, gentlemen.";
+             nextpage = 6;
+         }
+		 choice
+         {
+             text = "\c[orange]There's no need to get upset. Here, take my guns.";
+             nextpage = 7;
+         }
+
+    }
+
+		page //6
+
+    {
+         name = "Guard Captain";
+		 panel = "BDIAGB";
+         dialog = "Listen, pal. Rules are rules. Either you hand over the goods, or you don't get access. Don't worry, they'll still be here when you get back.";
+		 goodbye = "I have to think about this.";
+		 choice
+         {
+             text = "Perhaps they will, but you won't. \c[red][Attack]";
+			 			special = 80; // ACS_Execute
+						arg0 = 5; // Run script 5
+						arg1 = 0; // Run on this map
+             nextpage = 4;
+         }
+		 choice
+         {
+             text = "\c[orange]Alright, fine! But they better be in mint condition when I return.";
+             nextpage = 7;
+         }
+
+    }
+
+			page //7
+    {
+         name = "Guard Captain";
+		 panel = "BDIAGB";
+         dialog = "Don't give that filthy shit to me. Dump it in the safe next to the door.";
+		 goodbye = "I'll be back for them. *All* of them.";
+
+    }
+
+			page //8
+
+    {
+         name = "Guard Captain";
+		 panel = "BDIAGB";
+         dialog = "\c[red]I wasn't asking, pal.";
+		 goodbye = "\c[gold][Leave.]";
+			choice
+         {
+             text = "Surely you don't need to take my weapons, gentlemen.";
+             nextpage = 6;
+         }
+		 			choice
+         {
+             text = "\c[orange]Fine, take them then!";
+             nextpage = 7;
+         }
+		 		 choice
+         {
+             text = "I'm getting real sick of your shit. \c[red][Attack]";
+			 			special = 80; // ACS_Execute
+						arg0 = 5; // Run script 5
+						arg1 = 0; // Run on this map
+             nextpage = 4;
+         }
+	}
+
+
+}
+
+conversation //guard captain 2 4
+{
+	ID = 4;
+    page //1 Hello
+
+    {
+         name = "Guard Captain";
+		 panel = "BDIAGB";
+         dialog = "\c[red]*Whistles*\c[Untranslated] How the fuck did you carry so many guns? Check this guy out!";
+		 goodbye = "\c[gold][Leave.]";
+
+		 Choice
+		 {
+			text = "Can I go in, now?";
+				special = 80; // ACS_Execute
+			    arg0 = 10; // Run script 5
+			    arg1 = 0; // Run on this map
+			nextpage = 2;
+		 }
+
+    }
+
+	    page //2 alright
+
+    {
+         name = "Guard Captain";
+		 panel = "BDIAGB";
+         dialog = "Alright.";
+		 goodbye = "\c[gold][Leave.]";
+
+		 Choice
+		 {
+			text = "Please move out of the way.";
+				special = 80; // ACS_Execute
+			    arg0 = 10; // Run script 5
+			    arg1 = 0; // Run on this map
+			nextpage = 2;
+		 }
+
+    }
+}
+
+conversation //free helga 5
+{
+	ID = 5;
+    page //1 Hello
+
+    {
+         name = "Prisoner";
+		 panel = "MDIAGN";
+         dialog = "I'm Free! (Under development, but feel free to have her tag along.)";
+		 goodbye = "\c[gold]Yay!";
+
+    }
+}
+
+conversation //hooded desk clerk left6
+{
+	ID = 6;
+    page //1 Hello
+    {
+         name = "Hooded Clerk";
+		 panel = "MCULTM";
+         dialog = "Ah. Another Earther. I hope you do not dissapoint the master like the last one did...";
+		 goodbye = "\c[gold][Leave.]";
+
+		 Choice
+		 {
+			text = "Who is the master?";
+			nextPage = 2;
+		 }
+
+
+		 Choice
+		 {
+			text = "Earther?";
+			nextPage = 3;
+		 }
+
+
+		 Choice
+		 {
+			text = "Dissapointed? How?";
+			nextPage = 4;
+		 }
+	}
+
+	page //2
+	{
+		name = "Hooded Clerk";
+		//pageName = "Master?";
+		panel = "MCULTM";
+		dialog = "\c[red]*He sneers at you with a knowing look.*";
+		goodbye = "\c[gold][Leave.]";
+
+
+		 Choice
+		 {
+			text = "Earther?";
+			nextPage = 3;
+		 }
+
+
+		 Choice
+		 {
+			text = "How was the master dissapointed?";
+			nextPage = 4;
+		 }
+	}
+
+		page //3
+	{
+		name = "Hooded Clerk";
+		//pageName = "Earther?";
+		panel = "MCULTM";
+		dialog = "It is obvious to us from your bearing that you are an Earther. That stocky build is a sure sign of your kind. From too much fine food, no doubt. Not all of us have had the good fortune to spend their lives in the lap of plenty. Not to mention, of course, your boorish manner of speech.";
+		goodbye = "\c[gold][Leave.]";
+
+		 Choice
+		 {
+			text = "Who is the Master?";
+			nextPage = 2;
+		 }
+
+
+		 Choice
+		 {
+			text = "Dissapointed? How?";
+			nextPage = 4;
+		 }
+
+
+
+		 Choice
+		 {
+			text = "Boorish?";
+			nextPage = 5;
+		 }
+	}
+
+		page //4
+	{
+		//pageName = "Dissapointed?";
+		name = "Hooded Clerk";
+		panel = "MCULTM";
+		dialog = "Fear not. Even the unworthy find purpose in the master's light. Yes... \c[red]*To himself*\c[Untranslated] Ye-e-e-e-s. They certainly do...";
+		goodbye = "\c[gold]That... was unsettling. I'm going to leave now.";
+
+
+		 Choice
+		 {
+			text = "Who is the Master?";
+			nextPage = 2;
+		 }
+
+
+		 Choice
+		 {
+			text = "What do you mean, Earther?";
+			nextPage = 3;
+		 }
+
+
+
+	}
+
+	page //5
+	{
+		//pageName = "Boorish?";
+		name = "Hooded Clerk";
+		panel = "MCULTM";
+		dialog = "\c[red]*His expression darkens.*\c[Untranslated]You Earthers speak a single word, and it rings in the discordant voice of a dullard. I do not know why serfs of your ilk are so well fed in your land, but the fact rings of heresy. Only those willing to truly test themselves deserve abundance. I have long suspected that your kind does troth with false gods.";
+		goodbye = "\c[gold][Leave.]";
+
+		 Choice
+		 {
+			text = "Who is the Master?";
+			nextPage = 2;
+		 }
+
+
+		Choice
+		 {
+			text = "How was the master dissapointed?";
+			nextPage = 4;
+		 }
+
+		Choice
+		 {
+			text = "False gods?";
+			nextPage = 6;
+		 }
+
+
+
+	}
+
+	Page //6
+	{
+		//pageName = "False gods?";
+		name = "Hooded Clerk";
+		panel = "MCULTM";
+		dialog = "I will speak no more of this. \c[red]*He glowers from beneath his hood.*";
+		goodbye = "\c[gold]This is getting uncomfortable. I'm going to go now.";
+	}
+
+
+
+}
+
+conversation //shadowy desk clerk right7
+{
+	ID = 7;
+    page //1 Hello
+    {
+         name = "Shadowy Clerk";
+		 //panel = "MCULTM";
+		 //panel = "BDIAGB";
+         dialog = "Curse these confounded devices! How do the Earthers type so quickly! And where in all the Hells is this 'ANY' KEY?";
+		 goodbye = "\c[gold]Maybe i'll come back later.";
+
+		 Choice
+		 {
+			 text = "I'm here to pick up my pistol";
+			 require
+			 {
+				 item = "RedCard";
+				 amount = 1;
+			 }
+			 Cost
+			 {
+				 item = "RedCard";
+				 amount = 1;
+			 }
+			 GiveItem = "Pistol~";
+			 NextPage = 2;
+		 }
+
+
+	}
+	    page //2 given
+    {
+         name = "Shadowy Clerk";
+		 //panel = "MCULTM";
+		 //panel = "BDIAGB";
+         dialog = "Take it, peasant, and be gone!";
+		 goodbye = "\c[gold]Thanks [Leave.].";
+
+		 Choice
+		 {
+			 text = "Nice.";
+			 NextPage = 1;
+		 }
+
+	}
+}
+
+conversation //Ellie 8
+{
+	ID = 8;
+    page //1 Hello
+    {
+         name = "Cook";
+		 panel = "MREDHN";
+         dialog = "Dinner's at sixth bell. Oh, you're from back home, aren't you? \c[red]*She sighs wistfully* \c[untranslated] We haven't got much left except local food. So if you you'd prefer something familiar, better order up quick. In case you want a cheeseburger or something.";
+		 goodbye = "\c[gold]No thanks.";
+
+		 Choice
+		 {
+			text = "Back home?";
+			nextPage = 2;
+		 }
+
+
+		 Choice
+		 {
+			text = "A cheeseburger sounds great!";
+			nextPage = 3;
+		 }
+
+
+		 Choice
+		 {
+			text = "I'll try the local food.";
+			nextPage = 4;
+		 }
+	}
+
+	page //2 back home
+    {
+         name = "Cook";
+		 panel = "MREDHN";
+         dialog = "You know. Earth? \c[Red]*She sighs again.\c[Untranslated] You uh... came through the gate, right?";
+		 goodbye = "\c[gold]That's none of your business. Goodbye.";
+
+		 Choice
+		 {
+			text = "Gate? What gate? I came through a dimly lit crypt under a haunted church.";
+			nextPage = 7;
+		 }
+
+
+		 Choice
+		 {
+			text = "So... are you from Earth, then?";
+			nextPage = 8;
+		 }
+
+
+		 Choice
+		 {
+			text = "I'm hungry.";
+			nextPage = 4;
+		 }
+
+	}
+
+	page //3 cheeseburger
+    {
+         name = "Cook";
+		 panel = "MREDHN";
+         dialog = "Oh, um. It'll be a while, then. The brothers don't trust Earth food, so we still have some buns. But there isn't much left, what with the castle on high alert and the road back home closed off.";
+		 goodbye = "\c[gold][I'll wait.]";
+
+		 Choice
+		 {
+			text = "The castle is on high alert?";
+			nextPage = 5;
+		 }
+
+		 Choice
+		 {
+			text = "What do you mean, the road back home?";
+			nextPage = 7;
+		 }
+
+
+		 Choice
+		 {
+			text = "I'll try some of the local food, then.";
+			nextPage = 4;
+		 }
+
+		 		 Choice
+		 {
+			text = "Let me ask you a question instead.";
+			nextPage = 6;
+		 }
+	}
+
+	page //4 menu
+    {
+         name = "Cook";
+		 panel = "MREDHB";
+         dialog = "Alright. Today we've got troctopods, vineroot soup, and mahtta-wahlae. Take your pick.";
+		 goodbye = "\c[gold]I wanted American food. American! Not this local crap! [Leave.]";
+
+		 Choice
+		 {
+			text = "Matter-what? What the hell are you talking about? ";
+			nextPage = 9;
+		 }
+
+		 Choice
+		 {
+			text = "I'll take the troctopod.";
+			nextPage = 27;
+		 }
+
+
+		 Choice
+		 {
+			text = "Give me some of that vineroot soup.";
+			nextPage = 25;
+		 }
+
+
+		 Choice
+		 {
+			text = "You know what? I think I'll try the mahtta-wahlae.";
+			nextPage = 26;
+		 }
+
+
+		 Choice
+		 {
+			text = "Actually, I think I'll just stick to the cheeseburger.";
+			nextPage = 3;
+		 }
+
+
+		 Choice
+		 {
+			text = "I don't need food. I need answers.";
+			nextPage = 6;
+		 }
+	}
+
+	page //5 castle torn up
+    {
+         name = "Cook";
+		 panel = "MREDHC";
+         dialog = "\c[red]*She swallows nervously*\c[Unstranslated] You know, what used to be the old count's castle, up on top of the mountain, across the big bridge? Something tore through the place. Something... nasty. I don't know what sort of creature can mess with... with the horned lords. \c[red]*she lowers her eyes*\c[Untranslated] But whatever it was, the whole place is in an uproar and nobody here is brave enough to go and check it out. I heard they were preparing a big ritual for tonight. Going to ask for more help. \c[Red]*She shudders, looking afraid.*";
+		 goodbye = "\c[gold]Oh, it's a real mystery, sure. Gotta go, bye!";
+
+
+		 Choice
+		 {
+			text = "Why do you look so worried?";
+			nextPage = 19;
+		 }
+
+		 Choice
+		 {
+			text = "Tell me about the horned ones.";
+			nextPage = 17;
+
+		 }
+
+		 Choice
+		 {
+			text = "Tell me about this ritual.";
+			nextPage = 18;
+		 }
+
+
+		 Choice
+		 {
+			text = "It was me. I'm the one who tore up the place.";
+			nextPage = 16;
+		 }
+	}
+
+	page //6 Information
+    {
+         name = "Cook";
+		 panel = "MREDHN";
+         dialog = "Sure! What do you want to know?";
+		 goodbye = "\c[gold]Actually, I'm good for now.";
+
+		 Choice
+		 {
+			text = "Where exactly are we?";
+			nextPage = 15;
+		 }
+
+		 Choice
+		 {
+			text = "Who are you?";
+			nextPage = 12;
+		 }
+
+		 Choice
+		 {
+			text = "How did you end up here?";
+			nextPage = 22;
+		 }
+
+
+		 Choice
+		 {
+			text = "Who are the men in robes?";
+			nextPage = 13;
+		 }
+
+		Choice
+		 {
+			text = "Who's in charge around here?";
+			nextPage = 14;
+		 }
+
+
+		Choice
+		 {
+			text = "How do I get back home? To Earth?";
+			nextPage = 7;
+		 }
+
+		 Choice
+		 {
+			text = "I'm looking for a key. It is probably a big, metal one. The kind that would fit a heavy padlock?";
+			nextPage = 11;
+		 }
+
+		 Choice
+		 {
+			text = "Actually, I'm interested in what's on the menu.";
+			nextPage = 4;
+		 }
+
+	}
+
+	page //7 gate
+    {
+         name = "Cook";
+		 panel = "MREDHA";
+         dialog = "Uh... you know? *The gate.* The gate the society used to move goods through, from Earth to the castle? Goods and... workers.";
+		 goodbye = "\c[gold][Leave.]";
+
+		 Choice
+		 {
+			text = "*Used to* move goods? Did something change?";
+			nextPage = 5;
+		 }
+
+
+		 Choice
+		 {
+			text = "I have some other questions for you.";
+			nextPage = 6;
+		 }
+
+	}
+
+	page //8 are you from earth?
+    {
+         name = "Cook";
+		 panel = "MREDHC";
+         dialog = "I haven't been home in nearly two years. I... my father worked for the *society*. He... he told me that coming here was going to be a breakthrough that would change the world forever. \c[red]*She bites her lip nervously.*\c[Untranslated]. If I had known *how* it would change the world, I would never had agreed to come here.";
+		 goodbye = "\c[gold][Leave.]";
+
+		 Choice
+		 {
+			text = "Your father? Where is he now?";
+			nextPage = 22;
+		 }
+
+
+		 Choice
+		 {
+			text = "Tell me about the society.";
+			nextPage = 21;
+		 }
+
+
+		 Choice
+		 {
+			text = "Actually, let's me ask you something else.";
+			nextPage = 6;
+		 }
+	}
+
+	page //9 try local food
+    {
+         name = "Cook";
+		 panel = "MREDHB";
+         dialog = "Wow, you're really new here, aren't you? Troctopods are a sort of mountanous land-crustacean. Well, the closest thing this place has to a crustacean. They're a local meat-staple. Rather delicious when cooked in their shells. Vineroot is just a boiled root, but its better than it sounds, even if it does taste a bit like mud. Mahtta-wahlae? Now that even I haven't had the courage to try. It's excreted from the anal glands of a local herd-animal. The monks can't seem to get enough of the stuff, but to me it just smells like sour milk.";
+		 goodbye = "\c[gold]I'll be back when I'm hungrier.";
+
+		 Choice
+		 {
+			text = "I'll take the land-crab.";
+			nextPage = 27;
+		 }
+
+
+		 Choice
+		 {
+			text = "Give me some of that vineroot soup.";
+			nextPage = 25;
+		 }
+
+
+		 Choice
+		 {
+			text = "You know what? I think I'll try the mahtta-wahlae.";
+			nextPage = 26;
+		 }
+
+		Choice
+		 {
+			text = "Actually, I'd prefer the cheeseburger.";
+			nextPage = 3;
+		 }
+
+		 Choice
+		 {
+			text = "Let me think about it. In the meantime, I have a few questions.";
+			nextPage = 4;
+		 }
+	}
+
+	page //10 how do i get back home?
+    {
+         name = "Cook";
+		 panel = "MREDHC";
+         dialog = "You can't. At least, not at the moment. The castle has been attacked, and it's locked down tight. The horned ones are enraged - it won't be safe to approach until they calm down. The gate back home was inside that castle. \c[Red]*she looks afraid*\c[Untranslated] You... don't think they destroyed the gate, do you?";
+		 goodbye = "\c[gold]You've given me a lot to think about. Thanks.";
+
+		 Choice
+		 {
+			text = "Tell me about the gate.";
+			nextPage = 7;
+		 }
+
+
+		 Choice
+		 {
+			text = "What do you mean, the castle was attacked?";
+			nextPage = 5;
+		 }
+
+		 Choice
+		 {
+			text = "If the castle is in chaos, and the gate was inside... Isn't now the best time to escape this place? While they are distracted?";
+			nextPage = 28;
+		 }
+
+		 Choice
+		 {
+			text = "Tell me about the horned ones.";
+			nextPage = 17;
+		 }
+
+		 Choice
+		 {
+			text = "Let me task you something else.";
+			nextPage = 6;
+		 }
+	}
+
+	page //11 Key?
+    {
+         name = "Cook";
+		 panel = "MREDHN";
+         dialog = "Funny you should ask. The Master just came back swinging a key around his fingers. He seemed quite pleased. It's either on his person, or locked up in his office. But the guards keep a sharp eye on that place. \c[Red]*She bites her lip.*\c[Untranslated] I... probably shouldn't be telling you that.";
+		 goodbye = "\c[gold]Thanks for the info. I'll put it to good use.";
+
+		 Choice
+		 {
+			text = "Where is the master's office?";
+			nextPage = 29;
+		 }
+
+		 Choice
+		 {
+			text = "Where is the master?";
+			nextPage = 18;
+		 }
+
+		 Choice
+		 {
+			text = "Let me task you something else, then.";
+			nextPage = 6; //information
+		 }
+	}
+
+	page //12 Who are you?
+    {
+         name = "Cook";
+		 panel = "MREDHN";
+         dialog = "My name is Ellie. Ellie Kelly. I came here with... With my father. About two years ago. I really miss home, y'know? How are things, back there?";
+		 goodbye = "\c[gold]I don't have time for chit-chat. [Leave.]";
+
+		 Choice
+		 {
+			text = "I've spent the last ten months in prison, so I can't comment. But I do have some questions for you.";
+			nextPage = 6; //information
+		 }
+
+		 Choice
+		 {
+			text = "I'm a bit out of touch on current events. Tell me, who is your father?";
+			nextPage = 20; //information
+		 }
+	}
+
+	page //13 Monks?
+    {
+         name = "Cook";
+		 panel = "MREDHA";
+         dialog = "They call themselves the 'Black brothers.' They're comprised entirely of natives to this land. Well, except for their leader, he's from earth. They worship... angels. \c[Red]*She scowls.*\c[Untranslated] The horned ones. They bring prosperity in exchange for...";
+		 goodbye = "\c[gold]I've heard enough for now. [Leave.]";
+
+		 Choice
+		 {
+			text = "Their leader is from Earth?";
+			nextPage = 14;
+		 }
+
+		 Choice
+		 {
+			text = "Who, or what, are the horned ones?";
+			nextPage = 17;
+		 }
+
+		 Choice
+		 {
+			text = "In exchange for what?";
+			nextPage = 23;
+		}
+	}
+
+	page //14 Master?
+    {
+         name = "Cook";
+		 panel = "MREDHA";
+         dialog = "Look, it's better if I don't talk about the master in earshot of anyone else. Suffice it to say, he used to work with my father, as a researcher. Though his studies were more... esoteric. Now... he is something more than just a scholar. You'll meet him eventually, all the new guys do. Look, just... be careful when you do. Those who don't display enough religious enthusiasm end up... end up... \c[Red]*She looks as if she is about to cry.*";
+		 goodbye = "\c[gold]I'll be back. Maybe.";
+
+
+		 Choice
+		 {
+			text = "End up what?";
+			nextPage = 23;
+		 }
+
+		Choice
+		 {
+			text = "Tell me about your father?";
+			nextPage = 20;
+		 }
+
+		 Choice
+		 {
+			text = "Where is the master?";
+			nextPage = 18;
+		 }
+
+		 Choice
+		 {
+			text = "I have some other questions instead.";
+			nextPage = 6;
+		 }
+	}
+
+	page //15 what is this place?
+    {
+         name = "Cook";
+		 panel = "MREDHN";
+         dialog = "Wow. You *really* didn't pay attention during indoctrination, huh? This place is called Stygia. It's a world that my father discovered. Well, re-discovered. There were already people here, somehow. My father, he... used to work for the UAC, helping them pioneer teleportation technology. But after he discovered the gate to Stygia, he split from them. He said they couldn't be trusted to test the technology with the proper safeguards in place. Some gates can't be closed once you open them.";
+		 goodbye = "\c[gold]I'll be back. Maybe.";
+
+
+
+		 Choice
+		 {
+			text = "Tell me about your father.";
+			nextPage = 20;
+		 }
+
+		 Choice
+		 {
+			text = "Some gates can't be closed?";
+			nextPage = 24;
+
+		 }
+
+		 Choice
+		 {
+			text = "Your father used to work for the UAC?";
+			nextPage = 33;
+
+		 }
+
+		 Choice
+		 {
+			text = "There were already people here?";
+			nextPage = 34;
+
+		 }
+		 Choice
+		 {
+			text = "I have some other questions";
+			nextPage = 6;
+		 }
+	}
+
+	page //16 tore it up?
+    {
+         name = "Cook";
+		 panel = "MREDHA";
+         dialog = "Uh-huh. Sure thing, buddy. I'd be careful about making such a boast around here. I once got a glimpse of one of the bridge gaurdians. There's simply no way a single man could carry enough firepower to take one of those things down. \c[Red]*Suddenly she gasps, as if frightenedby her own words.\c[Untranslated] I m-mean. Lords. The... lords. \c[Red] *she bows her head in subservience and makes a nervous gesture across her chest, hands splayed outwards like a pair of wings.*";
+		 goodbye = "\c[gold]Don't believe me? Fine. I was just leaving.";
+
+		 Choice
+		 {
+			text = "Interesting. Let me ask you something else.";
+			nextPage = 6;
+		 }
+
+		 Choice
+		 {
+			text = "Well, can I see the menu, then?";
+			nextPage = 4;
+
+		 }
+	}
+
+	page //17 Horned ones.?
+    {
+         name = "Cook";
+		 panel = "MREDHA";
+         dialog = "\c[Red]*She scowls*\c[Untranslated] The horned ones protect us. The master brought them here, and they provde for the people. The monks worship them, and the horned ones keep them well-fed and happy in exchange for... Trade.";
+		 goodbye = "\c[gold]Sounds like a convenient arrangement. Well, thanks for the info.";
+
+
+
+		 Choice
+		 {
+			text = "You don't seem happy about it.";
+			nextPage = 23;
+		 }
+
+		 Choice
+		 {
+			text = "Trade? For what?";
+			nextPage = 23;
+		 }
+
+		Choice
+		 {
+			text = "Odd. Let me ask you something else.";
+			nextPage = 6;
+		 }
+	}
+
+	page //18 Ritual?
+    {
+         name = "Cook";
+		 panel = "MREDHC";
+         dialog = "The master is in communion right now, in the chapel. I don't know exactly who... or what he speaks to. But the horned ones always give him something in return, if they are happy with his offerings. And he made a lot of offerings recently. I'm not sure what is going to happen, but expect something big. They are planning to retake the castle, and the gate.";
+		 goodbye = "\c[gold]Sounds like a convenient arrangement. Well, thanks for the info.";
+
+
+
+		 Choice
+		 {
+			text = "Tell me about the castle.";
+			nextPage = 5;
+		 }
+
+		 Choice
+		 {
+			text = "Tell me about the gate.";
+			nextPage = 7;
+
+		 }
+
+		Choice
+		 {
+			text = "Interesting. let me ask you something else.";
+			nextPage = 6;
+
+		 }
+	}
+
+	page //19 Worried?
+    {
+         name = "Cook";
+		 panel = "MREDHC";
+         dialog = "Look, I know the horned ones are supposed to protect us. But... people who go to the castle, they don't come back. That's bad enough already, but if there is something even worse there now... how will we ever get back home? The gate back to Earth is inside the castle.";
+		 goodbye = "\c[gold]That's rough. We can chat more later.";
+
+
+
+		 Choice
+		 {
+			text = "Tell me about the castle.";
+			nextPage = 5;
+		 }
+
+		 Choice
+		 {
+			text = "Tell me about the gate.";
+			nextPage = 7;
+
+		 }
+
+		Choice
+		 {
+			text = "Hmm. Let me ask you something else.";
+			nextPage = 6;
+
+		 }
+
+		Choice
+		 {
+			text = "I've been to the castle. I didn't see a gate though. I think I came through a secret way. But if there is some sort of gate back there, maybe we can use it to escape this place?";
+			nextPage = 28;
+
+		 }
+	}
+
+	page //20 Father?
+    {
+         name = "Cook";
+		 panel = "MREDHC";
+         dialog = "My father is Doctor Adrian Kelly. He was the head researcher for the teleportation program at the Union Aerospace Corporation, before he quit. He ended up working with the Thule society instead. They were the only ones crazy enough to take his teleportation research seriously. He was hoping they would be more susceptible to his planned safety protocols. Without him, the UAC's research slowed down, and he cracked teleportation before they did. That's how we found Stygia. \c[Red]*Her eyes glisten with tears.*\c[Unstranslated] But the Thule society didn't turn out to be much better than the UAC, after all.";
+		 goodbye = "\c[gold]That's his fault for trusting a cult. Goodbye.";
+
+
+
+		 Choice
+		 {
+			text = "What's up with the Thule society?";
+			nextPage = 21;
+		 }
+
+		 Choice
+		 {
+			text = "Where is your father now?";
+			nextPage = 22;
+		 }
+
+		 Choice
+		 {
+			text = "Tell me about Stygia";
+			nextPage = 15;
+		 }
+
+		 Choice
+		 {
+			text = "Tell me about the UAC";
+			nextPage = 33;
+		 }
+
+		Choice
+		 {
+			text = "Got it. Let me ask you something else.";
+			nextPage = 6;
+
+		 }
+	}
+
+	page //21 Society?
+    {
+         name = "Cook";
+		 panel = "MREDHA";
+         dialog = "The Thule society began way back during the second world war. They were a division of occultists and wierdos who supposedly did mystical research for Adolf Hitler. After the war ended, everyone thought they were done for. Well, it turns out they stuck around, and they have been very busy. Look, I know what you're thinking. That Dad agreed to work with Nazis. But the war ended a long time ago. Their priorities have shifted since then. I wish I could say it was for the better, though.";
+		 goodbye = "\c[gold]Your father trusted the Thule society? I'm in poor company.";
+
+		 Choice
+		 {
+			text = "Tell me about your father?";
+			nextPage = 20;
+		 }
+
+		 Choice
+		 {
+			text = "So the black-robed monks and the Thule society, they're different?";
+			nextPage = 13;
+
+		 }
+
+		Choice
+		 {
+			text = "Good to know. Let me ask you something else.";
+			nextPage = 6;
+
+		 }
+	}
+
+	page //22 History of dad
+    {
+         name = "Cook";
+		 panel = "MREDHC";
+         dialog = "My father... he... He and Dr... I mean the Master, worked together to make the gate that brought all us Earthers to Stygia. My father works... my father has to work for the master. I don't know where they are keeping him, though. I miss him.";
+		 goodbye = "\c[gold]Serves him right for working with these wierdos. I'm leaving.";
+
+
+
+		 Choice
+		 {
+			text = "Who is the master?";
+			nextPage = 14;
+		 }
+
+		 Choice
+		 {
+			text = "Stygia? Is that where we are?";
+			nextPage = 15;
+
+		 }
+
+		 Choice
+		 {
+			text = "Gate? What gate?";
+			nextPage = 7;
+
+		 }
+
+		Choice
+		 {
+			text = "Your father is missing?";
+			nextPage = 23;
+
+		 }
+
+		Choice
+		 {
+			text = "I have other questions.";
+			nextPage = 6;
+
+		 }
+	}
+
+	page //23 Won't talk
+    {
+         name = "Cook";
+		 panel = "MREDHA";
+         dialog = "I'm sorry, I don't want to talk about it. Not here, anyway.";
+		 goodbye = "\c[gold]Maybe later, then.";
+
+
+
+		 Choice
+		 {
+			text = "Well, let's look at the menu then.";
+			nextPage = 4;
+		 }
+
+		 Choice
+		 {
+			text = "Let me ask you something else, instead.";
+			nextPage = 6;
+
+		 }
+	}
+
+	page //24 Gates can't be closed
+    {
+         name = "Cook";
+		 panel = "MREDHA";
+         dialog = "My father was right. The master ignored his advice, and started opening other gateways in secret, to see where they would lead. That was how he discovered the horned ones. He... made a deal with them to help the people of Stygia. At least, that's what he claims.";
+		 goodbye = "\c[gold]You idiots got what you deserve. I've had enough.";
+
+
+
+		 Choice
+		 {
+			text = "The master discovered the horned ones? Who are they?";
+			nextPage = 17;
+		 }
+
+		 Choice
+		 {
+			text = "Who is this master, exactly?";
+			nextPage = 14;
+		 }
+
+		 Choice
+		 {
+			text = "I have some other questions.";
+			nextPage = 6;
+
+		 }
+	}
+
+	page //25 Vine-root
+    {
+         name = "Cook";
+		 panel = "MREDHB";
+         dialog = "Here you go. I tried to fish most of the sea-shells out. The monks love 'em, but us Earthers actually care about our teeth.";
+		 goodbye = "\c[gold]On second thought, I've changed my mind. [Leave.]";
+
+
+
+		 Choice
+		 {
+			text = "\c[orange]*Yum!*";
+				special = 80; // ACS_Execute
+			    arg0 = 16; // Run script 15
+			    arg1 = 0; // Run on this map
+
+			nextPage = 32;
+		 }
+
+
+		 Choice
+		 {
+			text = "On second thought, I don't want any right now. I have some other questions, though.";
+			nextPage = 6;
+
+		 }
+	}
+
+	page //26 Mahhter Wahely
+    {
+         name = "Cook";
+		 panel = "MREDHE";
+         dialog = "It's your funeral. \c[red]*She hands you a steaming bowl of sour-smelling goop, watching your reaction keenly.*";
+		 goodbye = "\c[gold]Wait! I've changed my mind. [Leave.]";
+
+
+
+		 Choice
+		 {
+			text = "\c[orange]*Choke it down, grimacing*";
+				special = 80; // ACS_Execute
+			    arg0 = 15; // Run script 15
+			    arg1 = 0; // Run on this map
+
+			nextPage = 31;
+		 }
+
+		 Choice
+		 {
+			text = "\c[orange]*Try your best to enjoy it.*";
+				special = 80; // ACS_Execute
+			    arg0 = 15; // Run script 15
+			    arg1 = 0; // Run on this map
+			nextPage = 31;
+		 }
+
+		 Choice
+		 {
+			text = "On second thought, I don't want that stuff right now. I have some other questions, though.";
+			nextPage = 6;
+		 }
+
+		 Choice
+		 {
+			text = "You know what? Let's go over the menu again.";
+			nextPage = 4;
+		 }
+	}
+
+	page //27 land-crab
+    {
+         name = "Cook";
+		 panel = "MREDHJ";
+         dialog = "This one is my favourite! We don't have any lobster-forks, but then again, with hands like yours, you can probably just crack open the shells with brute strength.";
+		 goodbye = "\c[gold]Actually, I've changed my mind. [Leave.]";
+
+
+
+		 Choice
+		 {
+			text = "\c[orange]*Delicious!*";
+				special = 80; // ACS_Execute
+			    arg0 = 16; // Run script 15
+			    arg1 = 0; // Run on this map
+
+			nextPage = 32;
+		 }
+
+
+		 Choice
+		 {
+			text = "On second thought, I don't want any right now. I have some other questions, though.";
+			nextPage = 6;
+
+		 }
+	}
+
+	page //28 escape
+    {
+         name = "Cook";
+		 panel = "MREDHC";
+         dialog = "You want to escape? \c[Red]*She looks around surrepticiously and then lowers her voice.*\c[Untranslated] Look, I don't know if you're serious or not, but I *can't* leave. They have my father!";
+		 goodbye = "\c[gold]That's really too bad. We'll talk again later.";
+
+
+
+		 Choice
+		 {
+			text = "They have your father?";
+			nextPage = 22;
+		 }
+
+		 Choice
+		 {
+			text = "Who has your father?";
+			nextPage = 13;
+		 }
+
+
+		 Choice
+		 {
+			text = "Alright. Let me ask you something else.";
+			nextPage = 6;
+
+		 }
+	}
+
+	page //29 Where is his office
+    {
+         name = "Cook";
+		 panel = "MREDHE";
+         dialog = "\c[red]*she raises an eyebrow*\c[untranslated] It's right above us, honey.\c[red]*She points upwards.*\c[untranslated] But nobody is allowed in without permission.";
+		 goodbye = "\c[gold]Let me figure that part out. [Leave.]";
+
+		 Choice
+		 {
+			text = "Alright. Let me ask you something else.";
+			nextPage = 6;
+
+		 }
+	}
+
+	page //30 you seem different
+    {
+         name = "Cook";
+		 panel = "MREDHA";
+         dialog = "I'm not *with* the Black brothers, if that's what you mean. Or the society. I'm my own person! I'm just working here because... because I *have* to. For now.";
+		 goodbye = "\c[gold]Seems like a raw deal. [Leave.]";
+
+		 Choice
+		 {
+			text = "Alright. Let me ask you something else.";
+			nextPage = 6;
+		 }
+
+		 Choice
+		 {
+			text = "Why do you *have* to be here?";
+			nextPage = 23;
+		 }
+
+		Choice
+		 {
+			text = "Tell me about the Black brothers.";
+			nextPage = 13;
+		 }
+
+		Choice
+		 {
+			text = "The society?.";
+			nextPage = 21;
+		 }
+
+		Choice
+		 {
+			text = "I have other questions for you.";
+			nextPage = 6;
+		 }
+	}
+
+	page //31 mattha whalae tried
+    {
+         name = "Cook";
+		 panel = "MREDHJ";
+         dialog = "\c[Red]*She bursts out laughing*\c[Untranslated] Oh my god! The look on your face! It's priceless! Hey, are you alright? You don't look so good.";
+		 goodbye = "\c[gold]I think i'm going to be sick. [Leave.]";
+
+		 Choice
+		 {
+			text = "It's... not so bad actually. *hurk*. Got time for some questions?";
+			nextPage = 6;
+		 }
+
+	}
+
+	page //32 good food
+    {
+         name = "Cook";
+		 panel = "MREDHJ";
+         dialog = "\c[red]*She beams, proudly.*\c[Untranslated] Cooking this stuff is the one joy I have left. Hope you liked it!";
+		 goodbye = "\c[gold]Not bad. Thanks! [Leave.]";
+
+		 Choice
+		 {
+			text = "Thanks for the food. Got time for some questions?";
+			nextPage = 6;
+		 }
+
+	}
+
+	page //33 UAC
+    {
+         name = "Cook";
+		 panel = "MREDHN";
+         dialog = "The Union Aerospace Corporation? Surely you've heard of them? They're basically majority shreholders in half of our solar system, back home. The have a total monopoly over space travel, too. I wonder if they've figured out teleportation yet without my dad around? I Haven't been home in a while.";
+		 goodbye = "\c[gold]Not bad. Thanks! [Leave.]";
+
+		 Choice
+		 {
+			text = "Your dad?";
+			nextPage = 20;
+		 }
+
+		 		 Choice
+		 {
+			text = "Oh, they figured it out alright. It did not end well. But let me ask you something else.";
+			nextPage = 6;
+		 }
+
+	}
+
+	page //34 locals
+    {
+         name = "Cook";
+		 panel = "MREDHN";
+         dialog = "Uh-huh. Used to be a flourishing medieval society, with hundreds of years of history. Perhaps thousands. We think they were brought here from Earth a long, long time ago. Not sure by who, though. But they weren't doing very well when we first got here.";
+		 goodbye = "\c[gold]Thanks for the info. [Leave.]";
+
+		 Choice
+		 {
+			text = "They weren't doing well?";
+			nextPage = 35;
+		 }
+
+		 Choice
+		 {
+			text = "Let me ask you something else.";
+			nextPage = 6;
+		 }
+
+	}
+
+	page //35 locals poverty
+    {
+         name = "Cook";
+		 panel = "MREDHN";
+         dialog = "Yeah, they were starving. Something to do with local weather patterns taking a turn for the worst. Long term crop failure, mass starvation. They've been in decline for the last few centuries. The master changed all that.";
+		 goodbye = "\c[gold]Thanks for the info. [Leave.]";
+
+		 Choice
+		 {
+			text = "Tell me about the master";
+			nextPage = 14;
+		 }
+
+		 Choice
+		 {
+			text = "Interesting. Let me ask you something else.";
+			nextPage = 6;
+		 }
+
+	}
+}
+
+conversation //Monks in base 9
+{
+	ID = 9;
+    page //1 Hello
+    {
+         name = "Black Brother";
+		 //panel = "MREDHN";
+         dialog = "RANDOM_MONKBASE";
+		 goodbye = "\c[gold][Leave.]";
+
+	}
+}
+
+conversation //Monk in kitchen 10
+{
+	ID = 10;
+    page //1 Hello
+    {
+         name = "Black Brother";
+		 //panel = "MREDHN";
+         dialog = "Please. Stay out of the kitchen.";
+		 goodbye = "\c[gold][Leave.]";
+
+	}
+}
+
+conversation //Demon Typist 11
+{
+	ID = 11;
+    page //1 Hello
+    {
+         name = "Crypto";
+		 //panel = "MREDHN";
+         dialog = "RANDOM_DEMONTYPE";
+		 goodbye = "\c[gold][Leave.]";
+
+	}
+}
+
+conversation //Server techs 12
+{
+	ID = 12;
+    page //1 Hello
+    {
+         name = "Undead Technician";
+		 //panel = "MREDHN";
+         dialog = "RANDOM_SERVERTECH";
+		 goodbye = "\c[gold][Leave.]";
+
+	}
+}
+
+conversation //Zombies 13
+{
+	ID = 13;
+    page //1 Hello
+    {
+         name = "Risen Soldier";
+		 //panel = "MREDHN";
+         dialog = "RANDOM_ZOMBIESOLDIER";
+		 goodbye = "\c[gold][Leave.]";
+
+	}
+}
+
+conversation //Bunker guard 15
+{
+	ID = 15;
+    page //1 Hello
+    {
+         name = "Former Ranger";
+         dialog = "No passage without authorization.";
+		 goodbye = "\c[gold][Leave.]";
+
+		Choice
+		{
+			text = "What kind of authorization?";
+			nextpage = 2;
+		}
+
+
+		Choice
+		{
+			text = "I already have authorization.";
+			Require
+			{
+				Item = "BlueCard";
+				Amount = 1;
+			}
+			Special = 80;
+			Arg0 = 17;
+			Arg1 = 0;
+			Nextpage = 7;
+		}
+
+		Choice
+		{
+			text = "I already have authorization.";
+			Exclude
+			{
+				Item = "BlueCard";
+				Amount = 1;
+			}
+			Nextpage = 6;
+		}
+
+
+
+
+
+		 Choice
+		{
+			text = "\c[Red]I've got your authorization right here. [Attack.]";
+			Special = 80;
+			Arg0 = 5;
+			Arg1 = 0;
+			nextpage = 4;
+		}
+
+
+	}
+
+	page //2 authorization type
+    {
+         name = "Former Ranger";
+         dialog = "What do you mean, 'what kind of authorization? A fuckin' keycard, genius.";
+		 goodbye = "\c[gold]No need to be an ass.";
+
+		Choice
+		{
+			text = "What kind of keycard?";
+			nextpage = 3;
+		}
+
+		Choice
+		{
+			text = "I've got a keycard.";
+			Require
+			{
+				Item = "BlueCard";
+				Amount = 1;
+			}
+			Special = 80;
+			Arg0 = 17;
+			Arg1 = 0;
+			Nextpage = 7;
+		}
+
+		Choice
+		{
+			text = "I've got a keycard.";
+			Exclude
+			{
+				Item = "BlueCard";
+				Amount = 1;
+			}
+			Nextpage = 6;
+		}
+
+	}
+
+	page //3 kind of keycard
+    {
+         name = "Former Ranger";
+         dialog = "Listen buddy, if you had it, you'd know. No go away.";
+		 goodbye = "\c[gold]Fine.";
+
+
+		Choice
+		{
+			text = "\c[Red]I don't need a fuckin' keycard. [Attack.]";
+			Special = 80;
+			Arg0 = 5;
+			Arg1 = 0;
+			nextpage = 4;
+		}
+
+		Choice
+		{
+			text = "I've got your keycard right here.";
+			Require
+			{
+				Item = "BlueCard";
+				Amount = 1;
+			}
+			Special = 80;
+			Arg0 = 17;
+			Arg1 = 0;
+			Nextpage = 7;
+		}
+
+		Choice
+		{
+			text = "I've got your keycard right here.";
+			Exclude
+			{
+				Item = "BlueCard";
+				Amount = 1;
+			}
+			Nextpage = 6;
+		}
+
+	}
+
+	page //4 hostility
+    {
+         name = "Former Ranger";
+         dialog = "Shit! Alarm! Alarm!.";
+		 goodbye = "\c[Red][Fight.]";
+
+
+	}
+
+page //5 Hello
+    {
+         name = "Former Ranger";
+         dialog = "If you have authorization, you can go in.";
+		 goodbye = "\c[gold][Leave.]";
+
+		Choice
+		{
+			text = "What kind of authorization do I need?";
+			nextpage = 2;
+		}
+
+
+		Choice
+		{
+			text = "I already have authorization.";
+			Require
+			{
+				Item = "BlueCard";
+				Amount = 1;
+			}
+			Special = 80;
+			Arg0 = 17;
+			Arg1 = 0;
+			Nextpage = 7;
+		}
+
+		Choice
+		{
+			text = "I already have authorization.";
+			Exclude
+			{
+				Item = "BlueCard";
+				Amount = 1;
+			}
+			Nextpage = 6;
+		}
+		 Choice
+		{
+			text = "\c[Red]I've got your authorization right here. [Attack.]";
+			Special = 80;
+			Arg0 = 5;
+			Arg1 = 0;
+			nextpage = 4;
+		}
+
+
+	}
+
+		page //6 no
+    {
+         name = "Former Ranger";
+         dialog = "Yeah? Well, where is it? Dont waste my time.";
+		 goodbye = "\c[Gold][Leave.]";
+
+		Choice
+		{
+			text = "Nevermind.";
+			nextpage = 5;
+		}
+
+
+	}
+
+		page //7 yes
+    {
+         name = "Former Ranger";
+         dialog = "Well why didn't ya fuckin' say so?";
+		 goodbye = "\c[Gold][Leave.]";
+
+		Choice
+		{
+			text = "Thanks!";
+			nextpage = 5;
+		}
+
+	}
+
+
+}
+
+conversation //Office guard 16
+{
+	ID = 16;
+    page //1 Hello
+    {
+         name = "Reanimated Commander";
+         dialog = "What do you want?";
+		 drop = "RedCard";
+		 goodbye = "\c[gold]Nothing you can provide.";
+
+		Choice
+		{
+			Exclude
+			{
+				Item = "BlueCard";
+				Amount = 1;
+			}
+			text = "To get into the office.";
+			nextpage = 2;
+		}
+
+		Choice
+		{
+			Require
+			{
+				Item = "BlueCard";
+				Amount = 1;
+			}
+			text = "To get into the office.";
+			nextpage = 8;
+		}
+
+
+
+		Choice
+		{
+			text = "Orders, sir!";
+			GiveItem = "RedCard";
+			exclude
+			{
+				Item = "Redcard";
+				Amount = 1;
+			}
+			Nextpage = 3;
+		}
+
+		Choice
+
+		{
+			text = "Reporting for duty!";
+			Require
+			{
+				item = "Pistol~";
+				Amount = 1;
+			}
+			nextpage = 6;
+
+
+
+		}
+
+		 Choice
+		{
+			text = "\c[Red]Your face, my fist. [Attack.]";
+			Special = 80;
+			Arg0 = 5;
+			Arg1 = 0;
+			nextpage = 4;
+		}
+	}
+
+		page //2 Office access
+    {
+         name = "Reanimated Commander";
+         dialog = "Now why would I let you into the office?";
+		 goodbye = "\c[gold]Nevermind.";
+
+		Choice
+		{
+			text = "Because I've got permission.";
+			Require
+			{
+				Item = "BlueCard";
+				Amount = 1;
+			}
+			Special = 80;
+			Arg0 = 19;
+			Arg1 = 0;
+			Nextpage = 5;
+		}
+
+				Choice
+		{
+			text = "Because I've got permission.";
+			Exclude
+			{
+				Item = "BlueCard";
+				Amount = 1;
+			}
+			Nextpage = 7;
+		}
+
+
+		Choice
+		{
+			text = "Actually, there's something else I need.";
+			Nextpage = 1;
+		}
+
+		 Choice
+		{
+			text = "\c[Red]You don't have a choice. [Attack.]";
+			Special = 80;
+			Arg0 = 5;
+			Arg1 = 0;
+			nextpage = 4;
+		}
+	}
+
+	page //3 Orders
+    {
+         name = "Reanimated Commander";
+         dialog = "Go to the front desk and grab a standard issue pistol if you haven't already. Here, take this authorization. Also, I'm not a sir. This isn't the military, we're a private organization. Don't embarrass yourself.";
+		 goodbye = "\c[gold]Yes, s... I mean yes, captain.";
+
+		Choice
+		{
+			text = "Actually, there's something else I needed.";
+			nextpage = 1;
+		}
+
+	}
+
+		page //4 Hostility
+    {
+         name = "Reanimated Captain";
+         dialog = "\c[Red]I'm going to enjoy this.";
+
+		 goodbye = "\c[Red][Fight.]";
+
+	}
+
+		page //5 Accepted or not
+    {
+         name = "Reanimated Captain";
+         dialog = "Anything else?";
+		 goodbye = "\c[gold]No.";
+
+		Choice
+		{
+			text = "Actually, there's something else I needed.";
+			nextpage = 1;
+		}
+
+	}
+
+	page //6 Pistol
+    {
+         name = "Reanimated Commander";
+         dialog = "Report to bunker 02 for guard duty.";
+		 goodbye = "\c[gold]Alright.";
+
+		Choice
+		{
+			text = "Actually, there's something else I needed.";
+			nextpage = 1;
+		}
+
+	}
+
+		page //7 No you don't
+    {
+         name = "Reanimated Commander";
+         dialog = "No. You don't.";
+		 goodbye = "\c[gold]Alright.";
+
+		Choice
+		{
+			text = "Actually, there's something else I needed.";
+			nextpage = 1;
+		}
+
+	}
+
+	page //8 No you don't
+    {
+         name = "Reanimated Commander";
+         dialog = "What? Again? You've already got permission. Stop wasting my time.";
+		 goodbye = "\c[gold]Alright.";
+
+		Choice
+		{
+			text = "Actually, there's something else I needed.";
+			nextpage = 1;
+		}
+
+	}
+
+}
+
+conversation //Bunker guard 02 17
+{
+	ID = 17;
+    page //1 Hello
+    {
+         name = "Heavy Trooper";
+         dialog = "Uhhh?";
+		 goodbye = "\c[gold]Nevermind.";
+
+		Choice
+		{
+			text = "Can I go in?";
+			Exclude
+			{
+				Item = "Pistol~";
+				Amount = 1;
+			}
+			nextpage = 2;
+		}
+
+		Choice
+		{
+			text = "Reporting for bunker duty.";
+			Require
+			{
+				Item = "Pistol~";
+				Amount = 1;
+			}
+			Special = 80;
+			Arg0 = 21;
+			Arg1 = 0;
+
+			nextpage = 3;
+		}
+	}
+
+    page //2 No pistol
+    {
+         name = "Heavy Trooper";
+         dialog = "Need.... Wepun...";
+		 goodbye = "\c[gold]This is a waste of time.";
+
+
+		Choice
+		{
+			text = "Let me try again...";
+			nextpage = 1;
+		}
+	}
+
+	    page //3 Pistol
+    {
+         name = "Heavy Trooper";
+         dialog = "\c[Red]*Gurgles*";
+		 goodbye = "\c[gold]Thanks!";
+
+		Choice
+		{
+			text = "Let me try again...";
+			nextpage = 1;
+		}
+
+	}
+}
+
+conversation //Bunker warning 02 18
+{
+	ID = 18;
+    page //1 Hello
+    {
+         name = "Nervous Guard";
+         dialog = "Oh, Jesus. They sent you in to clear out the bunker, huh?";
+		 goodbye = "\c[gold][Leave.]";
+
+		Choice
+		{
+			text = "Yes, that's me.";
+			nextpage = 2;
+		}
+
+		Choice
+		{
+			text = "What's in the bunker?";
+			nextpage = 3;
+		}
+
+		Choice
+		{
+			text = "Wait, what do you mean, clear out the bunker?";
+			nextpage = 4;
+		}
+
+	}
+
+    page //2 yes that's me
+    {
+         name = "Nervous Guard";
+         dialog = "Damn. Well, good luck. You're gonna need it.";
+		 goodbye = "\c[gold]Thanks. See you later.";
+
+		Choice
+		{
+			text = "What do you mean, I'm gonna need it?";
+			nextpage = 5;
+		}
+	}
+
+    page //3 What's in the bunker?
+    {
+         name = "Nervous Guard";
+         dialog = "Christ, I don't know. Some sort of native fauna, tore apart everyone inside and they had to seal it off. The security tape was so shocking the commander burned it after watching it. I'm not fucking kidding. Well, they've given you a gun, at least. \c[Red] *He eyes your pistol, looking unconvinced.*";
+		 goodbye = "\c[gold]Thanks. See you later.";
+
+		Choice
+		{
+			text = "Do you know what it was?";
+			nextpage = 4;
+		}
+	}
+
+	page //4 Clear it out??
+    {
+         name = "Nervous Guard";
+         dialog = "Look man, I don't know what's in there. Nobody does. You've seen the...uh... zombiefied soldiers the Master uses as cannon fodder? Those guys were taking dirt naps before he woke them back up. Problem is, something else woke up as well. Something that was already here... They sent in a whole squad yesterday, and no one came back out. Though sometimes I hear... scraping against the door.";
+		 goodbye = "\c[gold] Fuck this. I'm leaving.";
+
+		Choice
+		{
+			text = "What happened, exactly?";
+			nextpage = 3;
+		}
+
+				Choice
+		{
+			text = "Wait, why am I being sent in alone?";
+			nextpage = 16;
+		}
+
+		Choice
+		{
+			text = "Scraping? And you didn't try and open it? What if it was the soldiers that were sent in there, trying to get back out?";
+			nextpage = 17;
+		}
+	}
+
+	page //5 Zombification?
+    {
+         name = "Nervous Guard";
+         dialog = "\c[Red]*He leans in and lowers his voice*\c[Untranslated] It's the *Master.* He's got something really important down there, and when we lost the bunker, we lot control of it. He's been sending in rookies and veterans alike, hoping each of them will wear down whatever the hell is in there. You know. A battle of attrition. You'd think he'd send the zombies in to do the dirty work, but for some reason he only sends in living troopers.";
+		 goodbye = "\c[gold][Leave.]";
+
+		Choice
+		{
+			text = "Why does he only send in living troopers?";
+			nextpage = 6;
+		}
+
+		Choice
+		{
+			text = "What's down there?";
+			nextpage = 9;
+		}
+
+	}
+
+	page //6 Living troopers?
+    {
+         name = "Nervous Guard";
+         dialog = "C-Christ, I don't know. If I had known what I was signing up for when I joined the Society, I would never have come here. I'm terrified they're gonna send me in soon.";
+		 goodbye = "\c[gold]Good luck to you.";
+
+		Choice
+		{
+			text = "What's down there?";
+			nextpage = 9;
+		}
+
+		Choice
+		{
+			text = "Hey. If something goes down. Something big... Wanna fight by my side?";
+			nextpage = 7;
+		}
+
+
+		Choice
+		{
+			text = "That's rough. I better head on in.";
+			nextpage = 2;
+		}
+
+	}
+
+	page //7 fight by my side
+    {
+         name = "Nervous Guard";
+         dialog = "Uh... What do you mean? Like, if something breaks out of the bunker? I'll have to lock the door behind you, you know. You can only open it once the place is clear.";
+		 goodbye = "\c[gold][Leave.]";
+
+		Choice
+		{
+			text = "Damn. Well. No point in dawdling.";
+			nextpage = 2;
+		}
+
+		Choice
+		{
+			text = "No, I mean if something big does down in the base.";
+			nextpage = 8;
+		}
+
+	}
+
+	page //8 down at the base
+    {
+         name = "Nervous Guard";
+         dialog = "The base? What do you mean? What exactly are you planning? \c[Red]*It's impossible to tell his expression behind the mask.*";
+		 goodbye = "\c[gold][Leave.]";
+
+		Choice
+		{
+			text = "I'm going to try and take out the master. That way, we'll have a chance to escape from here. You and me.";
+			Special = 80;
+			Arg0 = 23;
+			Arg1 = 0;
+			nextpage = 13;
+		}
+
+		Choice
+		{
+			text = "Oh, you know. If the zombies go rogue or something.";
+			nextpage = 10;
+		}
+
+	}
+
+	page //9 What's down there?
+    {
+         name = "Nervous Guard";
+         dialog = "I...uh... Think it has something to do with the... you know... reanimated workers. Keeps them in line.";
+		 goodbye = "\c[gold][Leave.]";
+
+		Choice
+		{
+			text = "Interesting. Well, I best head on in, then.";
+			nextpage = 2;
+		}
+
+		Choice
+		{
+			text = "Why does he only send in living troopers?";
+			nextpage = 6;
+		}
+
+
+		Choice
+		{
+			text = "Hey. If something goes down. Something big... Wanna fight by my side?";
+			nextpage = 7;
+		}
+
+	}
+
+	page //10 hostility phase 1
+    {
+         name = "Nervous Guard";
+         dialog = "What the? You're planning to set the zombies on us?";
+		 goodbye = "\c[gold][Leave.]";
+
+		Choice
+		{
+			text = "No way. I wouldn't want to end up somebody's dinner.";
+			nextpage = 11;
+		}
+
+		Choice
+		{
+			text = "Not on *us.* On *everyone*.";
+			Special = 80;
+			Arg0 = 5;
+			Arg1 = 0;
+			nextpage = 12;
+		}
+
+	}
+
+	page //11 back down
+    {
+         name = "Nervous Guard";
+         dialog = "You're damn right you don't. Those things creep me out, man.";
+		 goodbye = "\c[gold][Leave.]";
+
+		 Choice
+		 {
+			Text = "I'll just go in and take care of the bunker.";
+			NextPage = 2;
+		 }
+
+
+	}
+
+	page //12 oops!
+    {
+         name = "Nervous Guard";
+         dialog = "Ah, shit! \c[Red]*He hits his mic*\c[Untranslated] Intruder! Intruder!";
+		 goodbye = "\c[gold]Whoops!";
+	}
+
+	page //13 Friend
+    {
+         name = "Nervous Guard";
+         dialog = "Damn, you're serious, aren't you? Look, tell you what, if you come back outta that bunker alive, I'll have your back. If you can survive in there, you can survive anything. There's something else you should know, though.";
+		 goodbye = "\c[gold][Leave.]";
+
+		 Choice
+		 {
+			Text = "What is it?.";
+			NextPage = 14;
+		 }
+
+		Choice
+		 {
+			Text = "I'll just go in and take care of the bunker.";
+			NextPage = 2;
+		 }
+
+	}
+
+	page //14 secret
+    {
+         name = "Nervous Guard";
+         dialog = "There's a machine in the bunker that emits a signal. It's... what the Master uses to keep the zombies in line. Man, I'm not even supposed to know about it. I just overheard the commander talking to the Master about it after the shit hit the fan down here. Look, if you clear out the bunker... Well, maybe you can mess with the machine. Or... break it, I don't know. If the zombies lose their minds, they'll make fighting our way out of here much easier. Of course, that's assuming most of them die in the battle, and they don't eat *us* first.";
+		 goodbye = "\c[gold][Leave.]";
+
+		 Choice
+		 {
+			Text = "That... might be useful.";
+			NextPage = 15;
+		 }
+
+		Choice
+		 {
+			Text = "I don't plan on messing with that signal. Too risky.";
+			NextPage = 2;
+		 }
+
+	}
+
+	page //15 secret 2
+    {
+         name = "Nervous Guard";
+         dialog = "Alright. Well, even if you do clear out the bunker, you don't have to disrupt that signal right away. At least, not until you're sure you're ready to fight. The master has a camera on that room - he'll know who did it.";
+		 goodbye = "\c[gold]Good to know. [Leave.]";
+
+		 Choice
+		 {
+			Text = "Alright. Well, I better head on in.";
+			NextPage = 2;
+		 }
+
+	}
+
+	page //16 Alone
+    {
+         name = "Nervous Guard";
+         dialog = "Because we're expendable, man. Why else? If you're not in with the Master's inner circle, he doesn't give a damn about you.";
+		 goodbye = "\c[gold]Good to know. [Leave.]";
+
+		 Choice
+		 {
+			Text = "That's rough.";
+			NextPage = 5;
+		 }
+
+	}
+
+	    page //2 yes that's me
+    {
+         name = "Nervous Guard";
+         dialog = "Open the door, he says. Look man, if it really was the squad coming back, then why didn't they use the intercom on the other side of the door? No way, man. I'm not opening that damn door until the Master says the bunker has been secured.";
+		 goodbye = "\c[gold][Leave.].";
+
+		Choice
+		{
+			text = "Don't worry about me. I'm not like the other soldiers.";
+			nextpage = 5;
+		}
+
+		Choice
+		{
+			text = "If a whole squad died, then why am I being sent in alone?";
+			nextpage = 16;
+		}
+	}
+}
+
+conversation //Ellie Hides
+{
+	ID = 19;
+    page //1 Hello
+    {
+         name = "Ellie";
+		 Panel = "MREDHC";
+         dialog = "Oh my God. What is happening?";
+		 goodbye = "\c[gold]Sit tight. I'll be back later.";
+
+		Choice
+		{
+			text = "I'm taking out the Master for good.";
+			nextpage = 2;
+		}
+
+		Choice
+		{
+			text = "\c[Red]I'm getting rid of everyone who works in this fucked up place. Everyone. [Attack.]";
+			Special = 80;
+			Arg0 = 26;
+			Arg1 = 0;
+			nextpage = 3;
+		}
+
+
+
+	}
+
+    page //2 master
+    {
+         name = "Ellie";
+		 Panel = "MREDHC";
+         dialog = "Careful! The Master is no pushover. And he has an army!";
+		 goodbye = "\c[gold]Stay put. I'll be back when the Master has been dealt with.";
+
+
+		Choice
+		{
+			text = "\c[Red]I'm getting rid of everyone who works in this fucked up place. Everyone. [Attack.]";
+			Special = 80;
+			Arg0 = 26;
+			Arg1 = 0;
+			nextpage = 3;
+		}
+
+
+	}
+
+    page //3 Murder
+    {
+         name = "Ellie";
+		 Panel = "MREDHC";
+         dialog = "Oh my God, no!";
+		 goodbye = "\c[gold]...";
+
+	}
+}
+
+conversation //Master is dead
+{
+	ID = 20;
+    page //1 Hello
+    {
+         name = "Ellie";
+         dialog = "Is it over? Is he dead?";
+		 Panel = "MREDHC";
+		 goodbye = "\c[gold]Sit tight. I'll be back later.";
+
+		Choice
+		{
+			text = "The son of a bitch is in the dirt.";
+			nextpage = 2;
+		}
+
+	}
+
+	    page //1 Hello
+    {
+         name = "Ellie";
+         dialog = "\c[Pink]My hero! (temp)";
+		 Panel = "MREDHC";
+		 goodbye = "\c[gold]Woot!(temp).";
+
+	}
+}
+
+conversation //Undead lord Kro-Bakul
+{
+	ID = 21;
+	page //1 hello
+	{
+		name = "Undead Lord";
+		Panel = "MUNDB";
+		dialog = "Who dares disturb my rest?";
+		goodbye = "\c[gold]Nope! I'm leaving.";
+
+				Choice
+		{
+			text = "\c[Red]Your doom.";
+			Special = 80; //teleport down and fight
+			Arg0 = 37;
+			Arg1 = 0;
+			nextpage = 4;
+		}
+
+		choice
+		{
+			text = "Gah! What the fuck are you?";
+			nextpage = 2;
+
+		}
+
+		Choice
+		{
+			text = "Good morning. Sleep well?";
+			nextpage = 3;
+		}
+
+		Choice
+		{
+			text = "It is I. The chosen one!";
+			nextpage = 5;
+		}
+	}
+
+		page //2 wtf are you
+	{
+		name = "Undead Knight";
+		Panel = "MUNDB";
+		dialog = "I am Kro-Bakul. A great warrior, I once was, but now I am dead. And I do not... Fuck.";
+		goodbye = "\c[gold]Yeah... don't care.";
+
+		Choice
+		{
+			Text = "Kro-Bakul. I have questions for you.";
+			nextpage = 6;
+		}
+
+	}
+
+			page //3 Sleep well?
+	{
+		name = "Undead Knight";
+		Panel = "MUNDB";
+		dialog = "I do not rest, I do not dream. I only fester... in eternal \c[Red]*rage*.";
+		goodbye = "\c[gold][Leave.]";
+
+		Choice
+		{
+			Text = "What angers you so?";
+			nextpage = 19;
+		}
+
+	}
+
+		page //4 Hostility
+	{
+		name = "Undead Knight";
+		Panel = "MUNDR";
+		dialog = "\c[red]*His eye sockets blaze with unholy fury.*";
+		goodbye = "\c[Red][Fight!]";
+
+	}
+
+	page //5 Chosen one
+	{
+		name = "Undead Knight";
+		Panel = "MUNDN";
+		dialog = "Finally! I have waited an eternity for you to come again, master. Do you remember me? I am Kro-Bakul. Your greatest servant, I once was, but now I am dead. Tell me... did the people of Earth treat you well?";
+		goodbye = "\c[gold]Actually, I just remembered something. Gotta go!";
+
+		Choice
+		{
+			Text = "The people of Earth?";
+			nextpage = 7;
+		}
+
+		Choice
+		{
+			Text = "Never mind that. I have questions.";
+			nextpage = 6;
+		}
+
+	}
+
+	page //6 Questions
+	{
+		name = "Kro-Bakul";
+		dialog = "And *I* have answers.";
+		Panel = "MUNDB";
+		goodbye = "\c[gold]Actually, I' don't need anything right now.";
+
+		Choice
+		{
+			Text = "What is this place?";
+			nextpage = 9;
+		}
+
+		Choice
+		{
+			Text = "Who are you?";
+			nextpage = 8;
+		}
+
+		Choice
+		{
+			Text = "Tell me of this world?";
+			nextpage = 10;
+		}
+
+		Choice
+		{
+			Text = "How do I get out of here?";
+			nextpage = 11;
+		}
+
+		Choice
+		{
+			Text = "Why do you not attack?";
+			nextpage = 12;
+		}
+
+		Choice
+		{
+			Text = "Tell me of the soldiers who came here.";
+			nextpage = 13;
+		}
+
+		Choice
+		{
+			Text = "Can I free you from this place?";
+			nextpage = 20;
+		}
+
+		Choice
+		{
+			text = "\c[Red]I've heard enough. Time to die!";
+			Special = 80; //teleport down and fight
+			Arg0 = 37;
+			Arg1 = 0;
+			nextpage = 4;
+		}
+
+	}
+
+	page //7 Earthlings
+	{
+		name = "Kro-Bakul";
+		Panel = "MUNDN";
+		dialog = "Yes. They were a barbaric, war-like people. It has been more than two-thousand years since you left us to teach them your ways. I have waited for you since then, and waited in anguish, as our world fell to ruin. Tell me, did they flourish under your guidance, mighty Lord? Is Earth now a realm of peace?";
+		goodbye = "\c[gold]Peace? Don't making me laugh [Leave.].";
+
+
+		Choice
+		{
+			Text = "They are better than in the past. On average. I have some questions for you.";
+			nextpage = 6;
+
+	    }
+
+
+		Choice
+		{
+			Text = "The people of Earth wouldn't know peace if they died and went to heaven. I want to know something else.";
+			nextpage = 6;
+
+	    }
+}
+
+	page //8 Who are you.
+	{
+		name = "Kro-Bakul";
+		Panel = "MUNDS";
+		dialog = "Do you not remember, my lord? I am Kro-Bakul, the last of the twelve. I was the only disciple who remained alive when you left us. My charge was to spread your teachings, but I failed. Since my death I have watched this world wither away, trapped here with my brothers in this tomb, trapped by despair as much as by these walls.";
+		goodbye = "\c[gold]Actually, I' don't need anything else.";
+
+		Choice
+		{
+			Text = "Why do you despair?";
+			nextpage = 19;
+		}
+
+		Choice
+		{
+			Text = "Can I free you somehow?";
+			nextpage = 20;
+		}
+
+	}
+
+	page //9 This place
+	{
+		name = "Kro-Bakul";
+		Panel = "MUNDB";
+		dialog = "This tomb, or the region?";
+		goodbye = "\c[gold]I'll get back to you on that.";
+
+		Choice
+		{
+			Text = "This tomb.";
+			nextpage = 14;
+		}
+
+		Choice
+		{
+			Text = "The region.";
+			nextpage = 15;
+		}
+
+		Choice
+		{
+			Text = "Actually, this world.";
+			nextpage = 10;
+		}
+
+	}
+
+	page //10 The world
+	{
+		name = "Kro-Bakul";
+		Panel = "MUNDN";
+		dialog = "Stygia has changed since I fell, more than two-thousand years ago. This world used to be a place of sweet airs, where the sun kissed our cheeks and our children were born bubbling and boisterous. Now our children weep and the winds carry the rank stench of sulphur. Ash falls from the skies, blocking what little sunlight we might pray for. Our crops fail and my descendants turn to daemons for salvation.";
+		goodbye = "\c[gold]That sounds grim. Well, good luck with that.";
+
+		Choice
+		{
+			Text = "What caused the sun to dissapear?";
+			nextpage = 16;
+		}
+
+		Choice
+		{
+			Text = "Daemons?";
+			nextpage = 18;
+		}
+
+		Choice
+		{
+			Text = "I have a different question.";
+			nextpage = 6;
+		}
+
+
+	}
+
+	page //11 how do i escape
+	{
+		name = "Kro-Bakul";
+		Panel = "MUNDB";
+		dialog = "The way is shut. Throw yourself off the cliff at the East end of the maze. If you truly are the one, you will fly. If you are not... it will be quicker for you this way.";
+		goodbye = "\c[gold]That sounds grim. Well, good luck with that.";
+
+
+		Choice
+		{
+			Text = "You think I will fly?";
+			nextpage = 17;
+		}
+
+		Choice
+		{
+			Text = "I'm going to ask you something instead.";
+			nextpage = 6;
+		}
+	}
+
+	page //12 Why not attack
+	{
+		name = "Kro-Bakul";
+		Panel = "MUNDB";
+		dialog = "The deathless rage \c[Red]*boils*\c[Untranslated] within me. But I have recently sated myself with the souls of those poor fools who came here to meet their doom. Reason stays my blade... for now.";
+		goodbye = "\c[gold]Alright, that's my cue to leave.";
+
+		Choice
+		{
+			Text = "Tell me of these poor fools.";
+			nextpage = 13;
+		}
+
+
+				Choice
+		{
+			Text = "I have other questions for you.";
+			nextpage = 6;
+		}
+	}
+
+	page //13 others
+	{
+		name = "Kro-Bakul";
+		Panel = "MUNDR";
+		dialog = "\c[Red]*His eyes blaze with sadistic mirth*\c[Untranslated] Ha! The so-called Master above thought he could hide his magic box in our tomb. It sings a daemonic song that stirs the dead from their rest. And he thought that a tomb was a good place to put it? Hah! Unlike his weak-minded footsoldiers, the ancient warriors of Stygia will not so easily bend the knee to his control, even if his magics did wake us. His soldiers die in droves, yet still they have not even breached the final chamber. Eventaully, he will have to come to try and wrest his discordant machine back from us himself. I look forward to that day. I \c[Red]*hunger*\c[Untranslated] for it.";
+		goodbye = "\c[gold]I'll be back.";
+
+		Choice
+		{
+			Text = "\c[Red]You'll never get the chance.";
+			Special = 80; //teleport down and fight
+			Arg0 = 37;
+			Arg1 = 0;
+			nextpage = 4;
+		}
+
+
+		Choice
+		{
+			Text = "I have another question for you.";
+			nextpage = 6;
+		}
+	}
+
+	page //14 This tomb
+	{
+		name = "Kro-Bakul";
+		Panel = "MUNDN";
+		dialog = "For two-thousand years, the disciples of the One True Lord have come to rest here in this mountain tomb. But our teachings have fallen by the wayside, and the people worship monsters now.";
+		goodbye = "\c[gold]I'll be back.";
+
+		Choice
+		{
+			Text = "They worship monsters?";
+			nextpage = 18;
+		}
+
+		Choice
+		{
+			Text = "Tell me of the One True Lord.";
+			nextpage = 8;
+		}
+
+
+		Choice
+		{
+			Text = "I have else something to ask.";
+			nextpage = 6;
+		}
+	}
+
+	page //15 The region
+	{
+		name = "Kro-Bakul";
+		Panel = "MUNDB";
+		dialog = "We are in the mountains above the black lake, where the waters once healed and the white tower stood resplendent. It was here that my lord preached, and the village of Bakul's Bothy was founded. Now it is a place of shadows and fear.";
+		goodbye = "\c[gold]This place is a shit-hole.";
+
+
+		Choice
+		{
+			Text = "I have else something to ask.";
+			nextpage = 6;
+		}
+	}
+
+	page //16 What caused Sun to dissapear
+	{
+		name = "Kro-Bakul";
+		Panel = "MUNDS";
+		dialog = "I am sorry, my lord. \c[Red] *His voice rings miserably in his helm.*\c[Untranslated] We failed to uphold your laws. Please, send no more punishment from the heavens. Take pity on us.";
+		goodbye = "\c[gold]I'll be back.";
+
+		Choice
+		{
+			Text = "I am not your lord.";
+			Special = 80; //teleport down and fight
+			Arg0 = 37;
+			Arg1 = 0;
+			nextpage = 4;
+		}
+
+		Choice
+		{
+			Text = "Fear not. The fate of this world is about to change for the better.";
+			nextpage = 21;
+		}
+
+
+		Choice
+		{
+			Text = "Let's move on to another topic.";
+			nextpage = 6;
+		}
+	}
+
+	page //17 Fly
+	{
+		name = "Kro-Bakul";
+		Panel = "MUNDB";
+		dialog = "If you truly are my lord returned, then you \c[red]*will*\c[Untranslated] fly.";
+		goodbye = "\c[gold]Wish me luck then!.";
+
+		Choice
+		{
+			Text = "I am not your lord.";
+			Special = 80; //teleport down and fight
+			Arg0 = 37;
+			Arg1 = 0;
+			nextpage = 4;
+		}
+
+
+		Choice
+		{
+			Text = "Perhaps later. For know, I have questions.";
+			nextpage = 6;
+		}
+	}
+
+	page //18 Worship monsters
+	{
+		name = "Kro-Bakul";
+		Panel = "MUNDN";
+		dialog = "False idols, as my lord forewarned. The horn-ed-ones. Daemons in the guise of angels, offering food and succor. But unlike my lord, they offer hatred instead of wisdom, greed instead of compassion, and death instead of eternal life. They came with strangers from Earth, through the gate. The same-said gate through which our lord left us.";
+		goodbye = "\c[gold]We'll talk more later.";
+
+		Choice
+		{
+			Text = "Tell me of the gate.";
+			nextpage = 22;
+		}
+
+
+		Choice
+		{
+			Text = "Hmm... I have other questions.";
+			nextpage = 6;
+		}
+	}
+
+	page //19 Why do you despair
+	{
+		name = "Kro-Bakul";
+		Panel = "MUNDS";
+		dialog = "I have lain here for two millenia, my spirit trapped in my bones, unable to do aught but watch as all that I built crumbles to ash.";
+		goodbye = "\c[gold]Let us speak again soon.";
+
+		Choice
+		{
+			Text = "All that you built crumbles?";
+			nextpage = 10;
+		}
+
+
+		Choice
+		{
+			Text = "I have other questions.";
+			nextpage = 6;
+		}
+	}
+
+	page //20 can i free you
+	{
+		name = "Kro-Bakul";
+		Panel = "MUNDB";
+		dialog = "You wish to release me from my torment? Hmm...";
+		goodbye = "\c[gold]Let me think about this.";
+
+		Choice
+		{
+			Text = "Yes.";
+			nextpage = 23;
+		}
+
+
+		Choice
+		{
+			Text = "Not what I had in mind. I have questions instead.";
+			nextpage = 6;
+		}
+	}
+
+	page //21 change this world for the better
+	{
+		name = "Kro-Bakul";
+		Panel = "MUNDS";
+		dialog = "No. Do not give me hope. I knew hope for the first thousand years, but no longer. There is too much pain, in hope. I have abandoned it. Now there is only \c[Red]*rage*.";
+		goodbye = "\c[gold]Alright. I'm leaving.";
+
+
+		Choice
+		{
+			Text = "I want to know something else.";
+			nextpage = 6;
+		}
+	}
+
+	page //22 the gate
+	{
+		name = "Kro-Bakul";
+		Panel = "MUNDB";
+		dialog = "Two years ago, when the last of the crops still lifted their weak heads from the soil, a nobleman decided to expand his castle and hoard the last of the food for himself, atop the highest peak. In digging his cellar, he uncovered the gateway that leads to Earth, and to other, darker places. The descendants of those that I had commanded to defend the gate had long since abandoned their duty. I... \c[Red]*Failed*.\c[Untranslated] The gate was discovered, and activated. The count dissapeared through it, and soon after, destruction came back through. Since then, our once starving people have learned that no price is too high for a full belly and a warm home. Not even thier own humanity.";
+		goodbye = "\c[gold][Leave.]";
+
+
+		Choice
+		{
+			Text = "A mistake to be sure. I want to know something else.";
+			nextpage = 6;
+		}
+	}
+
+	page //23 release me
+	{
+		name = "Kro-Bakul";
+		Panel = "MUNDB";
+		dialog = "Kro. Kro. Kro-Bakul. That is my name. Take this key. I shall meet you in the proving chamber. There, we shall fight, one last time. When you slay me, and you shall inherit my greatest treasure. But I shall not hold back, for I was once the mightiest warrior of Stygia, and I will not die again without honour!  Are you prepared?";
+		goodbye = "\c[gold]Don't go anywhere yet. I'll be back if I change my mind.";
+
+
+		Choice
+		{
+			Text = "Yes, I am prepared. Meet me in the final chamber.";
+			Special = 80;
+			Arg0 = 38;
+			Arg1 = 0;
+			nextpage = 24;
+		}
+
+		Choice
+		{
+			Text = "Let us return to this topic later. First, I have questions.";
+			nextpage = 6;
+		}
+
+	}
+
+	page //24 Goodbye Kro bakul
+	{
+		name = "Kro-Bakul";
+		Panel = "MUNDB";
+		dialog = "Good luck to you, warrior.";
+		goodbye = "\c[gold]And you.";
+
+	}
+
+}
+
+conversation //Bunker warning friend 02 18
+{
+	ID = 22;
+    page //1 Hello
+    {
+         name = "Intercom";
+         dialog = "When the master gives me the all clear, you can come out.";
+		 goodbye = "\c[gold]Shit!";
+
+	}
+}
+
+conversation //Death Knight Final Battle
+{
+	ID = 23;
+    page //1 Hello
+    {
+         name = "Kro-Bakul, Stygian Lord.";
+         dialog = "...";
+		 goodbye = "\c[Gold]Let's do this.";
+
+	}
+}
+
+conversation //Monk Master guard
+{
+	ID = 24;
+    page //1 Hello
+    {
+         name = "Cock-blocking monk.";
+         dialog = "The master is in communion. Come back later, when this part of the world has been developed... Arik. Dyks. \c[Red]*His eyes glare knowingly, as if he can see directly into your soul.* \c[Untranslated] I see the code. The code! It's everywhere! ";
+		 goodbye = "\c[gold]I'll come back later then, you cheeky fucker.";
+
+	}
+}

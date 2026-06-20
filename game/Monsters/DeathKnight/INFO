@@ -1,0 +1,14 @@
+Name: Death Knight
+Difficulty: Medium
+Connection: None
+Summon: Deathknight
+Melee: No
+Distance: Projectile
+Type: Demon, Fire
+Brightmaps: No
+Actor modification: No
+ACS: No
+
+
+A very powerful monster with several attacks that do very high damage. In addition to its high
+health, it can reflect projectiles with its shield. Best killed with hitscan attacks in open areas.

@@ -1,0 +1,16 @@
+//Crusader Shield -- offers the defense rating of the Enchanted Shield, but with the capacity of the Silver Shield
+ACTOR CrusaderShield : BasicArmorPickup
+{
+//$Category Health and Armor
+  +FLOATBOB
+  Inventory.Pickupmessage "Crusader Shield"
+  Inventory.Icon "SHD3A0"
+  Armor.SavePercent 75
+  Armor.SaveAmount 100
+  States
+  {
+  Spawn:
+    SHD3 A -1
+    Stop
+  }
+}

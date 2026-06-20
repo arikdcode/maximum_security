@@ -1,0 +1,25 @@
+Information:
+Name: Blot
+Difficulty: Very Easy
+Connections: None
+Summon: Blot
+Melee: Yes
+Distance: No
+Type: Demon, Ghost
+Brightmaps: None
+Actor modification: None
+ACS: None
+
+Credits:
+Code: Captain Toenail
+Sounds: Doom, Captain Toenail
+Sprites: Doom, Hexen
+Sprite Edit: Captain Toenail
+
+Description:
+	Roiling ink stains of unliving shadow - the Blot is a dark soul from the 
+	deepest crevasses of the Umbral Plains.
+	
+	They lurk in the darkness and pass from place to place with a bouncing 
+	motion. To attack they will leap through their victims, engulfing them in 
+	shadow.

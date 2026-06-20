@@ -1,0 +1,21 @@
+Information:
+Name: Cave Formations
+Connection: None
+Palette: Heretic
+Summon: (Limestone/Brown/Tan/Volcanic)(Floor/Ceiling)(1-10)
+Ambient Sound: No
+De-/Activatable: No
+Destroyable: No
+Special Effects: No
+Brightmaps: No
+Actor modification: No
+ACS: No
+
+Credits:
+Code: Captain Toenail
+Sprites: Daggerfall
+Sprite Edit: Captain Toenail
+
+Description:
+Stalactites and stalagmites from Daggerfall for ceilings and floors.
+Contains four sets with different rock textures.

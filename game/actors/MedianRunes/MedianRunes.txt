@@ -1,0 +1,12 @@
+ACTOR Darklight : SkullRodAmmo 14258
+{
+  Inventory.PickupMessage "Darklight"
+  Inventory.Amount 50
+  +FLOATBOB
+  States
+  {
+  Spawn:
+    MRUN AB 5
+    Loop
+  }
+}

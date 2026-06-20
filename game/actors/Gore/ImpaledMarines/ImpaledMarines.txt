@@ -1,0 +1,25 @@
+Actor CarcassImpaledMarine 3025
+{
+  //$Category Gore/Corpses/
+  +Solid
+  Height 48
+  Radius 20
+  States
+  {
+  Spawn:
+    MPL2 A -1
+  }
+}
+
+Actor CarcassImpaledMarine2 3026
+{
+  //$Category Gore/Corpses/
+  +Solid
+  Height 48
+  Radius 20
+  States
+  {
+  Spawn:
+    MPLD A -1
+  }
+}

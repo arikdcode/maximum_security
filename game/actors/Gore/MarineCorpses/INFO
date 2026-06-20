@@ -1,0 +1,9 @@
+Name : Marine Corpses
+Connection : None
+Palette : Doom
+Summon : CORP01, CORP02, CORP03, CORP04, CORP05, CORP06
+Type : Corpse, Gore
+Ambient Sound : No
+De-/Activatable : No
+Destroyable : No
+Special Effects : none

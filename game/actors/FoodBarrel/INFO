@@ -1,0 +1,6 @@
+Name: Food Barrels
+Type: Container (Health)
+Palette: Custom
+Summon: VegieBarrel, MeatBarrel, EmptyFoodBarrel, Smallbarrel[1-4]
+Use type: Instant
+Duration: Instant

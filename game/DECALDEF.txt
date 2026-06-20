@@ -1,0 +1,9 @@
+decal ZSFreezeBlastMelt
+{
+	pic BSMEAR1
+	x-scale 0.55
+	y-scale 0.55
+	shade "DD DD FF"
+	randomflipx
+	animator BloodSmearer
+}

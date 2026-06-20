@@ -1,0 +1,13 @@
+Name: Zombie Scientist (Freeze Rifle)
+Difficulty: Very Easy
+Connections: None
+Summon: ZombieScientistFreeze
+Melee: No
+Distance: Projectile
+Type: Human, Undead
+Brightmaps: Yes
+Actor modification: No
+ACS: No
+
+Description:
+A former scientist wielding an experimental freeze rifle.

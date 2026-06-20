@@ -1,0 +1,10 @@
+Name: Impaled Marines
+Connection: No
+Palette: Doom
+Summon: CarcassImpaledMarine, CarcassImpaledMarine2
+Ambient Sound: No
+De-/Activatable: No
+Destroyable: No
+Special Effects: No
+Brightmaps: No
+ACS: No

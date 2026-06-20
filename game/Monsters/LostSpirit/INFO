@@ -1,0 +1,17 @@
+Name: Lost Spirit
+Difficulty: Easy
+Connection: None
+Summon: LostSpirit
+Melee: No
+Distance: Projectile, Charge
+Type: Ghost
+Brighmaps: No
+Added States: No
+ACS: No
+
+
+Similar to the Lost Soul, the Lost Spirit will charge at its target, but the duration of the attack
+is limited to about 1.5 seconds. When closer to the target, it shoots two projectiles with a limited
+range. The Lost Spirit deals more damage and has more health than the Lost Soul. It is a ghost, so
+it feels no pain and it can fly through anything (only collides with other actors during the charge
+attack).

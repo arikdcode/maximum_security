@@ -1,0 +1,14 @@
+Name: Dead Scientists
+Connections: Female Zombie
+Summon: DeadMaleScientist, DeadFemaleScientist
+Ambient Sounds: None
+Activatable: No
+Destructible: No
+Special Effects: No
+
+Submitted: scalliano
+Decorate: scalliano
+GLDefs: none
+Sprites: Id Software (Zombieman), the Skulltag Team (Illucia), DavidRaven, The Kins (Shotgun Guy Alt Death)
+Sprite Edit: scalliano
+Idea Base: The UAC's apparent lack of staff

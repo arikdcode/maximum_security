@@ -1,0 +1,14 @@
+Name: Wither
+Difficulty: very easy
+Connections: none
+Summon: Wither
+Melee: yes
+Distance: projectile
+Type: Demon, Undead
+Brightmaps: no
+Actor modification: no
+ACS: no
+
+Description:
+Some Imps stay in Hell for so long, they become weaker and slower as their flesh withers away.
+But when the time comes, they will be sent to the frontlines to serve as cannon fodder.

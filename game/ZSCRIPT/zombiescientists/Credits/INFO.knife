@@ -1,0 +1,14 @@
+Name: Zombie Scientist (Knife)
+Difficulty: Very Easy
+Connections: None
+Summon: ZombieScientistKnife
+Melee: Yes
+Distance: No
+Type: Human, Undead
+Brightmaps: No
+Actor modifications: No
+ACS: No
+
+Description:
+A very weak zombie of a female scientist (Something missing from Doom's setting) with a knife.
+Dangerous up close, but very low health.

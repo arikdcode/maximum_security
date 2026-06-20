@@ -1,0 +1,13 @@
+Name: Zombie Scientist (Hammer)
+Difficulty: Very Easy
+Connections: None
+Summon: ZombieScientistHammer
+Melee: Yes
+Distance: No
+Type: Human, Undead
+Brightmaps: No
+Actor modification: No
+ACS: No
+
+Description:
+A former scientist wielding a sledgehammer.

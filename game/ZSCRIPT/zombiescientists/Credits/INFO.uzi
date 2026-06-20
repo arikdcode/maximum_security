@@ -1,0 +1,15 @@
+Name: Zombie Scientist (Uzi)
+Difficulty: Very Easy
+Connections: None
+Summon: ZombieScientistUzi
+Melee: Yes (special bullet attack when close)
+Distance: Hitscan
+Type: Human, Undead
+Brightmaps: No
+Actor modification: No
+ACS: No
+
+Description:
+This former scientist doesn't have very good aim, for reasons that are understandable in the
+circumstances. When he detects your presence he'll be quick to fire some shots off with his uzi,
+but will usually miss. However, if you touch him, he'll fire a devastating point-blank attack.

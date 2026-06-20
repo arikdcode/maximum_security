@@ -1,0 +1,62 @@
+version "4.14.2"
+
+#include "Monsters/HellApprentice/HellApprentice"
+#include "Monsters/RapidFireTrooper/RapidFireTrooper"
+#include "Monsters/FleshWizard/FleshWizard"
+#include "Monsters/JetPackZombie/JetPackZombie"
+#include "Monsters/BerserkerCommando/BerserkerCommando"
+#include "Models/SpiderTurret.zs"
+#include "Monsters/DoubleChaingunner/DoubleChaingunner.zs"
+
+//Undead
+#include "Monsters/DeathKnight/DeathKnight.txt"
+#include "Monsters/UndeadWarrior/UndeadWarrior.zs"
+#include "Monsters/Ghoul/Ghoul.zs"
+#include "Monsters/Fallen/Fallen.zs"
+#include "Monsters/Wraith/Wraith.zs"
+
+//KnightSaberInto
+#include "Monsters/DeathKnight/KnightSaber.zs"
+
+//Bosses
+#include "Monsters/InfernoDemon/InfernoDemon.zs"
+
+
+#include "zscript/Hellion/Hellion.txt"
+#include "zscript/wither/wither.txt"
+
+#include "zscript/zombiescientists/axe.txt"
+#include "zscript/zombiescientists/cleaver.txt"
+#include "zscript/zombiescientists/crowbar.txt"
+#include "zscript/zombiescientists/freeze.txt"
+#include "zscript/zombiescientists/grenade.txt"
+#include "zscript/zombiescientists/halon.txt"
+#include "zscript/zombiescientists/hammer.txt"
+#include "zscript/zombiescientists/knife.txt"
+#include "zscript/zombiescientists/pistol.txt"
+#include "zscript/zombiescientists/plasma.txt"
+#include "zscript/zombiescientists/syringe.txt"
+#include "zscript/zombiescientists/uzi.txt"
+#include "zscript/zombiescientists/wrench.txt"
+#include "zscript/zombiescientists/Ellie.txt"
+
+#include "zscript/cacomancer/cacomancer.zs"
+#include "zscript/cacomancer/cacomancerbuff.zs"
+
+#include "zscript/ShadowHunter.txt"
+
+#include "Monsters/SniperCommando/SniperCommando"
+
+#include "zscript/StepEventHandler.zc"
+
+#include "NNR_ZScript/MyWorldHandler.zs"
+#include "NNR_ZScript/NNR_HelgaFriend.zsc"
+//#Include "NNR_ZScript/NNR_HelgaSpawner.zsc"
+#include "NNR_ZScript/NNR_HelgaTaunt.zsc"
+//#include "Zscript/Maze.zs"
+
+#include "Monsters/ZSPECOPS/MachineGunGuy/MachineGunGuy.txt"
+#include "Monsters/ZSPECOPS/ShotGunGuy/ShotGunGuy.txt"
+
+//keys
+#include "Actors/keys/CustomKeys.txt"

@@ -1,0 +1,15 @@
+Name: Strobe Lights
+Connection: none
+Palette: Custom
+Summon: strobelight[red/green/blue/yellow]
+Ambient Sound: Yes
+De-/Activatable: Yes
+Destroyable: No
+Special Effects: Rotating dynamic light strobe
+
+Submitted: Captain Toenail
+Decorate: Captain Toenail
+GLDefs: Captain Toenail
+Sprites: Captain Toenail
+Sounds: freesounds.org
+SpriteEdit: Captain Toenail

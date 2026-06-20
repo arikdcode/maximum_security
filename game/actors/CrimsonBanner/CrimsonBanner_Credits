@@ -1,0 +1,23 @@
+Information:
+Name: Crimson Banner
+Connection: N/A
+Palette: Custom
+Summon: CrimsonBanner, VioletBanner, GreenBanner, BlueBanner
+Ambient Sound: No
+De-/Activatable: No
+Destroyable: No
+Special Effects: No
+ACS: No
+
+
+Credits:
+Submitted: ETTiNGRiNDER
+Decorate: ETTiNGRiNDER
+GLDefs: N/A
+Sounds: N/A
+Sprites: Raven Software (Hexen, Hexen 2), Psygnosis (Hexx)
+Sprite Edit: ETTiNGRiNDER, Infirnex
+Idea Base: Hexen 2 banner / Roman Legion standard
+
+Description:
+An alternate to Hexen's barbarian banner that's more regal/imperial looking, but still ragged.

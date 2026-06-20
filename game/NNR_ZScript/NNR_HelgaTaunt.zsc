@@ -1,0 +1,18 @@
+Class FriendHelgaTauntHandler : EventHandler
+{
+	Override Void WorldThingDied(WorldEvent e)
+	{
+		Let victim = e.Thing;
+		Let source = e.Thing.Target;		
+		If((victim.bISMONSTER || victim.bCOUNTKILL) && source is "NNR_FriendHelga")
+		{
+			If(Source && Source.Health > 0)			
+			{
+				If(Random(0,100) <= 10 || Victim.bBOSS) 
+				{ 
+					Source.A_StartSound("FriendHelga/Taunt",CHAN_VOICE);
+				}
+			}
+		}
+	}
+}

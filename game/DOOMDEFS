@@ -1,0 +1,4 @@
+Object DoomPlayer2
+{
+Frame PLAYF { Light ZOMBIEATK }
+}

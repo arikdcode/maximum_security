@@ -1,0 +1,7 @@
+Name: Bolt Rifle
+Class: 3
+Type: Hitscan
+Palette: Doom
+Summon: BoltRifle
+Ammo Type: (Custom)RifleBullets 
+Actor modification: Custom Bulletpuff

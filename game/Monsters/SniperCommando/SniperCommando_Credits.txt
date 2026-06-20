@@ -1,0 +1,20 @@
+Code: Xim, Ghastly
+GLDefs: Xim
+Sounds: VALVe
+Sprites: Id Software
+Sprite Edit: Xim, David G
+
+Name: Sniper Commando Zombie
+Difficulty: Easy
+Connection: M40Rifle
+Summon: SniperCommando
+Melee: No
+Distance: Hitscan
+Type: Human, Undead
+Brightmaps: No
+Actor modification: No
+ACS: No
+
+
+A zombie commando armed with a hitscan sniper rifle. They have high accuracy and damage but a slow
+fire rate.

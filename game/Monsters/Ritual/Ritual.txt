@@ -1,0 +1,30 @@
+ACTOR Ritual 15520
+{
+//$Category Monsters/Custom
+  +FLOATBOB
+  +NoGravity
+  +SOLID
+  +Buddha
+  +DONTTHRUST
+  Height 128
+  Radius 64
+  health 200
+  PainChance 200
+  SeeSound "vile/sight"
+  PainSound "vile/pain"
+  DeathSound "vile/death"
+  ActiveSound "vile/active"
+  Monster
+  States
+  {
+  Spawn:
+    RITE A -1
+    Stop
+   Pain:
+    RITE BCD 4
+	RITE E  4 A_Pain()
+	RITE FGHI 4
+   Goto Spawn
+ 
+  }
+}

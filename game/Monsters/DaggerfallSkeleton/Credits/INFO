@@ -1,0 +1,27 @@
+Name: Skeletal Warrior
+Difficulty: Easy
+Connections: None
+Summon: dagfallskeleton
+Melee: Yes
+Distance: no
+Type: Undead
+Brightmaps: no
+Added States: none
+ACS: No
+
+Credits:
+
+Ripped by: ramon.dexter
+Submitted: Sir Squidly
+Decorate: Sir Squidly
+GLDefs: None
+Sounds: Bethesda Softworks, Dagerfall
+Sprites: Bethesda Softworks, Daggerfall
+Sprite Edit: MagicWizard for polishing the back sprites, Sir Squidly for evrything else.
+Idea Base: When is more skeletons a bad thing?
+
+//Description:
+
+//A Skeleton wielding a shield and Axe, ready to tear some poor adventurer into
+//pieces. It's horrific screech is worse than it's bite though, as it only
+//has its axe to attack with, leaving it defencless against ranged opponents.

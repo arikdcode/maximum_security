@@ -1,0 +1,338 @@
+actor Energized: Inventory
+{
+	Inventory.MaxAmount 1
+}
+
+/*ACTOR Darklight : SkullRodAmmo 14258
+{
+	//$Category Ammunition
+	//$Title Darklight
+  Inventory.PickupMessage "Darklight"
+  Inventory.Amount 50
+  +FLOATBOB
+  States
+  {
+  Spawn:
+    MRUN AB 5
+    Loop
+  }
+}*/
+
+ACTOR Darklight : Ammo 14258
+{
+  Inventory.PickupMessage "Darklight"
+  Inventory.Amount 50
+  Inventory.MaxAmount 200
+  Ammo.BackpackAmount 20
+  Ammo.BackpackMaxAmount 400
+  +FLOATBOB
+  Inventory.Icon "MRUNA0"
+  States
+  {
+  Spawn:
+    MRUN AB 5
+    Loop
+  }
+}
+
+
+ACTOR RSWORD : Weapon 31084
+{
+   Weapon.SelectionOrder 3200
+   +Weapon.noalert
+   //$Category Weapons
+   //weapon.ammotype "clip"
+  //weapon.ammouse 0
+  //weapon.ammogive 1
+  weapon.ammogive 100  
+  Weapon.SlotNumber 1
+  Weapon.KickBack 10
+  +WEAPON.CHEATNOTWEAPON
+  Weapon.AmmoUse 1
+  +Weapon.MeleeWeapon
+  +WEAPON.AXEBLOOD
+  //WEAPON.NOALERT
+  +WEAPON.AMMO_OPTIONAL
+  +FLOATBOB
+  //WEAPON.NOAUTOSWITCHTO
+  //Weapon.AmmoType "Blade"
+  Weapon.AmmoType "Darklight"
+  Inventory.PickupMessage "You got the DarkBlade!"
+  Inventory.PickupSound "weapons/ESWORD/pickup"
+    AttackSound "weapons/ESWORD/attack"
+   Obituary "%k knighted %o with an Energy Blade. Tis only a flesh wound!"
+   
+   States
+   {
+   Spawn:
+      RSWP AB 10 Bright
+      Loop
+   Ready:
+
+      RSWR A 1 A_WeaponReady
+	  NULL A 0 A_JumpIfInventory("Energized",1,"Blazing")
+    Loop
+
+   Deselect:
+	  NULL A 0 A_JumpIfInventory("Energized", 1, "EDeselect")
+	  NULL A 0 A_TakeInventory("Energized", 0)
+	  NULL A 0 A_Stopsound(CHAN_7)
+      RSWR A 1 A_Lower
+    Loop
+	
+   EDeselect:
+	  NULL A 0 A_PlaySound("weapons/ESWORD/SORRISE", CHAN_WEAPON)	
+	  NULL A 0 A_TakeInventory("Energized", 0)
+	  NULL A 0 A_Stopsound(CHAN_7)
+      RSWL ABCD 1 A_Lower
+    Loop
+	
+   Select:
+      NULL A 0 A_JumpIfInventory("Energized",1,"ESelect")
+	  RSWR A 1 A_Raise
+    Loop
+	
+	ESelect:
+	  NULL A 0 A_PlaySound("weapons/ESWORD/SABERLIT1", CHAN_WEAPON)
+	  RSWL ABCDE 2 BRIGHT A_Raise
+	  RSWL FGHIJKL 2 BRIGHT A_WeaponReady
+	Goto Blazing
+	
+   Depower:
+	  NULL A 0 A_TakeInventory("Energized", 0, AAPTR_PLAYER1)
+      NULL A 0 A_Stopsound(CHAN_7)
+	  NULL A 0 A_PlaySound("weapons/ESWORD/SORRISE", CHAN_WEAPON)	
+	  RSWI E 2 BRIGHT 
+	  RSWI E 1 BRIGHT 	
+	  RSWI EDCBA 3 BRIGHT A_WeaponReady
+	Goto Ready
+   
+   Fire: //Unpowered
+	  NULL A 0 A_JumpIfInventory("Energized",1,"EFire")
+	  NULL A 0 A_Jump (206,"Backswing","Upswing","HSwing","MSwing")
+	  NULL A 0 A_Stopsound(CHAN_7)
+	  NULL A 0 A_Recoil (-2)
+      RSWS AAAAA 1 A_WeaponOffset(16, 6, WOF_ADD) 
+	  RSWS B 1 A_WeaponOffset(-80, -30, WOF_ADD)
+	  RSWS C 2 //A_WeaponOffset(-5, 0, WOF_ADD)
+	  RSWS D 1 //A_WeaponOffset(8, 0, WOF_ADD)
+      //FHMR E 3 A_FireCustomMissile ("martillazo")
+      RSWS E 1 A_CustomPunch(40+random(20, 60), 1, 0, "eSwordPuff", 100)
+	  RSWS F 1 A_PlaySound("weapons/ESWORD/attack", CHAN_WEAPON)
+	  RSWS G 4	  
+	  //NULL A //acs_execute(99,0,0,0,0)
+	  NULL A 5 A_ReFire
+	  //FHMS B 3 
+    Goto Ready	
+	  
+	BackSwing: //Unpowered
+	  NULL A 0 A_Stopsound(CHAN_7)
+	  //NULL A 25
+	  NULL A 0 A_Recoil (-2)
+	  RSWB AAAAAA 1 //A_WeaponOffset(-4, 1, WOF_ADD)
+	  //NULL A 0 A_WeaponOffset(24, -6, WOF_ADD) //reset
+	  RSWB B 1
+	  RSWB C 1 
+	  RSWB D 2 A_CustomPunch(40+random(20, 60), 1, 0, "eSwordPuff", 100)
+	  RSWB E 4 A_PlaySound("weapons/ESWORD/attack", CHAN_WEAPON)
+	  //NULL A 15 //acs_execute(99,0,0,0,0)
+	  NULL A 5 A_ReFire
+	  //FHMS B 3 
+	Goto Ready
+	  
+	UpSwing: //Unpowered
+	  NULL A 0 A_Stopsound(CHAN_7)
+	  //NULL A 25
+	  NULL A 0 A_Recoil (-2)
+	  RSWU AAAAAA 1 A_WeaponOffset(-4, 2, WOF_ADD) 
+	  NULL A 0 A_WeaponOffset(24, -12, WOF_ADD) //reset
+	  RSWU B 1
+	  RSWU C 1 
+	  RSWU D 2 A_CustomPunch(40+random(20, 60), 1, 0, "eSwordPuff", 100)
+	  RSWU E 4 A_PlaySound("weapons/ESWORD/attack", CHAN_WEAPON)
+	  //NULL A 15 //acs_execute(99,0,0,0,0)
+	  NULL A 5 A_ReFire
+	  //FHMS B 3 
+    Goto Ready
+	
+	HSwing: //Unpowered
+	  //NULL A 25
+	  NULL A 0 A_Stopsound(CHAN_7)
+	  NULL A 0 A_Recoil (-2)
+	  RSWH AAAAAAA 1 A_WeaponOffset(4, 1, WOF_ADD) 
+	  NULL A 0 A_WeaponOffset(-28, -7, WOF_ADD) //reset
+	  RSWH B 1 A_CustomPunch(40+random(20, 60), 1, 0, "eSwordPuff", 100)
+	  RSWH C 2 A_PlaySound("weapons/ESWORD/attack", CHAN_WEAPON)
+	  RSWH D 4
+	  //NULL A 15 //acs_execute(99,0,0,0,0)
+	  NULL A 5 A_ReFire
+	  //FHMS B 3 
+	Goto Ready
+	
+	MSwing: //Unpowered
+	  //NULL A 25
+	  NULL A 0 A_Stopsound(CHAN_7)
+	  NULL A 0 A_Recoil (-2)
+	  RSWM AAAAAAA 1 A_WeaponOffset(-4, 1, WOF_ADD) 
+	  NULL A 0 A_WeaponOffset(28, -7, WOF_ADD) //reset
+	  RSWM B 1 A_CustomPunch(40+random(20, 60), 1, 0, "eSwordPuff", 100)
+	  RSWM C 2 A_PlaySound("weapons/ESWORD/attack", CHAN_WEAPON)
+	  RSWM D 4
+	  //NULL A 15 //acs_execute(99,0,0,0,0)
+	  NULL A 5 A_ReFire
+	  //FHMS B 3 
+	Goto Ready
+	  
+	AltFire:
+	 // NULL A 0 //A_JumpIfInventory("Energized",1,"Launch")
+	  
+	  NULL A 3 A_JumpIfInventory("Energized",1,"Depower")
+	  //RSWR A 2 A_JumpIfNoAmmo("Buzz")
+	  Goto Ignite
+	  
+	/*Buzz:
+		RSWR A 4 A_PlaySound("weapons/ESWORD/SORRISE", CHAN_WEAPON)
+		NULL A 0 A_TakeInventory("Energized", 0, AAPTR_PLAYER1)
+	Goto Ready*/
+	  
+	Ignite:
+		//RSWZ A 2 A_JumpIfNoAmmo("Buzz")
+		Null A 0 A_JumpIfInventory("Energized",1,"Depower")
+		NULL A 0 A_GiveInventory("Energized", 1)
+		NULL A 0 A_PlaySound("weapons/ESWORD/SABERLIT1", CHAN_WEAPON)
+		NULL A 0 A_Stopsound(CHAN_7)
+		RSWZ A 1 radius_quake(2, 5, 0, 3, 0)	
+		RSWI ABC 3 BRIGHT A_AlertMonsters
+		RSWI DE 3 BRIGHT //A_WeaponReady
+	  goto Blazing
+	  
+	  Blazing:
+		//NULL A 0 A_JumpIfNoAmmo("Depower")
+		NULL A 0 A_JumpIfNoAmmo("Depower")
+		NULL A 0 A_Stopsound(CHAN_7)
+		NULL A 0 A_PlaySound("weapons/ESWORD/SABERLIT2", CHAN_7)
+		RSWL ABCDEFGHIJKL 2 BRIGHT A_WeaponReady
+		RSWL AICDEFGHIJKL 2 BRIGHT A_WeaponReady
+		RSWL IBCDJFGHIJKF 2 BRIGHT A_WeaponReady
+		RSWL ABCDEJGHIJKL 2 BRIGHT A_WeaponReady
+		RSWL ABCDEFGHIJKL 2 BRIGHT A_WeaponReady
+		RSWL KBCDEFGHIJKL 2 BRIGHT A_WeaponReady
+		RSWL ABCDEFGHIJKF 2 BRIGHT A_WeaponReady
+		RSWL ABCDECGHIJKL 2 BRIGHT A_WeaponReady
+		RSWL ABCDEFGHIJKL 2 BRIGHT A_WeaponReady
+		RSWL HBCDEFGHIJKL 2 BRIGHT A_WeaponReady
+		RSWL ABCDEFGHIJKL 2 BRIGHT A_WeaponReady
+		RSWL ABKDEFGHIBKL 2 BRIGHT A_WeaponReady
+		RSWL AICDEFGHIJKL 2 BRIGHT A_WeaponReady
+		RSWL HBKDJFGHIJKL 2 BRIGHT A_WeaponReady
+		RSWL ABCDEFGHBJKL 2 BRIGHT A_WeaponReady
+		RSWL IBCDEFGHIJKL 2 BRIGHT A_WeaponReady
+		RSWL IBCDEFGHIJKL 2 BRIGHT A_WeaponReady 
+		RSWL IBCDEFGHIJKL 2 BRIGHT A_WeaponReady 
+		RSWL IBCDEFGHIJKL 2 BRIGHT A_WeaponReady 		
+	  loop
+	  
+	  EFire: //Powered
+		NULL A 0 BRIGHT A_JumpIfNoAmmo("Depower")
+		NULL A 1 A_Jump (196,"EBackSwing","EJSwing","EKSwing")
+		NULL A 0 A_Recoil (-2)
+		RSWE A 3 BRIGHT A_TakeInventory("Darklight", 10, TIF_NOTAKEINFINITE)  
+		RSWE B 2 BRIGHT A_PlaySound("weapons/ESWORD/SORZAP", CHAN_WEAPON)
+		RSWE C 1 BRIGHT
+		RSWE D 1 BRIGHT
+		//FHMR E 3 A_FireCustomMissile ("martillazo")
+		RSWE E 1 BRIGHT A_CustomPunch(200+random(100, 300), 1, 0, "eSwordPuff", 100)
+		RSWE F 1 BRIGHT
+		RSWE G 1 BRIGHT
+		RSWE H 1 BRIGHT
+		RSWE I 2 BRIGHT
+		RSWE J 3 BRIGHT
+		//NULL A //acs_execute(99,0,0,0,0)
+		NULL A 5 A_ReFire ("EFire")
+		//FHMS B 3 
+      Goto Blazing
+	  
+	  EBackSwing: //Powered
+		NULL A 0 BRIGHT A_JumpIfNoAmmo("Depower")
+		NULL A 0 A_Recoil (-2)
+		RSWF A 3 BRIGHT A_TakeInventory("Darklight", 10, TIF_NOTAKEINFINITE)
+		RSWF B 1 BRIGHT A_PlaySound("weapons/ESWORD/SORZAP", CHAN_WEAPON)
+		RSWF C 1 BRIGHT
+		RSWF D 2 BRIGHT A_CustomPunch(200+random(100, 300), 1, 0, "eSwordPuff", 100)
+		RSWF E 1 BRIGHT
+		RSWF F 1 BRIGHT
+		RSWF E 1 BRIGHT
+		RSWF F 3 BRIGHT
+		//NULL A 15 //acs_execute(99,0,0,0,0)
+		NULL A 5 A_ReFire ("EFire")
+	  Goto Blazing
+	  
+	  EJSwing: //Powered
+		NULL A 0 BRIGHT A_JumpIfNoAmmo("Depower")
+		NULL A 0 A_Recoil (-2)
+		RSWJ A 3 BRIGHT A_TakeInventory("Darklight", 10, TIF_NOTAKEINFINITE)
+		RSWJ B 1 BRIGHT A_PlaySound("weapons/ESWORD/SORZAP", CHAN_WEAPON)
+		RSWJ C 1 BRIGHT
+		RSWJ D 2 BRIGHT A_CustomPunch(200+random(100, 300), 1, 0, "eSwordPuff", 100)
+		RSWJ E 1 BRIGHT
+		RSWJ D 2 BRIGHT
+		RSWJ FFFF 1 BRIGHT A_WeaponOffset(-40, 8, WOF_ADD)
+		NULL A 0 A_WeaponOffset(160, -32, WOF_ADD)
+		//NULL A 15 //acs_execute(99,0,0,0,0)
+		NULL A 2 A_ReFire ("EFire")
+	  Goto Blazing
+	  
+	  EKSwing: //Powered
+		NULL A 0 BRIGHT A_JumpIfNoAmmo("Depower")
+		NULL A 0 A_Recoil (-2)
+		RSWK A 3 BRIGHT A_TakeInventory("Darklight", 10, TIF_NOTAKEINFINITE)
+		RSWK B 1 BRIGHT A_PlaySound("weapons/ESWORD/SORZAP", CHAN_WEAPON)
+		RSWK C 1 BRIGHT
+		RSWK D 2 BRIGHT A_CustomPunch(200+random(100, 300), 1, 0, "eSwordPuff", 100)
+		RSWK E 1 BRIGHT
+		RSWK D 2 BRIGHT
+		RSWK FFFF 1 BRIGHT A_WeaponOffset(40, 8, WOF_ADD)
+		NULL A 0 A_WeaponOffset(-160, -32, WOF_ADD)
+		NULL A 2 A_ReFire ("EFire")
+		//FHMS B 3 
+	  Goto Blazing
+	    		
+   }
+}
+
+ACTOR eSwordPuff : BulletPuff
+{
+  +PUFFONACTORS
+  //+NOEXTREMEDEATH --Uncomment and remove this message to prevent gibs
+  //SeeSound "ESDCHOPL"
+  AttackSound "ESDSLSHG"
+  ActiveSound "silent"
+  States
+  {
+  Spawn:
+    PUFF ABCD 4
+    Stop
+  }
+}
+
+
+/*actor martillazo
+{    
+    PROJECTILE     
+    +BLOODSPLATTER
+	+DONTREFLECT
+    Radius 8
+    Height 8
+    Speed 8
+    Damage 10
+    States
+    {
+    Spawn:
+        NULL A 5
+    Death:
+        NULL A 0 A_Explode(192,136,0) 		
+        Stop
+    }
+}*/
+
+//******************************************

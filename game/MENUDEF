@@ -1,0 +1,16 @@
+AddOptionMenu "OptionsMenu"
+{
+    StaticText ""
+    Submenu "Friend Helga Options", "blnkHelga_options"
+}
+
+OptionMenu "blnkHelga_options"
+{
+	Title "Friend Helga Options"
+	StaticText "Friend Helga Options", gold
+	StaticText " "	
+	Slider "Seconds until Helga talks when Idle", "blnkHelga_idletalk", 10, 60, 1
+	StaticText " "
+	Slider "Seconds until Helga cast a healing spell upon you", "blnkHelga_helpHeal", 10, 60, 1
+	StaticText " "
+}

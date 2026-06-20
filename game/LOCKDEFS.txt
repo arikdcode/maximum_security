@@ -1,0 +1,31 @@
+Lock 202
+{
+	IronKey
+	Message "You need an iron key to open this door."
+	RemoteMessage "You an iron key to open this door."
+	Mapcolor 255 180 100
+}
+
+Lock 203
+{
+	CopperKey
+	Message "You need a copper key to open this."
+	RemoteMessage "You a copper key to open this."
+	Mapcolor 255 180 0
+}
+
+Lock 204
+{
+	SilveryKey
+	Message "You need a silver key to open this door."
+	RemoteMessage "You need a silver key to open this."
+	Mapcolor 255 255 255
+}
+
+Lock 205
+{
+	GoldHeartKey
+	Message "You need a golden key to open this door."
+	RemoteMessage "You need a golden key to open this."
+	Mapcolor 255 255 50
+}

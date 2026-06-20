@@ -1,0 +1,79 @@
+namespace = "ZDoom";
+
+conversation
+{
+	ID = 1;
+    actor = "HelgaChained"; // Not a number!
+    page //1
+    {
+         name = "Prisoner";
+         dialog = "Wha...? Who are you?";
+		 panel = "MDIAGS"
+         choice
+         {
+             text = "A prisoner, like yourself. Or at least, I was. Why are you chained?";
+             nextpage = 2;
+         }
+		 choice
+         {
+             text = "What the hell is going on here?";
+             nextpage = 2;
+         }
+		 		 choice
+         {
+             text = "It doesn't matter who I am. Who are you?";
+             nextpage = 3;
+         }
+    }
+	
+    page //2
+    {
+         name = "Prisoner";
+         dialog = "Those men... *grunts in pain*... They were going to... to kill me.";
+		 panel = "MDIAGA"
+		 choice
+         {
+             text = "Kill you? Why?";
+             nextpage = 4;
+         }
+		 		 choice
+         {
+             text = "Are you hurt?";
+             nextpage = 4;
+         }
+    }
+	
+    page //3
+    {
+         name = "Prisoner";
+         dialog = "I am... was just a huntress from the village. But several monks ago, evil men came to the village. They started demanding sacrifices...";
+		 panel = "MDIAGN"
+		 choice
+         {
+             text = "Sacrifices";
+             nextpage = 4;
+		}
+    }
+	
+	    page //4
+    {
+         name = "Prisoner";
+         dialog = "Are you... Are you just here to torment me too?!";
+		 panel = "MDIAGA"
+		 choice
+         {
+             text = "I'm not here to do anything. You're on your own.";
+             nextpage = 5;
+         }
+		 choice
+         {
+             text = "I'm not here to torment you. How do I set you free?";
+             nextpage = 4;
+         }
+		 		 choice
+         {
+             text = "Are you hurt?";
+             nextpage = 4;
+         }
+    }
+}

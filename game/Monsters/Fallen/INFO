@@ -1,0 +1,15 @@
+Name: Fallen
+Difficulty: Medium
+Connection: None
+Summon: Fallen
+Melee: No
+Distance: Projectile
+Type: Demon, Undead
+Brightmaps: Yes
+Actor modification: No
+ACS: No
+
+
+Similar to Hexen's Afrit in behavior. As an attack, it fires a short stream of fireballs, and also
+dodges around in the air. Can't take much damage, but it can be hard to hit, especially with
+projectiles of your own.

@@ -1,0 +1,10 @@
+Name: Machinegun ZSpecOps
+Difficulty: Medium
+Connections: Some actors in other ZSpecOps variants
+Summon: ZSpecOpsMachinegun
+Melee: No
+Distance: Hitscan
+Type: Human, Undead
+Brightmaps: Yes
+Actor modification: No
+ACS: No

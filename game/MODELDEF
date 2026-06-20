@@ -1,0 +1,53 @@
+Model BlackObelisk
+{
+   Path "Models"
+   Model 0 "BlackObelisk.md3"
+   FrameIndex BLO1 A 0 0
+   Scale 1.0 1.0 1.0
+}
+
+Model BlackObeliskNoBase
+{
+   Path "Models"
+   Model 0 "BlackObeliskBaseless.md3"
+   FrameIndex BLO2 A 0 0
+   Scale 1.0 1.0 1.0
+}
+
+Model BlackObeliskFloat
+{
+   ROTATING
+   Rotation-Speed 0.3
+   Path "Models"
+   Model 0 "BlackObeliskBaseless.md3"
+   FrameIndex BLO2 A 0 0
+   Scale 1.0 1.0 1.0
+}
+
+Model Turret_Head
+{
+	Model 0 "Models/Turret_Head_3D.obj"
+
+	USEACTORPITCH
+	USEACTORROLL
+	
+	AngleOffset 90
+	Offset 12 0 0
+   
+	FrameIndex UNKN A 0 0
+}
+
+Model Turret_Base
+{
+	Model 0 "Models/Turret_Body_3D.obj"
+	Model 1 "Models/Turret_Legs_3D.obj"
+
+	USEACTORPITCH
+	USEACTORROLL
+	
+	AngleOffset 90
+	ZOffset -2
+   
+	FrameIndex UNKN A 0 0
+	FrameIndex UNKN A 1 0
+}

@@ -1,0 +1,59 @@
+Class ZombieScientistCrowbar : Actor
+{
+	Default
+	{
+		//$Category Monsters/ZombieScientists
+		//$Title "Crowbar"
+		obituary "%o was prised open by a zombie scientist.";
+		health 20;
+		mass 90;
+		speed 16;
+		Radius 20;
+		Height 52;
+		painchance 200;
+		seesound "zombiescientistM/sight";
+		painsound "zombiescientistM/pain";
+		deathsound "zombiescientistM/death";
+		activesound "zombiescientistM/active";
+		MONSTER;
+		+FLOORCLIP
+		+WINDTHRUST;
+	}
+	States
+	{
+	Spawn:
+		SCZC AB 10 A_Look();
+		loop;
+	See:
+		SCZC AABBCCDD 4 A_Chase();
+		loop;
+	Melee:
+		SCZC E 8 A_FaceTarget();
+		SCZC F 16 A_CustomMeleeAttack(random (2, 6) *5, "zombiescientist/blunthit", "zombiescientist/swing");
+		SCZC E 4;
+		goto See;
+	Pain:
+		SCZC G 3;
+		SCZC G 3 A_Pain();
+		goto See;
+	Death:
+		SCZC H 5;
+		SCZC I 5 A_Scream();
+		SCZC J 5 A_NoBlocking();
+		SCZC K 5;
+		SCZC L 5;
+		SCZC M 5;
+		SCZC N -1;
+		stop;
+	XDeath:
+		SCZC O 5;
+		SCZC P 5 A_XScream();
+		SCZC Q 5 A_NoBlocking();
+		SCZC RSTUV 5;
+		SCZC W -1;
+		stop;
+	Raise:
+		SCZC MLKJIH 5;
+		goto See;
+	}
+}

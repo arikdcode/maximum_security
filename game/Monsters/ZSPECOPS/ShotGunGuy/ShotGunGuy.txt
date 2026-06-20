@@ -1,0 +1,324 @@
+Class ZSpecOpsShotgun : Actor
+{
+//$Category Monsters/Custom
+  bool mode_aggressive; //This can all be done with a single int, honestly, but it's pretty clear to a reader what it's doing this way.
+  bool mode_sprint;
+  bool mode_wander;
+  bool mode_creep;
+  bool mode_berserk;
+
+  Default
+  {
+    Health 150;
+    Height 56;
+    Radius 20;
+    Speed 8;
+    PainChance 96;
+    SeeSound "ZSpecOps/Sight";
+    ActiveSound "ZSpecOps/Sight";
+    PainSound "ZSpecOps/Pain";
+    DeathSound "ZSpecOps/Death";
+    Obituary "%o was gunned down by a ZSpecOps";
+    Decal "BulletChip";
+    DropItem "Shotgun";
+    Monster;
+    +FloorClip
+    //+NoTarget
+    //+NoInfighting
+  }
+
+  States
+  {
+  Spawn:
+    ZSP1 AAAAAAAAAABBBBBBBBBB 1 A_Look();
+    Loop;
+
+  //Switching
+  See:
+    ZSP1 A 0 ZSpecOps_Reset();
+    ZSP1 A 0 A_JumpIf(mode_aggressive, "AggressiveSee");
+    ZSP1 A 0 A_JumpIf(mode_sprint, "SprintSee");
+    ZSP1 A 0 A_JumpIf(mode_wander, "WanderSee");
+    ZSP1 A 0 A_JumpIf(mode_creep, "CreepSee");
+    ZSP1 A 0 A_JumpIf(mode_berserk, "BerserkSee");
+    ZSP1 A 0 ZSpecOps_Aggressive(); //Default to Aggressive. Ideally we should never hit this if the mode-switching is working, but it's here just in case.
+    Goto AggressiveSee;
+
+  //Aggressive Mode
+  AggressiveSee:
+    ZSP1 A 3 A_Chase(null, "AggressiveMissile");
+    ZSP1 A 0 ZSpecOps_AggressiveEval();
+    ZSP1 A 3 A_Chase(null, "AggressiveMissile");
+    ZSP1 A 0 ZSpecOps_AggressiveEval();
+    ZSP1 B 3 A_Chase(null, "AggressiveMissile");
+    ZSP1 B 0 ZSpecOps_AggressiveEval();
+    ZSP1 B 3 A_Chase(null, "AggressiveMissile");
+    ZSP1 B 0 ZSpecOps_AggressiveEval();
+    ZSP1 C 3 A_Chase(null, "AggressiveMissile");
+    ZSP1 C 0 ZSpecOps_AggressiveEval();
+    ZSP1 C 3 A_Chase(null, "AggressiveMissile");
+    ZSP1 C 0 ZSpecOps_AggressiveEval();
+    ZSP1 D 3 A_Chase(null, "AggressiveMissile");
+    ZSP1 D 0 ZSpecOps_AggressiveEval();
+    ZSP1 D 3 A_Chase(null, "AggressiveMissile");
+    ZSP1 D 0 ZSpecOps_AggressiveEval();
+    Loop;
+  AggressiveMissile:
+    ZSP1 EEE 4 A_FaceTarget();
+    ZSP1 F 2 Bright
+    {
+      A_PlaySound("Weapons/ShotGF", CHAN_WEAPON);
+      A_CustomBulletAttack(8, 6, 7, 4, "Bulletpuff");
+    }
+    ZSP1 EEE 2 A_FaceTarget();
+    Goto AggressiveSee;
+
+  //Sprint Mode
+  SprintSee:
+    ZSP1 A 2 A_Chase(null, null);
+    ZSP1 A 0 A_JumpIfCloser(384, "See");
+    ZSP1 A 2 A_Chase(null, null);
+    ZSP1 A 0 A_JumpIfCloser(384, "See");
+    ZSP1 B 2 A_Chase(null, null);
+    ZSP1 B 0 A_JumpIfCloser(384, "See");
+    ZSP1 B 2 A_Chase(null, null);
+    ZSP1 B 0 A_JumpIfCloser(384, "See");
+    ZSP1 C 2 A_Chase(null, null);
+    ZSP1 C 0 A_JumpIfCloser(384, "See");
+    ZSP1 C 2 A_Chase(null, null);
+    ZSP1 C 0 A_JumpIfCloser(384, "See");
+    ZSP1 D 2 A_Chase(null, null);
+    ZSP1 D 0 A_JumpIfCloser(384, "See");
+    ZSP1 D 2 A_Chase(null, null);
+    ZSP1 D 0 A_JumpIfCloser(384, "See");
+    Loop;
+
+  //Wander Mode
+  WanderSee:
+    ZSP1 AABBCCDD 4
+    {
+      A_Wander();
+      A_LookEx(LOF_NOSOUNDCHECK | LOF_NOSEESOUND, 0, 0, 0, 360, "See");
+    }
+    Loop;
+
+  //Creep Mode
+  CreepSee:
+    ZSP1 A 0
+    {
+      if( ( CheckSight(target) && Random()<32 ) || health<50 )
+        return ResolveState("See");
+      return ResolveState(null);
+    }
+    ZSP1 AABBCCDD 5 A_Chase(null, "CreepMissile", CHF_NOPLAYACTIVE);
+    Loop;
+  CreepMissile:
+    ZSP1 EEE 4 A_FaceTarget();
+    ZSP1 F 2 Bright
+    {
+      A_PlaySound("Weapons/ShotGF", CHAN_WEAPON);
+      A_CustomBulletAttack(8, 6, 7, 4, "Bulletpuff");
+    }
+    ZSP1 EEE 2 A_FaceTarget();
+    Goto CreepSee;
+
+  //Berserk Mode
+  BerserkSee:
+    ZSP1 AABBCCDD 3 A_Chase(null, "BerserkMissile");
+    ZSP1 A 0 A_JumpIfCloser(768, "BerserkSee");
+    Goto See;
+  BerserkMissile:
+    ZSP1 EE 4 A_FaceTarget();
+    ZSP1 F 2 Bright
+    {
+      A_PlaySound("Weapons/ShotGF", CHAN_WEAPON);
+      A_CustomBulletAttack(8, 6, 7, 4, "Bulletpuff");
+    }
+    ZSP1 EEE 2 A_FaceTarget();
+    ZSP1 F 0 A_Jump(192, "BerserkSee");
+    ZSP1 F 0 A_MonsterRefire(40, "BerserkSee");
+    Loop;
+
+  //Misc hurting states
+  Pain:
+    ZSP1 G 4;
+    ZSP1 G 4 A_Pain();
+    ZSP1 G 0 A_Jump(96, "See"); //Chance to switch modes
+    Goto WhatPainState;
+  WhatPainState:
+    ZSP1 G 0 A_JumpIf(mode_aggressive, "AggressiveSee");
+    ZSP1 G 0 A_JumpIf(mode_sprint, "SprintSee");
+    ZSP1 G 0 A_JumpIf(mode_wander, "WanderSee");
+    ZSP1 G 0 A_JumpIf(mode_creep, "CreepSee");
+    ZSP1 G 0 A_JumpIf(mode_berserk, "BerserkSee");
+    Goto AggressiveSee; //Default to aggressive if we didn't have a mode
+  Death:
+    ZSP1 H 5;
+    ZSP1 I 5 A_Scream();
+    ZSP1 J 5;
+    ZSP1 K 5 A_NoBlocking();
+    ZSP1 L -1;
+  Raise:
+    ZSP1 LKJIH 5;
+    Goto See;
+  }
+
+  void ZSpecOps_Reset()
+  {
+    mode_aggressive=false;
+    mode_sprint=false;
+    mode_wander=false;
+    mode_creep=false;
+    mode_berserk=false;
+    //bMissileMore=false;
+    //bMissileEvenMore=false;
+	MissileChanceMult = 0;
+	MissileChanceMult = 0;
+    bAvoidMelee=false;
+    bNoPain=false;
+
+    ZSpecOps_SitRep();
+  }
+
+  void ZSpecOps_Aggressive()
+  {
+    //bMissileMore=true;
+   // bMissileEvenMore=true;
+	MissileChanceMult = 0.5;
+	MissileChanceMult = 0.25;
+    mode_aggressive=true;
+  }
+
+  state ZSpecOps_AggressiveEval()
+  {
+    if( (Random()>192 && health<50) || (Random()>32 && CheckIfCloser(target, 768)) )
+      return ResolveState("See");
+    return ResolveState(null);
+  }
+
+  void ZSpecOps_Sprint()
+  {
+    bNoPain=true;
+    mode_sprint=true;
+  }
+
+  void ZSpecOps_Wander()
+  {
+    A_ClearTarget();
+    mode_wander=true;
+  }
+
+  void ZSpecOps_Creep()
+  {
+    //bMissileMore=true;
+	MissileChanceMult = 0.5;
+    bAvoidMelee=true;
+    mode_creep=true;
+  }
+
+  void ZSpecOps_Berserk()
+  {
+    //bMissileMore=true;
+    //bMissileEvenMore=true;
+	MissileChanceMult = 0.5;
+	MissileChanceMult = 0.25;
+    bNoPain=true;
+    mode_berserk=true;
+  }
+
+  void ZSpecOps_SitRep()
+  {
+    if( health<50 )
+      if(CheckSight(target))
+        if(CheckIfCloser(target, 768))
+          switch(random(0, 2))
+          {
+            case 0:
+              ZSpecOps_Creep();  //Low health, out of sight, close, 33% chance
+              return;
+            case 1:
+              ZSpecOps_Aggressive();  //Low health, out of sight, close, 33% chance
+              return;
+            case 2:
+              ZSpecOps_Berserk();  //Low health, out of sight, close, 33% chance
+              return;
+          }
+        else
+          if(random(0, 1)) //50% chance
+          {
+            ZSpecOps_Sprint(); //Low health, out of sight, 50% chance
+            return;
+          }
+          else //50% chance
+          {
+            ZSpecOps_Creep(); //Low health, out of sight, 50% chance
+            return;
+          }
+      else
+        if( CheckIfCloser(target, 768) )
+          if(random(0, 1)) //50% chance
+          {
+            ZSpecOps_Berserk(); //Low health, close, 50% chance
+            return;
+          }
+          else //50% chance
+          {
+            ZSpecOps_Aggressive(); //Low health, close, 50% chance
+            return;
+          }
+        else
+          if(random(0,1)) //50% chance
+          {
+            ZSpecOps_Sprint(); //Low health, 50% chance
+            return;
+          }
+          else //50% chance
+          {
+            ZSpecOps_Berserk(); //Low health, 50% chance
+            return;
+          }
+
+    if(CheckSight(target))
+      if(CheckIfCloser(target,384))
+        if(random(0, 1)) //50% chance
+        {
+          ZSpecOps_Aggressive(); //Out of sight, close, 50% chance
+          return;
+        }
+        else //50% chance
+        {
+          ZSpecOps_Creep(); //Out of sight, close, 50% chance
+          return;
+        }
+      else
+        switch(random(0, 2))
+        {
+          case 0:
+            ZSpecOps_Aggressive(); //Out of sight, 33% chance
+            return;
+          case 1:
+            ZSpecOps_Wander(); //Out of sight, 33% chance
+            return;
+          case 2:
+            ZSpecOps_Creep(); //Out of sight, 33% chance
+            return;
+        }
+
+    if( CheckIfCloser(target, 384) )
+    {
+      ZSpecOps_Aggressive(); //Close
+      return;
+    }
+    else
+    {
+      if(random(0, 1)) //50% chance
+      {
+        ZSpecOps_Aggressive(); //High health, in sight, far away, 50% chance
+      }
+      else
+      {
+        ZSpecOps_Sprint(); //High health, in sight, far away, 50% chance
+      }
+    }
+  }
+}

@@ -1,0 +1,13 @@
+Name: Zombie Scientist (Crowbar)
+Difficulty: Very Easy
+Connections: None
+Summon: ZombieScientistCrowbar
+Melee: Yes
+Distance: No
+Type: Human, Undead
+Brightmaps: No
+Actor modification: No
+ACS: No
+
+Description:
+A former scientist wielding a crowbar.

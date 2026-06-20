@@ -1,0 +1,23 @@
+Name: Rifle Zombieman
+Difficulty: Easy
+Connections: None
+Summon: RifleGuy, deadrifleguy
+Melee: No
+Distance: Hitscan
+Type: Human, Undead
+Brightmaps: No
+Added States: No
+ACS: No
+
+
+A heavily-armored undead trooper. He's fairly accurate and does a decent amount of damage, but his
+helmet can be picked up to regain an armour point. Comes with an impaled corpse, complete with
+still-beating heart.
+
+Submitted: Skelegant
+Decorate: Skelegant
+GLDefs: Skelegant
+Sounds: id Software, Skelegant, Valve Software
+Sprites: id Software, David G.
+Sprite Edit: Skelegant, David G.
+Idea Base: Alpha rifle (plus those armour bonuses had to have come from somewhere)

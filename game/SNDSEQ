@@ -1,0 +1,155 @@
+:ConcreteBreak
+	volume 127
+    playuntildone		CONBREAK
+end
+
+:CreepLaugh
+	volume 200
+    playuntildone		CREEPLAF
+end
+
+:BreakLaugh
+	volume 127
+    playuntildone		CONBREAK
+	volume 250
+    playuntildone		CREEPLAF
+end
+
+:JackScream
+	volume 127
+    playuntildone		JACKSCRM
+end
+
+:VileLaugh
+	volume 400
+	delay  35
+	playuntildone		DSVILACT
+end
+
+:ConcreteScrape
+	Volume 180
+	playuntildone		CONSCRAPE
+end
+
+:GlassCrash
+	Volume 200
+	PlayUntilDone		GLASSHAT
+end
+
+:PageFlip
+	door 13
+	Volume 200
+	Play			PAGEFLIP
+	StopSound		PAGEFLIP
+end
+
+
+:PsiDoors
+	Volume 127
+	PlayUntilDone		PSIDOORS
+end
+
+:PsiDoor
+	Door 14
+	Volume 160
+	PlayUntilDone		PSIDOORS
+end
+
+:MetalBreak
+	Volume 80
+	PlayUntilDone		METALBREAK
+end
+
+:fireplace
+	Volume 127
+	playrepeat 			FIREPLACE
+end
+
+:musicbox
+	Volume 50
+	playrepeat 			MUSICBOX
+end
+
+:growlActivate
+	volume 200
+	//attenuation surround
+	Play				GROWLACT
+end
+
+//polyobj door
+:squeakDoor11
+	door 11
+	playuntildone 		DOORSQEK
+	stopsound			DOORCLOS
+end
+
+:ConDoor12
+	door 12
+	play 				CONSCRAPE
+	stopsound			STONESTP
+end
+
+:FuseBox
+	Volume 127
+	Play				FUSEBOX
+end
+
+:birds
+	Volume 127
+	Playrepeat			BIRDAMB1
+end
+
+:waterDrip
+	Volume 127
+	Playrepeat			WATERDRP
+end
+
+:dunegonAmbient
+ 	Volume 127
+	Playrepeat			DUNGEON1
+end	
+
+:PhoneRing
+	Volume 127
+	Play 				PHONRING
+end
+
+
+
+:Keyfall
+	Volume 127
+	Play 				KEYFALL
+end
+
+[DoorStone
+ Door 1
+ 0  ConDoor12
+ 1  ConDoor12
+ 2  ConDoor12
+ 3  ConDoor12
+]
+
+[PageFlip
+ Door 2
+ 0  PageFlip
+ 1  PageFlip
+ 2  PageFlip
+ 3  PageFlip
+]
+
+:Whirrstop
+	Volume 240
+	Playuntildone 		WHIRR
+	delay 12
+	Playuntildone 		WHIRSTOP
+end	
+
+:Achtung
+	Volume 127
+	Playuntildone		ACHTUNG
+end
+
+:Snipe
+	Volume 200
+	play				SNIPE
+end

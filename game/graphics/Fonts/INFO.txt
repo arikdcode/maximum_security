@@ -1,0 +1,11 @@
+Information:
+Name: Teevee Gold
+Variants: 3
+Type: SmallFont
+Format: FON2
+Replaces: N/A
+Size: 9px
+Paletted: Doom
+Lower-cases: No
+Individual glyphs/character maps included: Yes
+Standard GFX included: N/A

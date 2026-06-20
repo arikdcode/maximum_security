@@ -1,0 +1,370 @@
+Actor VegieBarrel 14500
+{
+//$Category Health and Armor/Food/
+  Radius 16
+  Height 30
+  Health 20
+  +Solid
+  +Shootable 
+  +noblood
+  DeathSound "Bar/Break"
+  States
+  {
+  Spawn:
+    FOBR A -1
+    Stop
+  Death:
+    NULL A 0 A_Scream
+    FOBR B 5 
+    FOBR C 5
+    FOBR D 5
+    FOBR E 5
+    FOBR F 0 A_SpawnItemEx("Vegie1", 0, 0,1, 1, 0, 0,Random(-179,179), 128)
+    FOBR F 0 A_SpawnItemEx("Vegie2", 0, 0,1, 1, 0, 0,Random(-179,179), 128)
+    FOBR F 0 A_SpawnItemEx("Vegie3", 0, 0,1, 1, 0, 0,Random(-179,179), 128)
+    FOBR F 0 A_SpawnItemEx("Vegie4", 0, 0,1, 1, 0, 0,Random(-179,179), 128)
+    FOBR F 0 A_SpawnItemEx("Vegie5", 0, 0,1, 1, 0, 0,Random(-179,179), 128)
+    FOBR F 0 A_SpawnItemEx("Woodrem1", 0, 0,1, 2, 0, 0,Random(-179,179), 128)
+    FOBR F 0 A_SpawnItemEx("Woodrem2", 0, 0,1, 2, 0, 0,Random(-179,179), 128)
+    FOBR F 0 A_SpawnItemEx("Woodrem1", 0, 0,1, 1, 0, 0,Random(-179,179), 128)
+    FOBR F 0 A_SpawnItemEx("Woodrem2", 0, 0,1, 1, 0, 0,Random(-179,179), 128)
+    FOBR F 5 
+    FOBR G 5
+    FOBR H 5
+    Wait
+  }
+}
+
+Actor SmallBarrel1 14501
+{
+  Radius 16
+  Height 14
+  Health 10
+  +Solid
+  +Shootable 
+  +noblood
+  DeathSound "Bar/Break"
+  States
+  {
+  Spawn:
+    FOMI A -1
+    Stop
+  Death:
+    NULL A 0 A_Scream 
+    FOMI E 0 A_SpawnItemEx("Vegie1", 0, 0,1, 1, 0, 0,Random(-179,179), 128)
+    FOMI E 0 A_SpawnItemEx("Vegie2", 0, 0,1, 1, 0, 0,Random(-179,179), 128)
+    FOMI E 0 A_SpawnItemEx("Woodrem1", 0, 0,1, 2, 0, 0,Random(-179,179), 128)
+    FOMI E 0 A_SpawnItemEx("Woodrem2", 0, 0,1, 2, 0, 0,Random(-179,179), 128)
+    FOMI E 0 A_SpawnItemEx("Woodrem1", 0, 0,1, 1, 0, 0,Random(-179,179), 128)
+    FOMI E 0 A_SpawnItemEx("Woodrem2", 0, 0,1, 1, 0, 0,Random(-179,179), 128)
+    FOMI E 5
+    FOMI F 5
+    Wait
+  }
+}
+
+Actor SmallBarrel2 14502
+{
+  Radius 16
+  Height 14
+  Health 10
+  +Solid
+  +Shootable 
+  +noblood
+  DeathSound "Bar/Break"
+  States
+  {
+  Spawn:
+    FOMI B -1
+    Stop
+  Death:
+    NULL A 0 A_Scream 
+    FOMI E 0 A_SpawnItemEx("Meat1", 0, 0,1, 1, 0, 0,Random(-179,179), 128)
+    FOMI E 0 A_SpawnItemEx("Fish", 0, 0,1, 1, 0, 0,Random(-179,179), 128)
+    FOMI E 0 A_SpawnItemEx("Woodrem1", 0, 0,1, 2, 0, 0,Random(-179,179), 128)
+    FOMI E 0 A_SpawnItemEx("Woodrem2", 0, 0,1, 2, 0, 0,Random(-179,179), 128)
+    FOMI E 0 A_SpawnItemEx("Woodrem1", 0, 0,1, 1, 0, 0,Random(-179,179), 128)
+    FOMI E 0 A_SpawnItemEx("Woodrem2", 0, 0,1, 1, 0, 0,Random(-179,179), 128)
+    FOMI E 5
+    FOMI F 5
+    Wait
+  }
+}
+
+Actor SmallBarrel3 14503
+{
+  Radius 16
+  Height 14
+  Health 10
+  +Solid
+  +Shootable 
+  +noblood
+  DeathSound "Bar/Break"
+  States
+  {
+  Spawn:
+    FOMI C -1
+    Stop
+  Death:
+    NULL A 0 A_Scream 
+    FOMI E 0 A_SpawnItemEx("Vegie3", 0, 0,1, 1, 0, 0,Random(-179,179), 128)
+    FOMI E 0 A_SpawnItemEx("Vegie4", 0, 0,1, 1, 0, 0,Random(-179,179), 128)
+    FOMI E 0 A_SpawnItemEx("Woodrem1", 0, 0,1, 2, 0, 0,Random(-179,179), 128)
+    FOMI E 0 A_SpawnItemEx("Woodrem2", 0, 0,1, 2, 0, 0,Random(-179,179), 128)
+    FOMI E 0 A_SpawnItemEx("Woodrem1", 0, 0,1, 1, 0, 0,Random(-179,179), 128)
+    FOMI E 0 A_SpawnItemEx("Woodrem2", 0, 0,1, 1, 0, 0,Random(-179,179), 128)
+    FOMI E 5
+    FOMI F 5
+    Wait
+  }
+}
+
+Actor SmallBarrel4 14504
+{
+  Radius 16
+  Height 14
+  Health 10
+  +Solid
+  +Shootable 
+  +noblood
+  DeathSound "Bar/Break"
+  States
+  {
+  Spawn:
+    FOMI D -1
+    Stop
+  Death:
+    NULL A 0 A_Scream 
+    FOMI E 0 A_SpawnItemEx("Vegie5", 0, 0,1, 1, 0, 0,Random(-179,179), 128)
+    FOMI E 0 A_SpawnItemEx("Cheese", 0, 0,1, 1, 0, 0,Random(-179,179), 128)
+    FOMI E 0 A_SpawnItemEx("Woodrem1", 0, 0,1, 2, 0, 0,Random(-179,179), 128)
+    FOMI E 0 A_SpawnItemEx("Woodrem2", 0, 0,1, 2, 0, 0,Random(-179,179), 128)
+    FOMI E 0 A_SpawnItemEx("Woodrem1", 0, 0,1, 1, 0, 0,Random(-179,179), 128)
+    FOMI E 0 A_SpawnItemEx("Woodrem2", 0, 0,1, 1, 0, 0,Random(-179,179), 128)
+    FOMI E 5
+    FOMI F 5
+    Wait
+  }
+}
+
+
+Actor EmptyFoodBarrel 14505
+{
+  Radius 16
+  Height 30
+  Health 20
+  +Solid
+  +Shootable 
+  +noblood
+  DeathSound "Bar/Break"
+  States
+  {
+  Spawn:
+    FOBR A -1
+    Stop
+  Death:
+    NULL A 0 A_Scream
+    FOBR B 5 
+    FOBR C 5
+    FOBR D 5
+    FOBR E 5
+    FOBR F 0 A_SpawnItemEx("Woodrem1", 0, 0,1, 2, 0, 0,Random(-179,179), 128)
+    FOBR F 0 A_SpawnItemEx("Woodrem2", 0, 0,1, 2, 0, 0,Random(-179,179), 128)
+    FOBR F 0 A_SpawnItemEx("Woodrem1", 0, 0,1, 1, 0, 0,Random(-179,179), 128)
+    FOBR F 0 A_SpawnItemEx("Woodrem2", 0, 0,1, 1, 0, 0,Random(-179,179), 128)
+    FOBR F 5 
+    FOBR G 5
+    FOBR H 5
+    Wait
+  }
+}
+
+Actor MeatBarrel 14506
+{
+  Radius 16
+  Height 30
+  Health 20
+  +Solid
+  +Shootable 
+  +noblood
+  DeathSound "Bar/Break"
+  States
+  {
+  Spawn:
+    FOBR A -1
+    Stop
+  Death:
+    NULL A 0 A_Scream 
+    FOBR B 5
+    FOBR C 5
+    FOBR D 5
+    FOBR E 5
+    FOBR F 0 A_SpawnItemEx("Meat1", 0, 0,1, 1, 0, 0,Random(-179,179), 128)
+    FOBR F 0 A_SpawnItemEx("Cheese", 0, 0,1, 1, 0, 0,Random(-179,179), 128)
+    FOBR F 0 A_SpawnItemEx("Cheese", 0, 0,1, 1, 0, 0,Random(-179,179), 128)
+    FOBR F 0 A_SpawnItemEx("Fish", 0, 0,1, 1, 0, 0,Random(-179,179), 128)
+    FOBR F 0 A_SpawnItemEx("Woodrem1", 0, 0,1, 2, 0, 0,Random(-179,179), 128)
+    FOBR F 0 A_SpawnItemEx("Woodrem2", 0, 0,1, 2, 0, 0,Random(-179,179), 128)
+    FOBR F 0 A_SpawnItemEx("Woodrem1", 0, 0,1, 1, 0, 0,Random(-179,179), 128)
+    FOBR F 0 A_SpawnItemEx("Woodrem2", 0, 0,1, 1, 0, 0,Random(-179,179), 128)
+    FOBR F 5
+    FOBR G 5
+    FOBR H 5
+    Wait
+  }
+}
+Actor Vegie1 : Health 14507
+{
+  Inventory.PickupFlash Pickupflash
+  Inventory.Amount 10
+  Inventory.PickupMessage "Chewed a strange fruit, what the?"
+  +BOUNCEONFLOORS
+  +BOUNCEONWALLS
+  Speed 4
+  States
+  {
+  Spawn:
+    FRUT A -1
+    Stop
+  }
+}
+
+Actor Vegie2 : Health 14508
+{
+  Inventory.PickupFlash Pickupflash
+  Inventory.Amount 15
+  Inventory.PickupMessage "Eaten an apple, Good."
+  +BOUNCEONFLOORS
+  +BOUNCEONWALLS
+  Speed 4
+  States
+  {
+  Spawn:
+    FRUT B -1
+    Stop
+  }
+}
+
+Actor Vegie3 : Health 14509
+{
+  Inventory.PickupFlash Pickupflash
+  Inventory.Amount 10
+  Inventory.PickupMessage "Eaten some Lecttuce, Humn..."
+  +BOUNCEONFLOORS
+  +BOUNCEONWALLS
+  Speed 4
+  States
+  {
+  Spawn:
+    FRUT D -1
+    Stop
+  }
+}
+
+Actor Vegie4 : Health 14510
+{
+  Inventory.PickupFlash Pickupflash
+  Inventory.Amount 15
+  Inventory.PickupMessage "Eaten some Carrots,..."
+  +BOUNCEONFLOORS
+  +BOUNCEONWALLS
+  Speed 4
+  States
+  {
+  Spawn:
+    FRUT E -1
+    Stop
+  }
+}
+
+Actor Vegie5 : Health 14511
+{
+  Inventory.PickupFlash Pickupflash
+  Inventory.Amount 10
+  Inventory.PickupMessage "Eaten some Onions, Yuck!."
+  +BOUNCEONFLOORS
+  +BOUNCEONWALLS
+  Speed 4
+  States
+  {
+  Spawn:
+    FRUT G -1
+    Stop
+  }
+}
+
+Actor Meat1 : Health 14512
+{
+  Inventory.PickupFlash Pickupflash
+  Inventory.Amount 25 
+  Inventory.PickupMessage "Eaten some Beef, Tasty."
+  +BOUNCEONFLOORS
+  +BOUNCEONWALLS
+  Speed 4
+  States
+  { 
+  Spawn:
+    FRUT C -1 
+    Stop
+  }
+}
+
+
+Actor Cheese : Health 14513
+{
+  Inventory.PickupFlash Pickupflash
+  Inventory.Amount 20
+  Inventory.PickupMessage "Eaten some Cheese, Yum.."
+  +BOUNCEONFLOORS
+  +BOUNCEONWALLS
+  Speed 4
+  States
+  {
+  Spawn:
+    FRUT F -1
+    Stop
+  }
+}
+
+Actor Fish : Health 14514
+{
+  Inventory.PickupFlash Pickupflash
+  Inventory.Amount 20
+  Inventory.PickupMessage "Eaten some Fish, Gulp.."
+  +BOUNCEONFLOORS
+  +BOUNCEONWALLS
+  Speed 4
+  States
+  {
+  Spawn: 
+    FRUT H -1
+    Stop
+  }
+}
+
+Actor Woodrem1 
+{
+  +BOUNCEONFLOORS
+  +BOUNCEONWALLS
+  Speed 5
+  States
+  {
+  Spawn: 
+    BAPA A -1
+    Stop
+  }
+}
+
+Actor Woodrem2 
+{
+  +BOUNCEONFLOORS
+  +BOUNCEONWALLS
+  Speed 5
+  States
+  {
+  Spawn: 
+    BAPA B -1
+    Stop
+  }
+}
+

@@ -1,0 +1,975 @@
+#include "zcommon.acs"
+
+int seconds = 35;
+int broken = 1;
+int bluepower = 0; //should be zero before start actual map
+
+script 1 OPEN
+{
+	do
+	{
+		delay(350);
+		if(bluepower == 1)
+		{
+			//delay(35);
+			Thing_Activate(32); //turn on pillar glow lights
+
+			ChangeFloor(37, "DROBSD25");
+			ChangeCeiling(37, "DROBSD23");
+			Light_RaiseByValue(37,36);
+
+			Thing_Activate(28); //turn on reactor light
+			Floor_LowerByValue(29,8,1); //link power circuit to switches
+			changefloor(29,"OTECHB05"); //circuit tex
+			Light_Glow(29,224,104,12); //circuit glow
+			//Light_RaiseByValue(31,40); //brighten switch room
+			delay(35);
+			thing_activate(36); //Reactor hum
+			thing_activate(37); //don't remember
+			delay(15);
+			//delay(20*seconds);
+			break;
+		}
+
+	}
+	while(bluepower == 0);
+	log(s:"Looks like the power is back on.");
+
+}
+
+
+Script 2 (void)
+{
+	Polyobj_DoorSlide(1,4,128,45,200);
+	Polyobj_DoorSlide(2,4,0,45,200);
+}
+
+
+//Puzzle blue power room------------------------------------------
+//----------------------------------------------------------------
+script 3 (void) //start switch
+{
+	Light_RaiseByValue(23,24);
+	Ceiling_RaiseByValue(5,8,6);
+	Light_Glow(6,224,128,12);
+	Floor_LowerByValue(6,8,1);
+	changefloor(6,"OTECHB05");
+	Light_Glow(6,224,128,12);
+	Light_Glow(5,224,128,12);
+	ToggleFloor7();
+	Light_RaiseByValue(18,120);
+	ToggleFloor19();
+	changefloor(24,"OIRONL81");
+
+	SetLineTexture(25,SIDE_FRONT,TEXTURE_BOTTOM, "OIRONL81");
+	Thing_Activate(26);
+
+		while(broken)
+	{
+		Floor_RaiseByValue(16,32,6);
+		Floor_RaiseByValue(27,32,6);
+		delay(18);
+		Floor_LowerByValue(16,32,6);
+		Floor_LowerByValue(27,32,6);
+		delay(18);
+		Floor_RaiseByValue(16,32,6);
+		Floor_RaiseByValue(27,32,6);
+		delay(12);
+		Floor_LowerByValue(16,32,6);
+		Floor_LowerByValue(27,32,6);
+		delay(35);
+		Floor_RaiseByValue(16,4,2);
+		Floor_RaiseByValue(27,4,2);
+		delay(6);
+		SoundSequenceOnSector(22,"Whirrstop",SECSEQ_INTERIOR);
+		Floor_LowerByValue(16,4,2);
+		Floor_LowerByValue(27,4,2);
+		delay(70);
+	}
+}
+
+//Blue Room Switches
+
+
+int switch1 = 0; //switch1
+int switch2 = 0;
+int switch3 = 0;
+int switch4 = 0;
+
+int floor7 = 0;
+int floor10 = 0;
+int floor12 = 0;
+int floor17 = 0;
+int floor19 = 0;
+
+int ceiling14 = 0;
+
+int	rightpower = 0;
+
+function void togglefloor10 (void)
+{
+	if (floor10 == 0) floor10 = 1;
+	else floor10 = 0;
+
+	switch(floor10)
+	{
+
+	case 1 :
+	Floor_RaiseByValue(10,32,97);
+	break;
+
+	case 0:
+	Floor_LowerByValue(10,32,97);
+	break;
+
+	default: //If the number is neither 0 or 1, then this block is executed.
+	log(s:"Hmm...");
+	break;
+	}
+}
+
+function void togglefloor7 (void)
+{
+	if (floor7 == 0) floor7 = 1;
+	else floor7 = 0;
+
+	switch(floor7)
+	{
+
+	case 1 :
+	Floor_RaiseByValue(7,32,97);
+	break;
+
+	case 0:
+	Floor_LowerByValue(7,32,97);
+	break;
+
+	default: //If the number is neither 0 or 1, then this block is executed.
+	log(s:"Hmm...");
+	break;
+	}
+}
+
+function void togglefloor12 (void)
+{
+	if (floor12 == 0) floor12 = 1;
+	else floor12 = 0;
+
+	switch(floor12)
+	{
+
+	case 1 :
+	Floor_RaiseByValue(12,32,97);
+	break;
+
+	case 0:
+	Floor_LowerByValue(12,32,97);
+	break;
+
+	default: //If the number is neither 0 or 1, then this block is executed.
+	log(s:"Hmm...");
+	break;
+	}
+}
+
+function void togglefloor17 (void)
+{
+	if (floor17 == 0) floor17 = 1;
+	else floor17 = 0;
+
+	switch(floor17)
+	{
+
+	case 1 :
+	Floor_RaiseByValue(17,64,97);
+	break;
+
+	case 0:
+	Floor_LowerByValue(17,64,97);
+	break;
+
+	default: //If the number is neither 0 or 1, then this block is executed.
+	log(s:"Hmm...");
+	break;
+	}
+}
+
+function void togglefloor19 (void)
+{
+	if (floor19 == 0) floor19 = 1;
+	else floor19 = 0;
+
+	switch(floor19)
+	{
+
+	case 1 :
+	Floor_RaiseByValue(19,32,97);
+	break;
+
+	case 0:
+	Floor_LowerByValue(19,32,97);
+	break;
+
+	default: //If the number is neither 0 or 1, then this block is executed.
+	log(s:"Hmm...");
+	break;
+	}
+}
+
+
+function void openCeiling14 (void)
+{
+	if (!Ceiling14)
+	{
+		ceiling14 = 1;
+		Ceiling_RaiseByValue(14,8,16);
+		Light_Glow(14,224,128,12);
+	}
+}
+
+function void closeCeiling14 (void)
+{
+	if (ceiling14)
+	{
+		ceiling14 = 0;
+		Ceiling_LowerByValue(14,8,16);
+		Light_Glow(14,104,128,12);
+	}
+}
+
+
+function void switchLight12 (void)
+{
+		if (switch1 && switch2) Light_Glow(13,224,128,12);
+		else Light_Glow(13,128,104,12);
+}
+
+function void switchLight124  (void)
+{
+		if (switch1 && switch2 && switch4)
+		{
+			Light_Glow(20,224,128,12);
+			OpenCeiling14();
+		}
+		else if (!switch1 || !switch2 || !switch3)
+		{
+
+			Light_Glow(20,104,128,12);
+			CloseCeiling14();
+		}
+}
+
+
+function void switch_F1 (void)
+{
+		If (switch1 == 1) switch1 = 0;
+		else if (switch1 == 0) switch1 = 1;
+		switch(switch1)
+		{
+		case 1:
+			changefloor(9,"OTECHB05");
+			Light_Glow(9,224,128,12);
+			switchlight12(); //check switches are on and make floor glow
+			switchLight124();
+			Floor_LowerByValue(9,8,1);
+			ToggleFloor19();
+			ToggleFloor10();
+			break;
+
+		case 0:
+			changefloor(9,"OIRONL81");
+			Light_Glow(9,104,128,12);
+			switchlight12();
+			switchLight124();
+			Floor_RaiseByValue(9,8,1);
+			ToggleFloor19();
+			ToggleFloor10();
+			break;
+
+		default: //If the number is neither 0 or 1, then this block is executed.
+		log(s:"Hmm...");
+		break;
+		}
+}
+
+function void switch_F2 (void)
+{
+	If (switch2 == 1) switch2 = 0;
+  else if (switch2 == 0) switch2 = 1;
+
+  switch(switch2)
+  {
+  case 1:
+	changefloor(13,"OTECHB05");
+	switchlight12();
+	switchLight124();
+	Floor_LowerByValue(13,8,1);
+	ToggleFloor12();
+    break;
+
+  case 0:
+	changefloor(13,"OIRONL81");
+	Light_Glow(13,128,12,12);
+	switchlight12();
+	switchLight124();
+	Floor_RaiseByValue(13,8,1);
+	ToggleFloor12();
+    break;
+
+  default: //If the number is neither 0 or 1, then this block is executed.
+    log(s:"Hmm...");
+    break;
+  }
+}
+
+function void switch_F3 (void)
+{
+	If (switch3 == 1) switch3 = 0;
+	else if (switch3 == 0) switch3 = 1;
+
+	switch(switch3)
+	{
+	case 1:
+		changefloor(15,"OTECHB05");
+		switchlight12();
+		switchLight124();
+		ToggleFloor17();
+		break;
+
+	case 0:
+		changefloor(15,"OIRONL81");
+		switchlight12();
+		switchLight124();
+		ToggleFloor17();
+		break;
+
+	default: //If the number is neither 0 or 1, then this block is executed.
+		log(s:"Hmm...");
+		break;
+	}
+}
+
+function void switch_F4 (void)
+{
+	if (switch4 ==1) switch4 = 0;
+	else if (switch4 == 0) switch4 = 1;
+
+	switch(switch4)
+	{
+		Case 1:
+			changefloor(20,"OTECHB05");
+			switchLight124();
+			Floor_LowerByValue(20,8,1);
+			ToggleFloor10();
+			break;
+
+
+		Case 0:
+			changefloor(20,"OIRONL81");
+			switchLight124();
+			Floor_RaiseByValue(20,8,1);
+			ToggleFloor10();
+			break;
+
+		default: //If the number is neither 0 or 1, then this block is executed.
+		log(s:"Hmm...");
+		break;
+	}
+
+}
+
+
+script 4 (void) //switch1
+{
+	switch_F1();
+}
+
+
+
+script 5 (void) //switch2
+{
+	switch_F2();
+}
+
+
+
+Script 6 (void) //SWITCH3 (wall1) AND SWITCH1
+{
+		switch_F3();
+		switch_F1();
+}
+
+script 7 (void) //switch4
+{
+	switch_F4();
+	switch_F3();
+}
+
+script 8 (void)
+{
+	broken = 0;
+	Floor_LowerToLowest(16,8);
+	SoundSequence("CONBREAK");
+	changefloor(16,"OIRONL81");
+}
+
+script "PowerRoomPuzzle" OPEN
+{
+	int mentioned_floor = 0;
+	while(1)
+	{
+		delay(35);
+		if (switch1 && switch2 && !switch3 && switch4 && !broken)
+		{
+
+			Floor_LowerByValue(15,4,1);
+			Floor_LowerByValue(14,4,40);
+			Ceiling_RaiseByValue(14,4,40);
+			changefloor(15,"OTECHB05");
+			Light_Glow(15,224,128,12);
+			delay(75);
+			Floor_RaiseByValue(21,2,52);
+			Ceiling_RaiseByValue(21,2,92);
+			switch1 = 3;
+			switch2 = 3;
+			switch3 = 3;
+			switch3 = 3;
+			switch4 = 3;
+			bluepower = 1;
+			delay(135);
+			break;
+		}
+
+		else if (switch1 && switch2 && !switch3 && switch4 && broken && !mentioned_floor)
+		{
+			delay(35);
+			log(s:"Almost have it... but that broken section... Hmm...");
+			mentioned_floor = 1;
+		}
+		else delay(1);
+
+	}
+}
+//----------------------------------------------------------------
+//----------------------------------------------------------------
+
+
+//blue key switches-----------------------------------------------
+
+function void Switch_L (void)
+{
+	if(!bluepower) log(s:"Looks like there is no power.");
+	else
+	{
+		toggle35();
+		toggle33();
+		toggle34();
+	}
+}
+
+int floor34 = 0;
+int floor33 = 0;
+int floor35 = 1;
+
+function void toggle34 (void) //toggle bars in puzzle
+{
+	if (floor34) Ceiling_Lowerbyvalue(34,100,128);
+	else Ceiling_Raisebyvalue(34,100,128);
+
+	if (floor34 == 0) floor34 = 1;
+	else floor34 = 0;
+}
+
+function void toggle35 (void) //toggle bars in puzzle
+{
+	if (floor35) Ceiling_LowerByValue(35,100,128);
+	else Ceiling_Raisebyvalue(35,100,128);
+
+	if (floor35 == 0) floor35 = 1;
+	else floor35 = 0;
+}
+
+
+function void toggle33 (void) //toggle bars in puzzle
+{
+	if (floor33) Ceiling_Lowerbyvalue(33,100,128);
+	else Ceiling_Raisebyvalue(33,100,128);
+
+	if (floor33 == 0) floor33 = 1;
+	else floor33 = 0;
+}
+
+
+function void Switch_M (void)
+{
+	if(!bluepower) log(s:"Looks like there is no power.");
+	else
+	{
+		toggle34();
+		toggle35();
+	}
+}
+
+function void Switch_R (void)
+{
+	if(!bluepower) log(s:"Looks like there is no power.");
+	else
+	{
+		toggle33();
+		toggle34();
+	}
+
+}
+
+script 9 (void)
+{
+	Switch_L();
+}
+
+script 10 (void)
+{
+	Switch_M();
+}
+
+script 11 (void)
+{
+	Switch_R();
+}
+
+script 12 (void) //when pick up blue key
+{
+	//SoundSequenceOnSector(31,"growlActivate",SECSEQ_INTERIOR);
+	ThingSound(32,"GROWLACT",1.0);
+	//Soundsequenceonactor(32,"growlActivate");
+	//SoundSequence("growlActivate");
+	//PlaySound(32,"growlact");
+}
+//------------------------------------------------------------
+//------------------------------------------------------------
+
+script 13 (void)
+{
+	if (bluepower == 0)
+	{
+
+		delay(18);
+		SetLineTexture(38,SIDE_FRONT,TEXTURE_MIDDLE,"DRSWC08A");
+		delay(35);
+		thingsound(32,"SNARLACT", 0.5);
+		SetLineTexture(38,SIDE_FRONT,TEXTURE_MIDDLE,"DRSWC08B");
+		delay(3);
+		SetLineTexture(38,SIDE_FRONT,TEXTURE_MIDDLE,"DRSWC08C");
+		delay(3);
+		SetLineTexture(38,SIDE_FRONT,TEXTURE_MIDDLE,"DRSWC08D");
+		delay(70);
+		SetLineTexture(38,SIDE_FRONT,TEXTURE_MIDDLE,"DRSWC08C");
+		delay(3);
+		SetLineTexture(38,SIDE_FRONT,TEXTURE_MIDDLE,"DRSWC08B");
+		delay(3);
+		SetLineTexture(38,SIDE_FRONT,TEXTURE_MIDDLE,"DRSWC08A");
+		delay(10);
+		SetLineTexture(38,SIDE_FRONT,TEXTURE_MIDDLE,"DRSWC08B");
+		delay(3);
+		SetLineTexture(38,SIDE_FRONT,TEXTURE_MIDDLE,"DRSWC08C");
+		delay(3);
+		SetLineTexture(38,SIDE_FRONT,TEXTURE_MIDDLE,"DRSWC08D");
+		delay(70);
+		SetLineTexture(38,SIDE_FRONT,TEXTURE_MIDDLE,"DRSWC08C");
+		delay(3);
+		SetLineTexture(38,SIDE_FRONT,TEXTURE_MIDDLE,"DRSWC08B");
+		delay(3);
+		SetLineTexture(38,SIDE_FRONT,TEXTURE_MIDDLE,"DRSWC08A");
+		delay(3);
+		SetLineTexture(38,SIDE_FRONT,TEXTURE_MIDDLE,"-");
+	}
+
+	//if (bluepower == 1) SetLineTexture(38,SIDE_FRONT,TEXTURE_MIDDLE,"-");
+
+}
+//--------------------------------------------------------------------
+//--------------------------------------------------------------------
+
+//Music Box Room------------------------------------------------------
+//int music;
+int musictime = 20;
+int viletrap = 0;
+
+int orangeBook_inventory = 0; //70 isecor //
+int greenBook_inventory = 0; //69		//
+int blueBook_inventory = 0; //67		//
+int redBook_inventory = 0; //68			//
+
+int book_count = 4;
+
+int Books_placed = 0;
+
+
+function void musicBox (int music) //deprecated
+{
+	//int music = x;
+	//if (music == 0) music = 1;
+	//else music = 0;
+
+	switch(music)
+	{
+		case 0:
+		{
+			thing_deactivate(41);
+			log(s:"Musicbox is off");
+		}
+
+
+		case 1:
+		{
+			thing_activate(41);
+			log(s:"Musicbox is on");
+
+		}
+
+		default:
+		{
+			log(s:"Haunting...");
+		}
+	}
+}
+script 14 (void)
+{
+	if (viletrap == 0) //reveal arch-viles the first time the musicbox is activated
+	{
+		door_open(45,128,0);
+		viletrap++;
+	}
+
+	if (musictime > 1) // if musicbox is not running already, turn it on
+		{
+			thing_activate(41); //turn on music
+			Floor_Waggle(46,10,20,0,20*seconds); //musicbox animation
+			Floor_Waggle(47,12,30,0,20*seconds);
+			Floor_Waggle(48,14,40,0,20*seconds);
+			log(s:"Musicbox is on");
+
+			//reveal books that aren't grabbed
+			if (orangeBook_inventory == 0)
+			{
+				FloorAndCeiling_RaiseByValue(70,1024,400);
+				Thing_SetSpecial(145,1,0,4,240);
+				//Light_glow(44,256,128,35);
+			}
+
+			if (greenBook_inventory == 0)
+			{
+				FloorAndCeiling_RaiseByValue(69,1024,400);
+				Thing_SetSpecial(146,1,0,4,250);
+			}
+
+			if (redBook_inventory == 0)
+			{
+				FloorAndCeiling_RaiseByValue(68,1024,400);
+				Thing_SetSpecial(147,1,0,4,250);
+			}
+
+			if (blueBook_inventory == 0)
+			{
+				FloorAndCeiling_RaiseByValue(67,1024,400);
+				Thing_SetSpecial(148,1,0,4,250);
+			}
+
+
+			while (musictime > 12) //reveal monsters and freeze for 8 seconds
+				{
+					log(i:musictime);
+					delay(35);
+					musictime--;
+
+				}
+
+			thing_activate(52); //unfreeze monsters and begin chase!
+			thing_activate(53);
+			thing_activate(54);
+			thing_activate(55);
+
+			// Teleport 2 of the  monsters to upper level if player is there
+			if ((GetActorZ(0) >> 16) > ((GetActorZ(52) >> 16)-60)) TeleportOther(52,56,0);
+			if ((GetActorZ(0) >> 16) > ((GetActorZ(54) >> 16 ) -60)) TeleportOther(54,58,0);
+
+
+
+			//Teleport the same 2 of the monsters to lower level if player is there
+			if ((GetActorZ(0) >> 16) < ((GetActorZ(52) >> 16) -60)) TeleportOther(52,61,0);
+			if ((GetActorZ(0 >> 16)) < ((GetActorZ(53) >> 16) - 60 )) TeleportOther(53,62,0);
+
+			while (musictime > 0) //12 seconds of being chased
+				{
+					log(i:musictime);
+					delay(35);
+					musictime--;
+
+				}
+
+			log(i:musictime);
+			musictime = 20; //reset timer
+
+			//hide books that aren't grabbed
+			if (orangeBook_inventory == 0)
+			{
+				FloorAndCeiling_LowerByValue(70,1024,400);
+				Thing_SetSpecial(145,1,0,4,255);
+			}
+
+			if (greenBook_inventory == 0)
+			{
+				FloorAndCeiling_LowerByValue(69,1024,400);
+				Thing_SetSpecial(146,1,0,4,255);
+			}
+
+			if (redBook_inventory == 0)
+			{
+				FloorAndCeiling_LowerByValue(68,1024,400);
+				Thing_SetSpecial(147,1,0,4,255);
+			}
+
+			if (blueBook_inventory == 0)
+			{
+				FloorAndCeiling_LowerByValue(67,1024,400);
+				Thing_SetSpecial(148,1,0,4,255);
+			}
+
+
+
+	}
+
+	Thing_Deactivate(41);  //freeze monsters again while music is off
+	thing_Deactivate(52);
+	thing_Deactivate(53);
+	thing_Deactivate(54);
+	thing_Deactivate(55);
+	log(s:"Musicbox is off");
+}
+
+
+
+script 15 (void) //green book
+{
+	FloorAndCeiling_LowerByValue(69,1024,400);
+	Thing_SetSpecial(146,1,0,4,255);
+	greenBook_inventory = 1;
+	if (book_count == 4) log(s:"I have the first book! ");
+	else if (book_count < 2) log(s:"I have all the books!");
+	else log(i:book_count-1, s:" left to go!");
+	book_count--;
+}
+
+script 16 (void) //red book
+{
+	FloorAndCeiling_LowerByValue(68,1024,400);
+	Thing_SetSpecial(147,1,0,4,255);
+	redBook_inventory = 1;
+	if (book_count == 4) log(s:"I have the first book! ");
+	else if (book_count < 2) log(s:"I have all the books!");
+	else log(i:book_count-1, s:" left to go!");
+	book_count--;
+}
+
+script 17 (void) //blue book
+{
+	FloorAndCeiling_LowerByValue(67,1024,400);
+	Thing_SetSpecial(148,1,0,4,255);
+	blueBook_inventory = 1;
+	if (book_count == 4) log(s:"I have the first book! One down! ");
+	else if (book_count < 2) log(s:"I have all the books!");
+	else log(i:book_count-1, s:" left to go! ");
+	book_count--;
+}
+
+script 18 (void) //orange book
+{
+	FloorAndCeiling_LowerByValue(70,1024,400);
+	Thing_SetSpecial(145,1,0,4,255);
+	orangeBook_inventory = 1;
+	if (book_count == 4) log(s:"I have the first book! ");
+	else if (book_count < 2) log(s:"I have all the books!");
+	else log(i:book_count-1, s:" left to go!");
+	book_count--;
+}
+
+script 19 (void) //book receptacle plinth script
+{
+
+ if (book_count == 4) log(s:"Something fits into these slots here... hmmm");
+
+ if (orangeBook_inventory == 1)
+ {
+	orangeBook_inventory = 2;
+	FloorAndCeiling_RaiseByValue(79,1024,32);
+	SetActorProperty(52,APROP_Health,0); //kill arch-vile
+	Books_placed++;
+	log(i:Books_placed, s:" down!");
+ }
+  if (redBook_inventory == 1)
+ {
+	redBook_inventory = 2;
+	FloorAndCeiling_RaiseByValue(76,1024,32);
+	//play placesound
+	SetActorProperty(53,APROP_Health,0); //kill arch-vile
+	Books_placed++;
+	log(i:Books_placed, s:" down!");
+
+ }
+  if (blueBook_inventory == 1)
+ {
+	blueBook_inventory = 2;
+	FloorAndCeiling_RaiseByValue(77,1024,32);
+	SetActorProperty(54,APROP_Health,0); //kill arch-vile
+	Books_placed++;
+	log(i:Books_placed, s:" down!");
+
+ }
+  if (greenBook_inventory == 1)
+ {
+	greenBook_inventory = 2;
+	FloorAndCeiling_RaiseByValue(78,1024,32);
+	SetActorProperty(55,APROP_Health,0); //kill arch-vile
+	Books_placed++;
+	log(i:Books_placed, s:" down!");
+
+ }
+
+ if (Books_placed > 3)
+ {
+	 log(s:"Phew! I got them all.");
+	 Door_Open(81,16,0);
+	 //open doors
+	 //change stainglass
+	 SetLineTexture(80,SIDE_FRONT,TEXTURE_MIDDLE,"STARCHGY");
+	 //reveal sword
+	 //release ronsrers
+ }
+
+
+
+}
+
+script 20 (void) //window commentary books
+{
+	if((getactorz(0) >> 16) > 150) log(s:"These books look important. Different colours? Hmm...");
+}
+
+script 21 (void) //window commentary books
+{
+	if((getactorz(0) >> 16) > 150) log(s:"They seem to fear these books.");
+}
+
+script 22 (void) //window commentary books
+{
+	if((getactorz(0) >> 16) > 150) log(s:"The books are missing. He looks worried.");
+}
+
+script 23 (void) //change music
+{
+	SetMusic("D_E2M8");
+}
+
+script 24 (void) //changesky
+{
+	ChangeSky("OSKY4B","OSKY4B");
+}
+
+script 25 (void) //changesky
+{
+	ChangeSky("OSKY33","OSKY33");
+}
+
+int musicvolume = 1.0;
+
+script 26 (void) //Boss Fight arch vile resurrect
+{
+	log(s:"Where the hell am I?");
+	while (GetActorProperty(125,APROP_Health) > 0) //While secret hidden arch-Vile is alive
+	{
+		delay(350); //wait 10 seconds
+		//log(s:"check");
+		if (GetActorProperty(126, APROP_HEALTH) < 1 && GetActorProperty(125,APROP_Health) > 0)
+		{
+			Thing_Raise(126,1); //heal and resurrect borther 1
+			log(s:"Something is bringing them back!");
+			SoundSequenceOnSector(128,"VileLaugh",SECSEQ_FULLHEIGHT);
+
+		}
+
+		//log(s:"brother 1 hp is ", i:GetActorProperty(126, APROP_HEALTH));
+
+		if (GetActorProperty(127, APROP_HEALTH) < 1 && GetActorProperty(125,APROP_Health) > 0)
+		{
+			Thing_Raise(127,1); //heal and resurrect borther 2
+			log(s:"Something is bringing them back!");
+			SoundSequenceOnSector(128,"VileLaugh",SECSEQ_FULLHEIGHT);
+
+		}
+	}
+	log(s:"The resurrector is dead.");
+
+	while (GetActorProperty(127, APROP_HEALTH) > 0 || GetActorProperty(126, APROP_HEALTH) > 0 || GetActorProperty(125,APROP_Health) > 0)
+	{
+			delay(35);
+	}
+
+		Floor_RaiseByValue(131,8,96);
+		Floor_RaiseByValue(132,8,64);
+		log(s:"Finally...");
+		delay(70);
+		log(s:"Looks like I can leave this place.");
+
+		/*SetMusicVolume(0.8);
+		delay(25);
+		SetMusicVolume(0.6);
+		delay(25);
+		SetMusicVolume(0.4);
+		delay(25);
+		SetMusicVolume(0.2);
+		delay(25);
+		SetMusicVolume(0);
+		delay(25);
+		SetMusic("TITNPLNT");
+		SetMusicVolume(2);
+		SetMusic("TITNPLNT");*/
+
+		while(musicVolume > 0)
+    {
+        musicVolume -= 0.025;
+        SetMusicVolume(musicVolume);
+        Delay(3);
+    }
+
+    SetMusic("TITNPLNT");
+
+    while(musicVolume < 1.0)
+    {
+        musicVolume += 0.025;
+        SetMusicVolume(musicVolume);
+        Delay(3);
+    }
+
+
+
+}
+int bossmusic = 0;
+
+	script 27 (void) //boss music
+	{
+		if (bossmusic == 0)
+		{
+		SetMusic("D_E3M8");
+		bossmusic++;
+		}
+	}
+
+	script 28 (void)
+	{
+		FloorAndCeiling_LowerByValue(103,16,800);
+		PlaySound(101,"KEYFALL",CHAN_BODY,1.0);
+	}
+
+script 100 (void)
+{
+Radius_Quake(2,5,0,3,0);
+}

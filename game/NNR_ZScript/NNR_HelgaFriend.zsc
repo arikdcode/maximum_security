@@ -1,0 +1,470 @@
+Class NNR_FriendHelga : Actor
+{
+	Int TeleTic;
+	Int	IdleTic;
+	Int HealTic; //Time between aviable healing spell cast...
+	//Int spawned;
+	//Int Fog;
+	Default
+	{
+		Tag "Helga";
+		Monster;
+		Health 200;
+		Radius 16;
+		Height 56;
+		BloodType "FriendHelgaBlood";
+		BloodColor "Red";
+		Mass 100;
+		Speed 3;
+		PainChance 160;
+		Damage 0;
+		XScale 0.50;
+		YScale 0.50;
+		-CountKill;
+		+LookAllAround;
+		+FloorClip;
+		+Friendly;
+		+NotAutoAimed;
+		+SlidesOnWalls;
+		+DontMorph;
+		+NoBlockMonst;
+		+QuickToretaliate;
+		+NoiceDeath;
+		+Buddha;
+		+AvoidMelee;
+		+NoExtremeDeath;
+		MaxStepHeight 48;
+		MaxDropOffHeight 48;
+		PainSound "FriendHelga/Pain";
+		DamageFactor "BuildFriendDamage", 0; //Caleb, Duke, Lo Wang and other "Build Engine" buddies...
+		DamageFactor "FriendMarineDamage", 0; //At least, there is DoomGuy for it...
+		DamageFactor "FriendRMGDamage", 0; //My buddies...
+		Obituary "%o was accidentally killed by companion Helga..."; //For now I had to have it...
+	}
+	override int TakeSpecialDamage(Actor inflictor, Actor source, int damage, Name damagetype)
+	{
+		if (source && (source.player || source is "NNR_FriendHelga"))
+		{
+			return 0;
+		}
+		return super.TakeSpecialDamage(inflictor, source, damage, damagetype);
+	}
+	Override Void PostBeginPlay()
+	{
+		Super.PostBeginPlay();
+		A_StartSound("FriendHelga/Intro",CHAN_VOICE);
+		A_StartSound("FriendHelga/Draw",CHAN_AUTO);
+	}
+	override void Tick() 
+	{
+		super.Tick();
+		if (isFrozen())
+		{
+			return;
+		}
+		if (!master)
+		{
+			//spawn("Teleportfog",(pos.x, pos.y, pos.z + height * 0.5));
+			//fog++;
+			//Destroy();
+			return;
+		}
+		//Castin healing spell...
+		If (HealTic >= GetCVar("blnkHelga_helpHeal")*35)
+		{
+			If (Master.Health > 0 && Master.Health < 0.75*Master.GetMaxHealth() && !InStateSequence(CurState, FindState("Healing")))
+			{
+				HealTic = 0;
+				SetStateLabel("Healing");
+			}
+		}
+		HealTic++;
+		//Don't touch that!!!
+		if (health < default.health)
+		{
+			A_SetHealth(health + 1);
+		}
+		if (health <= 5 && !InStateSequence(curstate, FindState("FakeDeath")))
+		{
+			A_SetHealth(default.health);
+			SetStateLabel("FakeDeath");
+		}
+	}
+	Override bool CanCollideWith(Actor other, bool Passive)
+	{
+		If(!Other) 
+		Return False;
+		If(Other && !Passive)
+		{
+			If(Other.Player)
+			{
+				If(!Deathmatch) 
+				Return False;
+				Else If(Deathmatch && Other == Master) 
+				Return False;
+			}			
+			If(Other.bMISSILE && Other.Target && Other.Target.Player)
+			{
+				If(!Deathmatch) 
+				Return False;
+				Else If(Deathmatch && Other.Target == Master) 
+				Return False;
+			}			
+			Return True;
+		}
+		If(Other && Passive)
+		{
+			If(Other.Player)
+			{
+				If(!Deathmatch) 
+				Return False;
+				Else If(Deathmatch && Other == Master) 
+				Return False;
+			}			
+			If(Other.bMISSILE && Other.Target && Other.Target.Player)
+			{
+				If(!Deathmatch) 
+				Return False;
+				Else If(Deathmatch && Other.Target == Master) 
+				Return False;
+			}
+			Return True;
+		}
+		Return True;
+	}	
+	States
+	{
+    Spawn:
+		HELG G 1 A_Look;
+		TNT1 A 0 A_CheckSight("TeleTic");
+		Loop;
+	See:
+		HELG G 0 A_SetScale(0.5);
+		HELG GGGHHHIIIJJJ 1
+		{
+			If (Master && Distance3D(master) < 70)
+			{
+				Return ResolveState("Stand");
+			}
+			A_Chase();
+			A_Recoil(-1);
+			Return ResolveState(Null);
+		}
+		TNT1 A 0 A_CheckSight("TeleTic");
+		Loop;
+	Stand:
+		HELG G 1
+		{ 
+			If (IdleTic >= GetCVar("blnkHelga_idletalk")*35)
+            {
+                IdleTic = 0;
+				A_StartSound("FriendHelga/Idle", CHAN_VOICE);
+				A_StartSound("FriendHelga/Holster",CHAN_AUTO);
+            }
+            IdleTic++;
+			A_Chase(Null,"Missile",CHF_NOPLAYACTIVE|CHF_DONTMOVE);
+		}
+		GoTo See;
+	TeleTic:
+        TNT1 A 0 
+        {
+            if (teletic >= 5)
+            {
+                A_ClearTarget();
+				teletic = 0;
+				Warp(master, fRandom(-16, -64), fRandom(-64, 64), 0, 0, WARPF_STOP|WARPF_TOFLOOR);
+            }
+			teletic++;
+        }
+        GoTo See;
+	Melee:
+		TNT1 A 0 A_Jump(64,"Missile");
+		HELG G 2;
+		TNT1 A 0
+		{
+			IdleTic = 0;
+			A_FaceTarget();
+			A_Recoil(-3);
+		}
+		TNT1 A 0 A_StartSound("FriendHelga/Melee", CHAN_VOICE);
+		HELG K 5 A_CustomMeleeAttack(Random(5,10)*Random(5,10),"FriendHelga/KnifeHit","FriendHelga/KnifeMiss","Melee",True);
+		HELG L 5;
+		HELG M 5;
+		HELG N 5;
+		HELG O 5;
+		HELG G 2;
+		GoTo See;
+	Missile:
+		TNT1 A 0 A_StartSound("FriendHelga/Attack", CHAN_VOICE); //Angry rant before the storm...
+		TNT1 A 0 A_Jump(72,"BowFireUsual");
+		TNT1 A 0 A_Jump(72,"BowFirePoison");
+		TNT1 A 0 A_Jump(28,"ThrowAxe");
+		TNT1 A 0 A_Jump(28,"MagicIce");
+		TNT1 A 0 A_Jump(28,"MagicFire");
+		TNT1 A 0 A_Jump(28,"MagicSchock");
+	ThrowAxe:
+		HELG K 5;
+		HELG L 5;
+		HELG M 5
+		{
+			IdleTic = 0;
+			A_FaceTarget();
+			A_StartSound("FriendHelga/Swing", CHAN_WEAPON); //Crook stick so it not gonna be silent in close range...
+			A_SpawnProjectile("FriendHelgaAxe",40,-8);
+			//A_AlertMonsters(0,AMF_TARGETEMITTER);
+		}
+		HELG N 5;
+		HELG O 5 A_ChangeVelocity(Random(2,10), Random(-10,10), Random(1,2),CVF_RELATIVE);
+		GoTo See;
+	BowFireUsual:
+		//Janky reload before firing so there is no need in separate state for that. I don't want to break re-fire function.
+		HELG Z 1 A_ChangeVelocity(Random(2,10), Random(-10,10), Random(1,2),CVF_RELATIVE);
+		HELG Z 3 A_StartSound("FriendHelga/BowReLoad", CHAN_WEAPON);
+		HELG Y 4;
+		HELG X 4;
+		//------------------------------
+		HELG W 1 A_FaceTarget;
+		HELG W 11 A_StartSound("FriendHelga/BowReady", CHAN_WEAPON);
+		HELG X 12 
+		{	
+			IdleTic = 0;
+			A_FaceTarget();
+			A_StartSound("FriendHelga/BowShot", CHAN_WEAPON); //Crook stick so it not gonna be silent in close range...
+			A_SpawnProjectile("FriendHelgaArrowWeak",45,-3);
+			//A_AlertMonsters(0,AMF_TARGETEMITTER);
+			A_Chase(NULL,NULL,CHF_FASTCHASE);
+		}
+		TNT1 A 0 A_Jump(64,"See");
+		TNT1 A 0 A_MonsterRefire(0,"See");
+		Goto BowFireUsual;
+	BowFirePoison:
+		//Janky reload before firing so there is no need in separate state for that. I don't want to break re-fire function.
+		HELG Z 1 A_ChangeVelocity(Random(2,10), Random(-10,10), Random(1,2),CVF_RELATIVE);
+		HELG Z 3 A_StartSound("FriendHelga/BowReLoad", CHAN_WEAPON);
+		HELG Y 4;
+		HELG X 4;
+		//------------------------------
+		HELG W 1 A_FaceTarget;
+		HELG W 11 A_StartSound("FriendHelga/BowReady", CHAN_WEAPON);
+		HELG X 12 
+		{	
+			IdleTic = 0;
+			A_FaceTarget();
+			A_StartSound("FriendHelga/BowShot", CHAN_WEAPON); //Crook stick so it not gonna be silent in close range...
+			A_SpawnProjectile("FriendHelgaArrowAcid",45,-3);
+			//A_AlertMonsters(0,AMF_TARGETEMITTER);
+			A_Chase(NULL,NULL,CHF_FASTCHASE);
+		}
+		TNT1 A 0 A_Jump(64,"See");
+		TNT1 A 0 A_MonsterRefire(0,"See");
+		Goto BowFirePoison;
+	MagicIce:
+		HELG R 1 A_FaceTarget;
+		HELG R 6 A_StartSound("FriendHelga/IceCharge", CHAN_WEAPON);
+		HELG S 7 Bright;
+		HELG T 7 Bright;
+		HELG U 7 Bright
+		{
+			IdleTic = 0;
+			A_FaceTarget();
+			A_StartSound("FriendHelga/IceFire", CHAN_WEAPON); //Crook stick so it not gonna be silent in close range...
+			A_SpawnProjectile("FriendHelgaIceBall",45,-6);
+			//A_AlertMonsters(0,AMF_TARGETEMITTER);
+		}
+		HELG V 7 A_ChangeVelocity(Random(2,10), Random(-10,10), Random(1,2),CVF_RELATIVE);
+		GoTo See;
+	MagicFire:
+		HELG R 1 A_FaceTarget;
+		HELG R 6 A_StartSound("FriendHelga/FireCharge", CHAN_WEAPON);
+		HELG S 7 Bright;
+		HELG T 7 Bright;
+		HELG U 1 Bright
+		{
+			IdleTic = 0;
+			A_FaceTarget();
+			A_SpawnProjectile("FriendHelgaFireShot", 45, -6);
+			//A_AlertMonsters(0,AMF_TARGETEMITTER);
+		}
+		HELG U 1 Bright
+		{
+			A_FaceTarget();
+			A_SpawnProjectile("FriendHelgaFireShot", 45, -6);
+		}
+		HELG U 1 Bright
+		{
+			A_FaceTarget();
+			A_SpawnProjectile("FriendHelgaFireShot", 45, -6);
+		}
+		HELG U 1 Bright
+		{
+			A_FaceTarget();
+			A_SpawnProjectile("FriendHelgaFireShot", 45, -6);
+		}
+		HELG U 1 Bright
+		{
+			A_FaceTarget();
+			A_SpawnProjectile("FriendHelgaFireShot", 45, -6);
+		}
+		HELG U 1 Bright
+		{
+			A_FaceTarget();
+			A_SpawnProjectile("FriendHelgaFireShot", 45, -6);
+		}
+		HELG U 1 Bright
+		{
+			A_FaceTarget();
+			A_SpawnProjectile("FriendHelgaFireShot", 45, -6);
+		}
+		HELG V 7 A_ChangeVelocity(Random(2,10), Random(-10,10), Random(1,2),CVF_RELATIVE);
+		GoTo See;
+	MagicSchock:
+		HELG R 1 A_FaceTarget;
+		HELG R 6 A_StartSound("FriendHelga/ShockCharge", CHAN_WEAPON);
+		HELG S 7 Bright;
+		HELG T 7 Bright;
+		HELG U 7 Bright
+		{
+			IdleTic = 0;
+			A_FaceTarget();
+			A_StartSound("FriendHelga/ShockFire", CHAN_WEAPON);
+			A_CustomRailgun(100, 0, "Snow", "Grey", RGF_SILENT|RGF_NOPIERCING|RGF_FULLBRIGHT, 2, 0, "FriendHelgaPuff", 0, 0, 1024, 35, 3.0, 2.0, "None", 0, 270, 0, 3);
+			//A_AlertMonsters(0,AMF_TARGETEMITTER);
+		}
+		HELG V 7 A_ChangeVelocity(Random(2,10), Random(-10,10), Random(1,2),CVF_RELATIVE);
+		GoTo See;
+	Healing:
+		HELG R 1 A_FaceMaster();
+		HELG R 6 A_StartSound("FriendHelga/Heal", CHAN_VOICE);
+		HELG S 7 Bright;
+		HELG T 7 Bright
+		{
+			IdleTic = 0;	
+			A_StartSound("FriendHelga/LechenieDo", CHAN_5);
+			A_FaceMaster();
+			//This part is purely maded by Agent_Ash...
+			Let proj = A_SpawnProjectile("FriendHelgaHealingShot", 45, -6, ptr:AAPTR_MASTER);
+            If (proj && master)
+			{
+                proj.tracer = master;
+			}
+			//A_AlertMonsters(0,AMF_TARGETEMITTER);
+		}
+		HELG U 7 Bright;
+		HELG V 7 A_ChangeVelocity(Random(2,10), Random(-10,10), Random(1,2),CVF_RELATIVE);
+		GoTo See;
+	Pain:
+		HELG Q 2 A_ChangeVelocity(Random(2,10), Random(-10,10), Random(1,2),CVF_RELATIVE);
+		HELG Q 2 Fast
+		{
+			A_Pain();
+			A_ChangeVelocity(Random(2,10), Random(-10,10), Random(1,2),CVF_RELATIVE);
+		}
+		TNT1 A 0 A_ChangeVelocity(Random(1,4), Random(-5,5), Random(1,2),CVF_RELATIVE);
+		GoTo See;
+	FakeDeath:
+		TNT1 A 0 
+		{
+			bShootable = False;
+		}
+		HELG A 5;
+		TNT1 A 0 A_StartSound("FriendHelga/Death");
+		HELG BC 5;
+		TNT1 A 0 A_SetScale(0.3);
+		HELG D 100;
+	FakeRaise:
+		TNT1 A 0 
+		{
+			A_StartSound("FriendHelga/Help", CHAN_VOICE);
+		}
+		HELG D 1;
+		TNT1 A 0 A_SetScale(0.5);
+		HELG DCBA 4;
+		TNT1 A 0
+		{
+			bShootable = True;
+		}
+		GoTo See;
+    }
+}
+
+Class FriendHelgaHealingShot : Actor
+{
+	Default
+	{
+		Radius 8;
+		Height 16;
+		Scale 0.666;
+		RenderStyle "Add";
+		Alpha 0.9;
+		Damage 0;
+		Projectile;
+		Speed 20;
+		//SeeSound "FriendHelga/LechenieDo"
+		//DeathSound "FriendHelga/LecheniePosle"
+	}
+	override void Tick()
+    {
+        super.Tick();
+        if (!tracer)
+        {
+            Destroy();
+            return;
+        }
+        vel = Vec3To(tracer).Unit() * speed;
+    }
+	override int SpecialMissileHit(Actor victim)
+    {
+        if (victim)
+        {
+            if (victim.bISMONSTER)
+			{
+                return 1;
+			}
+            if (victim.player && tracer && victim == tracer)
+			{
+                victim.GiveBody(25);
+			}
+        }
+        return -1;
+    }
+	States
+	{
+	Spawn:
+        FHLD O 1 Bright;
+        FHLD P 1 Bright;
+        FHLD Q 1 Bright;
+        FHLD R 1 Bright;
+        FHLD S 1 Bright;
+        FHLD T 1 Bright;
+        FHLD U 1 Bright;
+        FHLD V 1 Bright;
+        FHLD W 1 Bright;
+        FHLD X 1 Bright;
+		Loop;
+	Crash:
+	XDeath:
+		FHLP Y 1 Bright A_StartSound("FriendHelga/LecheniePosle", CHAN_6);
+		FHLP Z 1 Bright;
+		FHLP A 1 Bright;
+		FHLP B 1 Bright;
+		FHLP C 1 Bright;
+		FHLP D 1 Bright;
+		FHLP E 1 Bright;
+		FHLP F 1 Bright;
+		FHLP G 1 Bright;
+		FHLP H 1 Bright;
+		Stop;
+	Death:
+		FHLP Y 1 Bright;
+		FHLP Z 1 Bright;
+		FHLP A 1 Bright;
+		FHLP B 1 Bright;
+		FHLP C 1 Bright;
+		FHLP D 1 Bright;
+		FHLP E 1 Bright;
+		FHLP F 1 Bright;
+		FHLP G 1 Bright;
+		FHLP H 1 Bright;
+		Stop;
+	}
+}

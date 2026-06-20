@@ -1,0 +1,13 @@
+Name: Super Armor Bonus
+Type: Armor
+Palette: Doom
+Summon: SuperArmorBonus
+Use Type: Instant
+Duration: Instant
+Brightmaps: No
+Added States: No
+ACS: No
+
+Description:
+A much more powerful and valuable armor bonus. Adds 10 armor bonus per pickup.
+If no armor is present at time of pickup, armor will act like green armor.

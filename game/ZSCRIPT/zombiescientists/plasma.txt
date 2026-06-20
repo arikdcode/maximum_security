@@ -1,0 +1,115 @@
+Class ZombieScientistPlasma : Actor
+{
+	Default
+	{
+		//$Category Monsters/ZombieScientists
+		//$Title "Plasmapistol"
+		obituary "%o was melted by a zombie scientist.";
+		health 20;
+		mass 100;
+		speed 8;
+		Radius 20;
+		Height 52;
+		painchance 200;
+		seesound "zombiescientistM/sight";
+		painsound "zombiescientistM/pain";
+		deathsound "zombiescientistM/death";
+		activesound "zombiescientistM/active";
+		dropitem "Cell";
+		MONSTER;
+		+FLOORCLIP;
+		+AVOIDMELEE;
+		MissileChanceMult 0.5;
+		+WINDTHRUST;
+	}
+
+	States
+	{
+	Spawn:
+		SCZP AB 10 A_Look();
+		loop;
+	See:
+		SCZP AABBCCDD 4 A_Chase();
+		loop;
+	Missile:
+		SCZP E 6 A_FaceTarget();
+		SCZP E 1 A_StartSound("zombiescientist/plasmafire");
+		SCZP F 5 A_SpawnProjectile("ZombieScientistPlasmaBall", 45, 3, Random(-3, 3), CMF_OFFSETPITCH, (0.1)*Random(-3, 3));
+		SCZP E 12;
+	goto See;
+		Pain:
+		SCZP G 3;
+		SCZP G 3 A_Pain();
+		goto See;
+	Death:
+		SCZP H 5 A_SpawnItemEx("ZombieScientistPlasmaDeathExplosion", 0.0, 0.0, 32.0, 0.0, 0.0, 0.0, 0.0, SXF_NOCHECKPOSITION, 0);
+		SCZP I 5 A_Scream();
+		SCZP J 5 A_NoBlocking();
+		SCZP K 5;
+		SCZP L 5;
+		SCZP M 5;
+		SCZP N -1;
+		stop;
+	XDeath:
+		SCZP O 5 A_SpawnItemEx("ZombieScientistPlasmaDeathExplosion", 0.0, 0.0, 32.0, 0.0, 0.0, 0.0, 0.0, SXF_NOCHECKPOSITION, 0);
+		SCZP P 5 A_XScream();
+		SCZP Q 5 A_NoBlocking();
+		SCZP RSTUV 5;
+		SCZP W -1;
+		stop;
+	Raise:
+		SCZP MLKJIH 5;
+		goto See;
+	}
+}
+
+Class ZombieScientistPlasmaBall : Actor
+{
+	Default
+	{
+		Height 8;
+		Radius 6;
+		Speed 15;
+		FastSpeed 25;
+		RenderStyle "Add";
+		DamageFunction (10 + random(1,5));
+		Scale 0.4;
+		DeathSound "weapons/plasmax";
+		Decal "PlasmaScorch";
+		Projectile;
+	}
+
+	States
+	{
+	Spawn:
+		ZPLS AB 2 BRIGHT;
+		loop;
+	Death:
+		PLSE ABCDE 4 Bright;
+		Stop;
+	}
+}
+
+//Why can't we get his plasma gun?
+//Because it went up in a flash of plasma when he died, that's why. :P
+Class ZombieScientistPlasmaDeathExplosion : Actor
+{
+	Default
+	{
+		Radius 1;
+		Height 2;
+		Alpha 0.75;
+		Scale 0.5;
+		RenderStyle "Add";
+		+NOGRAVITY;
+		+NOBLOCKMAP;
+		+NOINTERACTION;
+	}
+	States
+	{
+	Spawn:
+		ZPLX A 4 Nodelay Bright A_StartSound("weapons/plasmax");
+		ZPLX BCDE 4 Bright;
+		Stop;
+	}
+}

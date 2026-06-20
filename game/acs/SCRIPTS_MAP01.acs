@@ -1,0 +1,386 @@
+#include "zcommon.acs"
+
+int poleflag = 0; //flag to check blue key bars have been triggered
+int vileflag = 0; //flag to check laugh has been triggered by pusher
+
+
+function int distance2D (int tid1, int tid2)
+{
+	int x, y, d;
+	x = (GetActorX(tid1) - GetActorX(tid2)) >> 16; // Convert fixed point to integer
+	y = (GetActorY(tid1) - GetActorY(tid2)) >> 16;
+	//z = GetActorZ(tid1) - GetActorZ(tid2) >> 16;
+	d = sqrt( x*x + y*y);
+	return d;
+}
+
+
+function int min (int a, int b, int c) //minimum of three "ints"
+{
+	int smallest;
+	if (a <= b && a <= c) smallest = a;
+	else if (b <= c && b <= a) smallest = b;
+	else smallest = c;
+
+	return smallest;
+}
+
+script 1 OPEN
+{
+	SetMusic("D_MESSAG", 0);
+	//SetGlobalFogParameter(1,0);
+	Sector_SetFade(116,60,10,100);
+	Sector_SetFade(134,60,80,120);
+	Sector_setFade(144,60,60,100);
+	Sector_Setwind(191,2000,0,0);
+	thing_destroy(195,0,0);
+
+	if (CheckActorFloorTexture(1001, "slime15"))
+		{
+			delay(105);
+			HudMessage(s:"Ten months in prison... will it ever end?";HUDMSG_PLAIN,CR_GOLD, 0, 1.5,0.8,5.0,0.05,2.0 );
+			delay(150);
+			HudMessage(s:"Wait... I just remembered...";HUDMSG_PLAIN,CR_GOLD, 0, 1.5,0.8,5.0,0.05,2.0 );
+			delay(105);
+			HudMessage(s:"I'm the m****** ****-ing DOOM guy!";HUDMSG_PLAIN,CR_GOLD, 0, 1.5,0.8,5.0,0.05,2.0 );
+			delay(105);
+			HudMessage(s:"No prison can hold me!";HUDMSG_PLAIN,CR_GOLD, 0, 1.5,0.8,5.0,0.05,2.0 );
+		}
+}
+
+script "TID" ENTER
+{
+   Thing_ChangeTID(0, 1000 + PlayerNumber());
+}
+
+script 2 (void)  //smash outta prison
+{
+	Floor_LowerByValue (12, 1000, 88);
+	SoundSequence ("ConcreteBreak");
+}
+
+script 3 (void) //Evil Church
+{
+	SetMusic("D_E1M5", 0);
+	Thing_Activate(189);
+	Radius_Quake(3,35,0,200,0);
+	floor_lowerbyvalue(58,500,16);
+	floor_lowerbyvalue(59,500,32);
+	floor_lowerbyvalue(60,500,48);
+	floor_lowerbyvalue(61,500,64);
+	floor_lowerbyvalue(62,500,80);
+	floor_lowerbyvalue(63,500,96);
+	floor_lowerbyvalue(66,500,128);
+	Ceiling_lowerbyvalue(135,500,256);
+	ceiling_lowerbyvalue(110,500,16);
+	floor_lowerbyvalue(110,500,16);
+	Ceiling_LowerByValue(68,500,136);
+	floor_lowerbyvalue(68,500,16);
+	Ceiling_RaiseByValue(69,500,128);
+	Ceiling_RaiseByValue(70,500,136);
+	Ceiling_RaiseByValue(97,500,79);
+	Ceiling_RaiseByValue(175,500,48);
+	NoiseAlert (0, 73);
+	Sector_SetColor(98,255,50,50);
+	Sector_SetColor(69,255,100,100);
+	Sector_SetColor(58,255,100,100);
+	Sector_SetColor(59,255,100,100);
+	Sector_SetColor(60,255,100,100);
+	Sector_SetColor(61,255,100,100);
+	Sector_SetColor(62,255,100,100);
+	Sector_SetColor(63,255,100,100);
+	Sector_SetColor(64,255,100,100);
+	//Sector_SetColor(58,255,150,150);
+	Sector_SetColor(99,255,180,180);
+	ChangeSky("BFIRSK00","BFIRSK00");
+
+}
+
+script 4 (void)
+{
+	Thing_Activate(96);
+}
+
+script 5 (void) //breakout 2
+{
+	Floor_LowerByValue (13, 1000, 88);
+	SoundSequence ("ConcreteBreak");
+}
+
+script 6 (void) //breakout3
+{
+	Floor_LowerToLowest (15, 1000);
+	//Floor_lowerbyvalue (15, 1000,32);
+	SoundSequence ("ConcreteBreak");
+}
+
+script 100 (void)
+{
+Radius_Quake(2,5,0,3,0);
+}
+
+Script "setVoidDamage" OPEN
+{
+	Sector_SetDamage (102, 1000,17,1,256);
+}
+
+Script 8 (void)  //block blue key and evil laugh, alert boss if not yet alerted
+{
+	poleflag = 1;
+	Ceiling_LowerToFloor(103,500);
+	SoundSequence ("BreakLaugh");
+	setactorproperty(198,APROP_Ambush,0);
+	noisealert(0,198);
+
+
+}
+
+script 9 (void) //check bars triggered, open bars at blue key
+{
+	if (poleflag == 1)
+	{
+		Ceiling_RaiseToNearest(103,64);
+	}
+}
+
+script 10 (void)  //maze medkit trap at soul wall
+{
+	SoundSequence ("JackScream");
+	Ceiling_RaiseByValue(108,264,128);
+}
+
+script 11 (void) //spike trap blue maze
+{
+	//floor_trigger
+	Floor_LowerToNearest(111,4);
+	delay(15);
+	//Spikes
+	Sector_SetDamage(113,10,18,8,256);
+	ceiling_lowerByValue(112,500,128);
+	soundsequence("concretebreak");
+	delay(210);
+	ceiling_raiseByValue(112,16,128);
+	Sector_SetDamage(113,0,0);
+	Floor_RaiseByValue(111,2,4);
+	delay(105);
+
+}
+
+script 12 (void) //alert skeletons in crypt
+{
+	Thing_Activate(100);
+	NoiseAlert(0,0);
+	Floor_LowerToLowest(101,2);
+}
+
+script 13 (void) //maze pusher and vile laugh
+{
+	Polyobj_DoorSlide(2,128,64,224,10);
+
+	if (vileflag < 1)
+	{
+
+		SoundSequence("VileLaugh");
+	}
+
+	vileflag = vileflag +1;
+
+	if (vileflag == 5)
+	{
+		NoiseAlert(0,194);
+	}
+
+	SoundSequenceOnPolyobj (2, "ConcreteScrape");
+}
+
+script 14 (void) //exit level
+{
+	Exit_normal(0);
+}
+
+script 15 (void) //smash open shop glass
+{
+	Floor_LowerToLowest(143,2048);
+	SoundSequenceOnActor(163,"GlassCrash");
+}
+
+script 16 (void) //fridge doors
+{
+	Polyobj_DoorSlide(4,16,64,50,105);
+	SoundSequenceOnPolyObj(4,"PsiDoors");
+	Polyobj_DoorSlide(3,16,192,50,105);
+}
+
+script 17 (void) // fridge meat grinder
+{
+	Floor_LowerByValue(145,4,68);
+	Generic_Crusher(146,4,8,0,10);
+	Door_Open(148,256,0);
+}
+
+script 18 (void) //break open fan in meat room
+{
+	SetLineTexture(147, SIDE_FRONT, TEXTURE_MIDDLE, "DNXFAN05");
+	SetLineTexture(147, SIDE_BACK, TEXTURE_MIDDLE, "DNXFAN05");
+	SoundSequence("MetalBreak");
+	Line_SetBlocking(147,0,BLOCKF_PLAYERS);
+	Line_SetBlocking(147,0,BLOCKF_MONSTERS);
+
+}
+
+script 19 (void) //flick fuse open prison gate
+{
+	Light_RaiseByValue(152,50);
+	Light_RaiseByValue(151,86);
+	SetLineTexture(153,LINE_FRONT,TEXTURE_MIDDLE, "-");
+	Line_SetBlocking(153,0,BLOCKF_PLAYERS);
+	Line_SetBlocking(153,0,BLOCKF_PROJECTILES);
+	Line_SetBlocking(153,0,BLOCKF_HITSCAN);
+	Line_SetBlocking(153,0,BLOCKF_SOUND);
+	SoundSequence("fusebox");
+	Light_Flicker(177,210,160);
+	Thing_Deactivate(206);
+	{
+		Light_ChangeToValue (177, 210);
+		Light_ChangeToValue (192, 160);
+		delay (random (0, 1) * 64 + 1);
+		while (1)
+		{
+			Light_ChangeToValue (177, 160);
+			Light_ChangeToValue (192, 112);
+			delay (random (1,7));
+			Light_ChangeToValue (177, 210);
+			Light_ChangeToValue (192, 160);
+			delay (random (1,23));
+		}
+	  }
+}
+
+script 20 (void) //hall doors
+{
+	Polyobj_DoorSlide(5,16,0,50,105);
+	SoundSequenceOnPolyObj(4,"PsiDoors");
+	Polyobj_DoorSlide(6,16,128,50,105);
+}
+
+script 21 (void) //water bridge
+{
+	Floor_RaiseByValue(164,4,24);
+	ChangeFloor(164,"RTCW0053");
+	Floor_LowerByValue(165,4,24);
+	Door_Open(166,64);
+}
+
+script 22 (void) //zombiecrates
+{
+	NoiseAlert(0,181);
+	delay(10);
+	Floor_LowerByValue(178,500,30);
+	SoundSequenceOnActor(181,"concretebreak");
+}
+
+Script 23 (void)//phone calls
+{
+	soundsequence("PhoneRing");
+	ThingSound(207,"PHONRING",1.0);
+	delay(70);
+	noisealert(0,182);
+}
+
+script 24 (void) //smash snack machine 1 (phone room)
+{
+	SoundSequence("glasscrash");
+	SetLineTexture(183,LINE_FRONT,TEXTURE_BOTTOM,"DNYSNAK3");
+}
+
+script 25 (void) //smash snakc machine 2 (torture room)
+{
+	SetLineTexture(185,LINE_FRONT,TEXTURE_BOTTOM,"DNYSNAK3");
+	SoundSequence("glasscrash");
+}
+
+script 26 (void) //coke machine (phone room)
+{
+	SetLineTexture(184,LINE_FRONT,TEXTURE_BOTTOM,"DNYCOKE3");
+	SoundSequence("glasscrash");
+}
+
+script 27 (void)  //smash outta prison2
+{
+	Ceiling_RaiseByValue(190,1000,197);
+	SoundSequence ("ConcreteBreak");
+}
+
+Script 28 (void) //zombie painting
+{
+	Door_Open(158,132,158);
+	delay(105);
+	Sector_setwind(191,0,0,0);
+}
+
+script 29 (void) //teleport minotaur to nearest teleporter if he is too far from the player(script activator)
+{
+	int closest;
+	int mindist = 800;
+	int a;
+	int b;
+	int c;
+	delay(35);
+	if (!poleflag) print (s:"RUN!");
+	while(GetActorProperty (198, APROP_Health)>1) //While minotaur alive
+	{
+		//print (s:"delay 10 seconds");
+		delay(490);
+		//print (s:"begin script");			//wait 10 seconds to prevent runaway script
+		if (distance2D(198, 0) > mindist )  //(distance between minotaur and player - player TID defined in ENTER script)
+		{
+			a = distance2D (0, 107); //calculate teleporter a distance from player
+			b = distance2D (0, 196); //calculate teleporter b distance from player
+			c = distance2D (0, 197); //calculate teleporter c distance from player
+			closest = min(a,b,c); 	 //Determine which teleporter is closest
+
+			//Teleport minotaur to teleporter nearest to player
+			if (a == closest)
+			{
+				TeleportOther(198,107,0);
+				//HudMessage(s:"teleporting to a (maze exit)";HUDMSG_PLAIN,CR_GOLD, 0, 1.7,0.8,5.0,0.05,2.0 );
+			}
+			else if (b == closest)
+			{
+				TeleportOther(198,196,0);
+				//HudMessage(s:"teleporting to B (blue key)";HUDMSG_PLAIN,CR_GOLD, 0, 1.8,0.8,5.0,0.05,2.0 );
+			}
+			else if (c == closest)
+			{
+				TeleportOther(198,197,0);
+				//HudMessage(s:"teleporting to c (maze entrance)";HUDMSG_PLAIN,CR_GOLD, 0, 1.9,0.8,5.0,0.05,2.0 );
+			}
+
+		}
+	}
+	//HudMessage(s:"He died. Good job! Script Terminated";HUDMSG_PLAIN,CR_GOLD, 0, 2.1,0.8,5.0,0.05,2.0 );  //test script terminated correctly
+}
+
+script 30 (void)
+{
+	Polyobj_DoorSlide(12,4,64,56,64);
+	Polyobj_DoorSlide(13,4,192,56,64);
+	playsound(96,"CONSCRAPE",CHAN_BODY,1.0);
+	delay(175);
+	playsound(96,"CONSCRAPE",CHAN_BODY,1.0);
+
+}
+
+script 31 (void)
+{
+
+	SoundSequenceOnActor(209,"ACHTUNG");
+	delay(205);
+	Floor_LowerByValue(208,4,84);
+	Thing_Activate(210);
+}
+
+script 99 (void)
+{
+Radius_Quake(2,5,0,3,0);
+}

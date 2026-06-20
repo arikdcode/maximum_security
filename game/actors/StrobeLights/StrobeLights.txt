@@ -1,0 +1,317 @@
+//CEILING LIGHTS
+
+ACTOR StrobeLightBlue : SwitchableDecoration 12400
+{
+  Radius 16
+  Height 16
+  +NOGRAVITY
+  +SPAWNCEILING
+  States
+  {
+  Spawn:
+  Active:
+	STRB A 1 BRIGHT A_PlaySound("Strobelight/Alarm", CHAN_6, 1, TRUE)
+	STRB A 0 A_CustomMissile ("StrobeRayBlue", 0, 0, 0, 2, -35)
+    STRB A 0 A_CustomMissile ("StrobeRayBlue", 0, 0, 180, 2, -35)
+    STRB A 0 A_SetAngle(10 + angle)
+	STRB A 1 BRIGHT
+	STRB A 0 A_CustomMissile ("StrobeRayBlue", 0, 0, 0, 2, -35)
+    STRB A 0 A_CustomMissile ("StrobeRayBlue", 0, 0, 180, 2, -35)
+    STRB A 0 A_SetAngle(10 + angle)
+	STRB A 1 BRIGHT
+	STRB A 0 A_CustomMissile ("StrobeRayBlue", 0, 0, 0, 2, -35)
+    STRB A 0 A_CustomMissile ("StrobeRayBlue", 0, 0, 180, 2, -35)
+    STRB A 0 A_SetAngle(10 + angle)
+	
+	STRB B 1 BRIGHT
+	STRB B 0 A_CustomMissile ("StrobeRayBlue", 0, 0, 0, 2, -35)
+    STRB B 0 A_CustomMissile ("StrobeRayBlue", 0, 0, 180, 2, -35)
+    STRB B 0 A_SetAngle(10 + angle)
+	STRB B 1 BRIGHT
+	STRB B 0 A_CustomMissile ("StrobeRayBlue", 0, 0, 0, 2, -35)
+    STRB B 0 A_CustomMissile ("StrobeRayBlue", 0, 0, 180, 2, -35)
+    STRB B 0 A_SetAngle(10 + angle)
+	STRB B 1 BRIGHT
+	STRB B 0 A_CustomMissile ("StrobeRayBlue", 0, 0, 0, 2, -35)
+    STRB B 0 A_CustomMissile ("StrobeRayBlue", 0, 0, 180, 2, -35)
+    STRB B 0 A_SetAngle(10 + angle)
+	
+	STRB C 1 BRIGHT
+	STRB C 0 A_CustomMissile ("StrobeRayBlue", 0, 0, 0, 2, -35)
+    STRB C 0 A_CustomMissile ("StrobeRayBlue", 0, 0, 180, 2, -35)
+    STRB C 0 A_SetAngle(10 + angle)
+	STRB C 1 BRIGHT
+	STRB C 0 A_CustomMissile ("StrobeRayBlue", 0, 0, 0, 2, -35)
+    STRB C 0 A_CustomMissile ("StrobeRayBlue", 0, 0, 180, 2, -35)
+    STRB C 0 A_SetAngle(10 + angle)
+	STRB C 1 BRIGHT
+	STRB C 0 A_CustomMissile ("StrobeRayBlue", 0, 0, 0, 2, -35)
+    STRB C 0 A_CustomMissile ("StrobeRayBlue", 0, 0, 180, 2, -35)
+    STRB C 0 A_SetAngle(10 + angle)
+	
+	STRB D 1 BRIGHT
+	STRB D 0 A_CustomMissile ("StrobeRayBlue", 0, 0, 0, 2, -35)
+    STRB D 0 A_CustomMissile ("StrobeRayBlue", 0, 0, 180, 2, -35)
+    STRB D 0 A_SetAngle(10 + angle)
+	STRB D 1 BRIGHT
+	STRB D 0 A_CustomMissile ("StrobeRayBlue", 0, 0, 0, 2, -35)
+    STRB D 0 A_CustomMissile ("StrobeRayBlue", 0, 0, 180, 2, -35)
+    STRB D 0 A_SetAngle(10 + angle)
+	STRB D 1 BRIGHT
+	STRB D 0 A_CustomMissile ("StrobeRayBlue", 0, 0, 0, 2, -35)
+    STRB D 0 A_CustomMissile ("StrobeRayBlue", 0, 0, 180, 2, -35)
+    STRB D 0 A_SetAngle(10 + angle)
+    Loop
+  Inactive:
+    STRB A -1 A_StopSound (CHAN_6)
+	Stop
+  }
+}
+
+
+ACTOR StrobeLightRed : SwitchableDecoration 12401
+{
+  Radius 16
+  Height 16
+  +NOGRAVITY
+  +SPAWNCEILING
+  States
+  {
+  Spawn:
+  Active:
+	STRR A 1 BRIGHT A_PlaySound("Strobelight/Alarm", CHAN_6, 1, TRUE)
+	STRR A 0 A_CustomMissile ("StrobeRayRed", 0, 0, 0, 2, -35)
+    STRR A 0 A_CustomMissile ("StrobeRayRed", 0, 0, 180, 2, -35)
+    STRR A 0 A_SetAngle(10 + angle)
+	STRR A 1 BRIGHT
+	STRR A 0 A_CustomMissile ("StrobeRayRed", 0, 0, 0, 2, -35)
+    STRR A 0 A_CustomMissile ("StrobeRayRed", 0, 0, 180, 2, -35)
+    STRR A 0 A_SetAngle(10 + angle)
+	STRR A 1 BRIGHT
+	STRR A 0 A_CustomMissile ("StrobeRayRed", 0, 0, 0, 2, -35)
+    STRR A 0 A_CustomMissile ("StrobeRayRed", 0, 0, 180, 2, -35)
+    STRR A 0 A_SetAngle(10 + angle)
+	
+	STRR B 1 BRIGHT
+	STRR B 0 A_CustomMissile ("StrobeRayRed", 0, 0, 0, 2, -35)
+    STRR B 0 A_CustomMissile ("StrobeRayRed", 0, 0, 180, 2, -35)
+    STRR B 0 A_SetAngle(10 + angle)
+	STRR B 1 BRIGHT
+	STRR B 0 A_CustomMissile ("StrobeRayRed", 0, 0, 0, 2, -35)
+    STRR B 0 A_CustomMissile ("StrobeRayRed", 0, 0, 180, 2, -35)
+    STRR B 0 A_SetAngle(10 + angle)
+	STRR B 1 BRIGHT
+	STRR B 0 A_CustomMissile ("StrobeRayRed", 0, 0, 0, 2, -35)
+    STRR B 0 A_CustomMissile ("StrobeRayRed", 0, 0, 180, 2, -35)
+    STRR B 0 A_SetAngle(10 + angle)
+	
+	STRR C 1 BRIGHT
+	STRR C 0 A_CustomMissile ("StrobeRayRed", 0, 0, 0, 2, -35)
+    STRR C 0 A_CustomMissile ("StrobeRayRed", 0, 0, 180, 2, -35)
+    STRR C 0 A_SetAngle(10 + angle)
+	STRR C 1 BRIGHT
+	STRR C 0 A_CustomMissile ("StrobeRayRed", 0, 0, 0, 2, -35)
+    STRR C 0 A_CustomMissile ("StrobeRayRed", 0, 0, 180, 2, -35)
+    STRR C 0 A_SetAngle(10 + angle)
+	STRR C 1 BRIGHT
+	STRR C 0 A_CustomMissile ("StrobeRayRed", 0, 0, 0, 2, -35)
+    STRR C 0 A_CustomMissile ("StrobeRayRed", 0, 0, 180, 2, -35)
+    STRR C 0 A_SetAngle(10 + angle)
+	
+	STRR D 1 BRIGHT
+	STRR D 0 A_CustomMissile ("StrobeRayRed", 0, 0, 0, 2, -35)
+    STRR D 0 A_CustomMissile ("StrobeRayRed", 0, 0, 180, 2, -35)
+    STRR D 0 A_SetAngle(10 + angle)
+	STRR D 1 BRIGHT
+	STRR D 0 A_CustomMissile ("StrobeRayRed", 0, 0, 0, 2, -35)
+    STRR D 0 A_CustomMissile ("StrobeRayRed", 0, 0, 180, 2, -35)
+    STRR D 0 A_SetAngle(10 + angle)
+	STRR D 1 BRIGHT
+	STRR D 0 A_CustomMissile ("StrobeRayRed", 0, 0, 0, 2, -35)
+    STRR D 0 A_CustomMissile ("StrobeRayRed", 0, 0, 180, 2, -35)
+    STRR D 0 A_SetAngle(10 + angle)
+    Loop
+  Inactive:
+    STRR A -1 A_StopSound (CHAN_6)
+	Stop
+  }
+}
+
+
+ACTOR StrobeLightYellow : SwitchableDecoration 12402
+{
+  Radius 16
+  Height 16
+  +NOGRAVITY
+  +SPAWNCEILING
+  States
+  {
+  Spawn:
+  Active:
+	STRY A 1 BRIGHT A_PlaySound("Strobelight/Alarm", CHAN_6, 1, TRUE)
+	STRY A 0 A_CustomMissile ("StrobeRayYellow", 0, 0, 0, 2, -35)
+    STRY A 0 A_CustomMissile ("StrobeRayYellow", 0, 0, 180, 2, -35)
+    STRY A 0 A_SetAngle(10 + angle)
+	STRY A 1 BRIGHT
+	STRY A 0 A_CustomMissile ("StrobeRayYellow", 0, 0, 0, 2, -35)
+    STRY A 0 A_CustomMissile ("StrobeRayYellow", 0, 0, 180, 2, -35)
+    STRY A 0 A_SetAngle(10 + angle)
+	STRY A 1 BRIGHT
+	STRY A 0 A_CustomMissile ("StrobeRayYellow", 0, 0, 0, 2, -35)
+    STRY A 0 A_CustomMissile ("StrobeRayYellow", 0, 0, 180, 2, -35)
+    STRY A 0 A_SetAngle(10 + angle)
+	
+	STRY B 1 BRIGHT
+	STRY B 0 A_CustomMissile ("StrobeRayYellow", 0, 0, 0, 2, -35)
+    STRY B 0 A_CustomMissile ("StrobeRayYellow", 0, 0, 180, 2, -35)
+    STRY B 0 A_SetAngle(10 + angle)
+	STRY B 1 BRIGHT
+	STRY B 0 A_CustomMissile ("StrobeRayYellow", 0, 0, 0, 2, -35)
+    STRY B 0 A_CustomMissile ("StrobeRayYellow", 0, 0, 180, 2, -35)
+    STRY B 0 A_SetAngle(10 + angle)
+	STRY B 1 BRIGHT
+	STRY B 0 A_CustomMissile ("StrobeRayYellow", 0, 0, 0, 2, -35)
+    STRY B 0 A_CustomMissile ("StrobeRayYellow", 0, 0, 180, 2, -35)
+    STRY B 0 A_SetAngle(10 + angle)
+	
+	STRY C 1 BRIGHT
+	STRY C 0 A_CustomMissile ("StrobeRayYellow", 0, 0, 0, 2, -35)
+    STRY C 0 A_CustomMissile ("StrobeRayYellow", 0, 0, 180, 2, -35)
+    STRY C 0 A_SetAngle(10 + angle)
+	STRY C 1 BRIGHT
+	STRY C 0 A_CustomMissile ("StrobeRayYellow", 0, 0, 0, 2, -35)
+    STRY C 0 A_CustomMissile ("StrobeRayYellow", 0, 0, 180, 2, -35)
+    STRY C 0 A_SetAngle(10 + angle)
+	STRY C 1 BRIGHT
+	STRY C 0 A_CustomMissile ("StrobeRayYellow", 0, 0, 0, 2, -35)
+    STRY C 0 A_CustomMissile ("StrobeRayYellow", 0, 0, 180, 2, -35)
+    STRY C 0 A_SetAngle(10 + angle)
+	
+	STRY D 1 BRIGHT
+	STRY D 0 A_CustomMissile ("StrobeRayYellow", 0, 0, 0, 2, -35)
+    STRY D 0 A_CustomMissile ("StrobeRayYellow", 0, 0, 180, 2, -35)
+    STRY D 0 A_SetAngle(10 + angle)
+	STRY D 1 BRIGHT
+	STRY D 0 A_CustomMissile ("StrobeRayYellow", 0, 0, 0, 2, -35)
+    STRY D 0 A_CustomMissile ("StrobeRayYellow", 0, 0, 180, 2, -35)
+    STRY D 0 A_SetAngle(10 + angle)
+	STRY D 1 BRIGHT
+	STRY D 0 A_CustomMissile ("StrobeRayYellow", 0, 0, 0, 2, -35)
+    STRY D 0 A_CustomMissile ("StrobeRayYellow", 0, 0, 180, 2, -35)
+    STRY D 0 A_SetAngle(10 + angle)
+    Loop
+  Inactive:
+    STRY A -1 A_StopSound (CHAN_6)
+	Stop
+  }
+}
+
+
+ACTOR StrobeLightGreen : SwitchableDecoration 12403
+{
+  Radius 16
+  Height 16
+  +NOGRAVITY
+  +SPAWNCEILING
+  States
+  {
+  Spawn:
+  Active:
+	STRG A 1 BRIGHT A_PlaySound("Strobelight/Alarm", CHAN_6, 1, TRUE)
+	STRG A 0 A_CustomMissile ("StrobeRayGreen", 0, 0, 0, 2, -35)
+    STRG A 0 A_CustomMissile ("StrobeRayGreen", 0, 0, 180, 2, -35)
+    STRG A 0 A_SetAngle(10 + angle)
+	STRG A 1 BRIGHT
+	STRG A 0 A_CustomMissile ("StrobeRayGreen", 0, 0, 0, 2, -35)
+    STRG A 0 A_CustomMissile ("StrobeRayGreen", 0, 0, 180, 2, -35)
+    STRG A 0 A_SetAngle(10 + angle)
+	STRG A 1 BRIGHT
+	STRG A 0 A_CustomMissile ("StrobeRayGreen", 0, 0, 0, 2, -35)
+    STRG A 0 A_CustomMissile ("StrobeRayGreen", 0, 0, 180, 2, -35)
+    STRG A 0 A_SetAngle(10 + angle)
+	
+	STRG B 1 BRIGHT
+	STRG B 0 A_CustomMissile ("StrobeRayGreen", 0, 0, 0, 2, -35)
+    STRG B 0 A_CustomMissile ("StrobeRayGreen", 0, 0, 180, 2, -35)
+    STRG B 0 A_SetAngle(10 + angle)
+	STRG B 1 BRIGHT
+	STRG B 0 A_CustomMissile ("StrobeRayGreen", 0, 0, 0, 2, -35)
+    STRG B 0 A_CustomMissile ("StrobeRayGreen", 0, 0, 180, 2, -35)
+    STRG B 0 A_SetAngle(10 + angle)
+	STRG B 1 BRIGHT
+	STRG B 0 A_CustomMissile ("StrobeRayGreen", 0, 0, 0, 2, -35)
+    STRG B 0 A_CustomMissile ("StrobeRayGreen", 0, 0, 180, 2, -35)
+    STRG B 0 A_SetAngle(10 + angle)
+	
+	STRG C 1 BRIGHT
+	STRG C 0 A_CustomMissile ("StrobeRayGreen", 0, 0, 0, 2, -35)
+    STRG C 0 A_CustomMissile ("StrobeRayGreen", 0, 0, 180, 2, -35)
+    STRG C 0 A_SetAngle(10 + angle)
+	STRG C 1 BRIGHT
+	STRG C 0 A_CustomMissile ("StrobeRayGreen", 0, 0, 0, 2, -35)
+    STRG C 0 A_CustomMissile ("StrobeRayGreen", 0, 0, 180, 2, -35)
+    STRG C 0 A_SetAngle(10 + angle)
+	STRG C 1 BRIGHT
+	STRG C 0 A_CustomMissile ("StrobeRayGreen", 0, 0, 0, 2, -35)
+    STRG C 0 A_CustomMissile ("StrobeRayGreen", 0, 0, 180, 2, -35)
+    STRG C 0 A_SetAngle(10 + angle)
+	
+	STRG D 1 BRIGHT
+	STRG D 0 A_CustomMissile ("StrobeRayGreen", 0, 0, 0, 2, -35)
+    STRG D 0 A_CustomMissile ("StrobeRayGreen", 0, 0, 180, 2, -35)
+    STRG D 0 A_SetAngle(10 + angle)
+	STRG D 1 BRIGHT
+	STRG D 0 A_CustomMissile ("StrobeRayGreen", 0, 0, 0, 2, -35)
+    STRG D 0 A_CustomMissile ("StrobeRayGreen", 0, 0, 180, 2, -35)
+    STRG D 0 A_SetAngle(10 + angle)
+	STRG D 1 BRIGHT
+	STRG D 0 A_CustomMissile ("StrobeRayGreen", 0, 0, 0, 2, -35)
+    STRG D 0 A_CustomMissile ("StrobeRayGreen", 0, 0, 180, 2, -35)
+    STRG D 0 A_SetAngle(10 + angle)
+    Loop
+  Inactive:
+    STRG A -1 A_StopSound (CHAN_6)
+	Stop
+  }
+}
+
+
+//LIGHT RAYS
+
+ACTOR StrobeRayBlue
+{
+  Radius 2
+  Height 2
+  Speed 100
+  Damage 0
+  Renderstyle None
+  projectile
+  -ACTIVATEIMPACT
+  -ACTIVATEPCROSS
+  +RIPPER
+  +BLOODLESSIMPACT
+  +PAINLESS
+  +THRUACTORS
+  +DONTSPLASH
+  States
+  {
+  Spawn:
+    BAL1 A 8
+    Loop
+  Death:
+    BAL1 C 3
+    Stop
+  }
+}
+
+ACTOR StrobeRayGreen : StrobeRayBlue
+{
+}
+
+ACTOR StrobeRayRed : StrobeRayBlue
+{
+}
+
+ACTOR StrobeRayYellow : StrobeRayBlue
+{
+}

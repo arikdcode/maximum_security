@@ -1,0 +1,16 @@
+Name: Warrior Statue
+Connection: No
+Palette: Hexen
+Summon: WarriorStatueGold, WarriorStatueGold2, WarriorStatueStone, WarriorStatueStone2, WarriorStatueIron, WarriorStatueIron2
+Ambient Sound: No
+De-/Activatable: No
+Destroyable: No
+Special Effects: No
+ACS: No
+
+Submitted: ETTiNGRiNDER
+Decorate: ETTiNGRiNDER
+Sounds: N/A
+Sprites: Konami (statue), Raven Software (stand)
+Sprite Edit: ETTiNGRiNDER
+Idea Base: Another Castlevania-Hexen crossbreed

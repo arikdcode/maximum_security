@@ -1,0 +1,9 @@
+Name: Crusader Shield
+Type: Armor
+Palette: Custom
+Summon: CrusaderShield
+Use type: Instant
+Duration: Instant
+Added States: No
+ACS: No
+Brightmaps: Yes

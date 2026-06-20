@@ -1,0 +1,338 @@
+Class ZSpecOpsMachinegun : Actor
+{
+//$Category Monsters/Custom
+  bool mode_aggressive; //This can all be done with a single int, honestly, but it's pretty clear to a reader what it's doing this way.
+  bool mode_snipe;
+  bool mode_wander;
+  bool mode_creep;
+  bool mode_flee;
+
+  Default
+  {
+    Health 150;
+    Height 56;
+    Radius 20;
+    Speed 8;
+    PainChance 96;
+    SeeSound "ZSpecOps/Sight";
+    ActiveSound "ZSpecOps/Sight";
+    PainSound "ZSpecOps/Pain";
+    DeathSound "ZSpecOps/Death";
+    Obituary "%o was gunned down by a ZSpecOps";
+    Decal "BulletChip";
+    //DropItem "AddYourMod'sMachinegun";
+    Monster;
+    +FloorClip
+    //+NoTarget
+    //+NoInfighting
+  }
+
+  States
+  {
+  Spawn:
+    ZSP2 AAAAAAAAAABBBBBBBBBB 1 A_Look();
+    Loop;
+
+  //Switching
+  See:
+    ZSP2 A 0 ZSpecOps_Reset();
+    ZSP2 A 0 A_JumpIf(mode_aggressive, "AggressiveSee"); //We default to this if we aren't in any other mode, but it's easier to have this here so we can abort the other checks if we know we want to be aggressive.
+    ZSP2 A 0 A_JumpIf(mode_snipe, "SnipeSee");
+    ZSP2 A 0 A_JumpIf(mode_wander, "WanderSee");
+    ZSP2 A 0 A_JumpIf(mode_creep, "CreepSee");
+    ZSP2 A 0 A_JumpIf(mode_flee, "FleeSee");
+    ZSP2 A 0 ZSpecOps_Aggressive(); //Default to Aggressive. Ideally we should never hit this if the mode-switching is working, but it's here just in case.
+    Goto AggressiveSee;
+
+  //Aggressive Mode
+  AggressiveSee:
+    ZSP2 A 3 A_Chase(null, "AggressiveMissile");
+    ZSP2 A 0 ZSpecOps_AggressiveEval();
+    ZSP2 A 3 A_Chase(null, "AggressiveMissile");
+    ZSP2 A 0 ZSpecOps_AggressiveEval();
+    ZSP2 B 3 A_Chase(null, "AggressiveMissile");
+    ZSP2 B 0 ZSpecOps_AggressiveEval();
+    ZSP2 B 3 A_Chase(null, "AggressiveMissile");
+    ZSP2 B 0 ZSpecOps_AggressiveEval();
+    ZSP2 C 3 A_Chase(null, "AggressiveMissile");
+    ZSP2 C 0 ZSpecOps_AggressiveEval();
+    ZSP2 C 3 A_Chase(null, "AggressiveMissile");
+    ZSP2 C 0 ZSpecOps_AggressiveEval();
+    ZSP2 D 3 A_Chase(null, "AggressiveMissile");
+    ZSP2 D 0 ZSpecOps_AggressiveEval();
+    ZSP2 D 3 A_Chase(null, "AggressiveMissile");
+    ZSP2 D 0 ZSpecOps_AggressiveEval();
+    Loop;
+  AggressiveMissile:
+    ZSP2 EEE 4 A_FaceTarget();
+    ZSP2 F 2 Bright ZSpecOps_Fire();
+    ZSP2 E 2 A_FaceTarget();
+    ZSP2 F 2 Bright ZSpecOps_Fire();
+    ZSP2 E 2 A_FaceTarget();
+    ZSP2 F 2 Bright ZSpecOps_Fire();
+    ZSP2 E 2 A_FaceTarget();
+    ZSP2 F 0 A_Jump(32, "AggressiveSee");
+    ZSP2 F 0 A_Jump(192, 2);
+    ZSP2 F 0 A_MonsterRefire(40, "AggressiveSee");
+    ZSP2 F 0;
+    Goto AggressiveMissile+3;
+
+  //Snipe Mode
+  SnipeSee:
+    ZSP2 E 0 A_Chase(null, "SnipeMissile", CHF_DONTMOVE);
+    ZSP2 EEEE 2 A_FaceTarget();
+    ZSP2 E 0 A_JumpIfCloser(384, "See");
+    ZSP2 E 0 A_CheckSight("SnipeIdle");
+    Loop;
+  SnipeIdle:
+    ZSP2 E 0 A_ClearTarget();
+    ZSP2 E 1 A_LookEx(LOF_NOSOUNDCHECK | LOF_NOSEESOUND, 0, 0, 0, 360, "SnipeSee");
+    Goto SnipeIdle+1;
+  SnipeMissile:
+    ZSP2 E 0 A_Jump(128, 2); //Wish I could A_SetTics here, but gotta A_FaceTarget at intervals to keep pointing
+    ZSP2 E 2 A_FaceTarget();
+    ZSP2 E 0 A_Jump(128, 2);
+    ZSP2 E 2 A_FaceTarget();
+    ZSP2 E 0 A_Jump(128, 2);
+    ZSP2 E 2 A_FaceTarget();
+    ZSP2 E 0 A_Jump(128, 2);
+    ZSP2 E 2 A_FaceTarget();
+    ZSP2 E 0 A_Jump(128, 2);
+    ZSP2 E 2 A_FaceTarget();
+    ZSP2 E 0 A_Jump(128, 2);
+    ZSP2 E 2 A_FaceTarget();
+    ZSP2 E 0 A_Jump(128, 2);
+    ZSP2 E 2 A_FaceTarget();
+    ZSP2 F 2 Bright ZSpecOps_Fire();
+    ZSP2 E 2 A_FaceTarget();
+    ZSP2 E 0 A_Jump(192, "SnipeSee");
+    ZSP2 E 0 A_MonsterRefire(40, "SnipeSee");
+    Loop;
+
+  //Wander Mode
+  WanderSee:
+    ZSP2 AABBCCDD 4
+    {
+      A_Wander();
+      A_LookEx(LOF_NOSOUNDCHECK | LOF_NOSEESOUND, 0, 0, 0, 360, "See");
+    }
+    Loop;
+
+  //Creep Mode
+  CreepSee:
+    ZSP2 A 0
+    {
+      if( ( CheckSight(target) && Random()<32 ) || health<50 )
+        return ResolveState("See");
+      return ResolveState(null);
+    }
+    ZSP2 AABBCCDD 5 A_Chase(null, "CreepMissile", CHF_NOPLAYACTIVE);
+    Loop;
+  CreepMissile:
+    ZSP2 EEE 4 A_FaceTarget();
+    ZSP2 F 2 Bright ZSpecOps_Fire();
+    ZSP2 E 2 A_FaceTarget();
+    ZSP2 F 2 Bright ZSpecOps_Fire();
+    ZSP2 E 2 A_FaceTarget();
+    ZSP2 F 2 Bright ZSpecOps_Fire();
+    ZSP2 E 2 A_FaceTarget();
+    ZSP2 F 0 A_Jump(32, "CreepSee");
+    ZSP2 F 0 A_MonsterRefire(40, "CreepSee");
+    Goto CreepMissile+3;
+
+  //Flee Mode
+  FleeSee:
+    ZSP2 AABBCCDD 3 A_Chase(null, "FleeMissile");
+    ZSP2 A 0 A_JumpIfCloser(768, "FleeSee");
+    Goto See;
+  FleeMissile:
+    ZSP2 EE 4 A_FaceTarget();
+    ZSP2 F 2 Bright ZSpecOps_Fire();
+    ZSP2 E 2 A_FaceTarget();
+    ZSP2 F 2 Bright ZSpecOps_Fire();
+    ZSP2 E 2 A_FaceTarget();
+    ZSP2 F 2 Bright ZSpecOps_Fire();
+    ZSP2 E 2 A_FaceTarget();
+    ZSP2 F 2 Bright ZSpecOps_Fire();
+    ZSP2 E 2 A_FaceTarget();
+    ZSP2 F 2 Bright ZSpecOps_Fire();
+    ZSP2 E 2 A_FaceTarget();
+    ZSP2 F 2 Bright ZSpecOps_Fire();
+    ZSP2 E 2 A_FaceTarget();
+    ZSP2 F 2 Bright ZSpecOps_Fire();
+    ZSP2 E 2 A_FaceTarget();
+    ZSP2 F 2 Bright ZSpecOps_Fire();
+    ZSP2 E 2 A_FaceTarget();
+    ZSP2 F 2 Bright ZSpecOps_Fire();
+    ZSP2 E 2 A_FaceTarget();
+    ZSP2 F 2 Bright ZSpecOps_Fire();
+    ZSP2 E 2 A_FaceTarget();
+    ZSP2 F 2 Bright ZSpecOps_Fire();
+    ZSP2 E 2 A_FaceTarget();
+    ZSP2 F 2 Bright ZSpecOps_Fire();
+    ZSP2 E 2 A_FaceTarget();
+    Goto FleeSee;
+
+  //Misc hurting states
+  Pain:
+    ZSP2 G 4;
+    ZSP2 G 4 A_Pain();
+    ZSP2 G 0 A_Jump(96, "See"); //Chance to switch modes
+    Goto WhatPainState;
+  WhatPainState:
+    ZSP2 G 0 A_JumpIf(mode_aggressive, "AggressiveSee");
+    ZSP2 G 0 A_JumpIf(mode_snipe, "SnipeSee");
+    ZSP2 G 0 A_JumpIf(mode_wander, "WanderSee");
+    ZSP2 G 0 A_JumpIf(mode_creep, "CreepSee");
+    ZSP2 G 0 A_JumpIf(mode_flee, "FleeSee");
+    Goto AggressiveSee;
+  Death:
+    ZSP2 H 5;
+    ZSP2 I 5 A_Scream();
+    ZSP2 J 5;
+    ZSP2 K 5 A_NoBlocking();
+    ZSP2 L -1;
+  Raise:
+    ZSP2 LKJIH 5;
+    Goto See;
+  }
+
+  void ZSpecOps_Fire()
+  {
+    A_PlaySound("ZSpecOps/MGun", CHAN_WEAPON);
+    A_CustomBulletAttack(11, 8, 1, 5, "BulletPuff");
+  }
+
+  void ZSpecOps_Reset()
+  {
+    mode_aggressive=false;
+    mode_snipe=false;
+    mode_wander=false;
+    mode_creep=false;
+    mode_flee=false;
+    //bMissileMore=false;
+    //bMissileEvenMore=false;
+	MissileChanceMult = 0;
+	MissileChanceMult = 0;
+    bAvoidMelee=false;
+    bFrightened=false;
+
+    ZSpecOps_SitRep();
+  }
+
+  void ZSpecOps_Aggressive()
+  {
+    //bMissileMore=true;
+    //bMissileEvenMore=true;
+	MissileChanceMult = 0.5;
+	MissileChanceMult = 0.25;
+    mode_aggressive=true;
+  }
+
+  state ZSpecOps_AggressiveEval()
+  {
+    if( health<50 || (random()>32 && !CheckIfCloser(target, 768)) )
+      return ResolveState("See");
+    return ResolveState(null);
+  }
+
+  void ZSpecOps_Snipe()
+  {
+    //bMissileMore=true;
+    //bMissileEvenMore=true;
+	MissileChanceMult = 0.5;
+	MissileChanceMult = 0.25;
+    mode_snipe=true;
+  }
+
+  void ZSpecOps_Wander()
+  {
+    A_ClearTarget();
+    mode_wander=true;
+  }
+
+  void ZSpecOps_Creep()
+  {
+    //bMissileMore=true;
+	MissileChanceMult = 0.5;
+    bAvoidMelee=true;
+    mode_creep=true;
+  }
+
+  void ZSpecOps_Flee()
+  {
+    bFrightened=true;
+    mode_flee=true;
+  }
+
+  void ZSpecOps_SitRep()
+  {
+    if(health < 50)
+      if(CheckSight(target))
+        if(CheckIfCloser(target, 768))
+        {
+          ZSpecOps_Flee(); //Low on health, out of sight, close to target
+          return;
+        }
+        else
+          if(random(0,1)) //50% chance
+          {
+            ZSpecOps_Flee(); //Low on health, out of sight, 50% chance
+            return;
+          }
+          else //50% chance
+          {
+            ZSpecOps_Snipe(); //Low on health, out of sight, 50% chance
+            return;
+          }
+      else
+        if(CheckIfCloser(target, 768))
+        {
+          ZSpecOps_Flee(); //Low on health, in sight, close to target
+          return;
+        }
+        else
+        {
+          ZSpecOps_Snipe(); //Low on health, in sight, far from target
+          return;
+        }
+    if( CheckSight(target) )
+      if( CheckIfCloser(target, 384) )
+        if(random(0, 1)) //50% chance
+        {
+          ZSpecOps_Aggressive();
+          return;
+        }
+        else //50% chance
+        {
+          ZSpecOps_Creep();
+          return;
+        }
+      else
+        switch(random(0,3))
+        {
+          case 0:
+            ZSpecOps_Aggressive();
+            return;
+          case 1:
+            ZSpecOps_Snipe();
+            return;
+          case 2:
+            ZSpecOps_Wander();
+            return;
+          case 3:
+            ZSpecOps_Creep();
+            return;
+        }
+    if( CheckIfCloser(target, 384) )
+    {
+      ZSpecOps_Aggressive();
+      return;
+    }
+
+    if(random(0, 1))
+      ZSpecOps_Aggressive();
+    else
+      ZSpecOps_Snipe();
+  }
+}

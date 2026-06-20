@@ -1,0 +1,540 @@
+ACTOR Cup 11615
+{
+	//$Title Cup
+	//$Category Decorations/Custom
+	//$NotAngled
+	//$IsDecoration
+
+	Radius 6
+	Height 8
+	xscale 0.5
+	yscale 0.5
+	+SOLID
+	
+		States
+		{
+			Spawn:
+				CUPG A -1
+				Stop
+		}
+}
+
+ACTOR Dishes 11617
+{
+	//$Title Dishes
+	//$Category Decorations/Custom
+	//$NotAngled
+	//$IsDecoration
+
+	Radius 6
+	Height 10
+	xscale 0.5
+	yscale 0.5
+	+SOLID
+	
+		States
+		{
+			Spawn:
+				DISH A -1
+				Stop
+		}
+}
+
+ACTOR CuttingKnife 11616
+{
+	//$Title CuttingKnife
+	//$Category Decorations/Custom
+	//$NotAngled
+	//$IsDecoration
+
+	Radius 4
+	Height 10
+	xscale 0.25
+	yscale 0.25
+	+SOLID
+	
+		States
+		{
+			Spawn:
+				KNIF A -1
+				Stop
+		}
+}
+
+ACTOR BoulderLarge 11620
+{
+	//$Category Obstacles/Boulders
+	//$NotAngled
+	//$IsDecoration
+
+	Radius 24
+	Height 120
+	+SOLID
+	
+		States
+		{
+			Spawn:
+				BOUL A -1
+				Stop
+		}
+}
+
+ACTOR BoulderLarge2 11618
+{
+	//$Category Obstacles/Boulders
+	//$NotAngled
+	//$IsDecoration
+
+	Radius 20
+	Height 24
+	+SOLID
+	
+		States
+		{
+			Spawn:
+				BOUL B -1
+				Stop
+		}
+}
+
+ACTOR FireBarrel2 11619
+{
+	//$Category Obstacles
+	//$NotAngled
+	//$IsDecoration
+
+	Radius 12
+	Height 36
+	+SOLID
+	
+		States
+		{
+			Spawn:
+				
+				FBAR ABCABCABCABCABCABCABCABCABCABCABCABCABCABCABCABCABCABCABCABCABC 5
+				NULL A 0 A_Playsound("FIRELOOP")
+				Loop
+		}
+}
+
+ACTOR WallLamp 11621
+{
+	//$Category Lights
+	//$NotAngled
+	//$IsDecoration
+
+	Radius 4
+	Height 8
+	//+SOLID
+	+NOGRAVITY
+	
+		States
+		{
+			Spawn:
+				WALT A -1 Bright
+				Stop
+		}
+}
+
+ACTOR Victim1 11622
+{
+	//$Category Gore/Corpses
+	//$NotAngled
+	//$IsDecoration
+
+	Radius 8
+	Height 96
+	+SOLID
+	+SPAWNCEILING
+	+NOGRAVITY
+	
+		States
+		{
+			Spawn:
+				VICT A -1
+				Stop
+		}
+}
+
+ACTOR Victim2 11623
+{
+	//$Category Gore/Corpses
+	//$NotAngled
+	//$IsDecoration
+
+	Radius 8
+	Height 74
+	+SOLID
+	+SPAWNCEILING
+	+NOGRAVITY
+	
+		States
+		{
+			Spawn:
+				VICT B -1
+				Stop
+		}
+}
+
+ACTOR Victim3 11624
+{
+	//$Category Gore/Corpses
+	//$NotAngled
+	//$IsDecoration
+
+	Radius 24
+	Height 8
+	+SOLID
+	
+		States
+		{
+			Spawn:
+				VICT C -1
+				Stop
+		}
+}
+
+ACTOR Victim4 11625
+{
+	//$Category Gore/Corpses
+	//$NotAngled
+	//$IsDecoration
+
+	Radius 10
+	Height 4
+	//+SOLID
+	+NOGRAVITY
+	
+		States
+		{
+			Spawn:
+				VICT D -1
+				Stop
+		}
+}
+
+ACTOR Victim5 11626
+{
+	//$Category Gore/Corpses
+	//$NotAngled
+	//$IsDecoration
+
+	Radius 58
+	Height 53
+	//+SOLID
+	+NOGRAVITY
+	
+		States
+		{
+			Spawn:
+				VICT E -1
+				Stop
+		}
+}
+
+ACTOR PurpleScrub1 11627
+{
+	//$Category Decorations/Foliage
+	//$NotAngled
+	//$IsDecoration
+
+	Radius 16
+	Height 56
+	+SOLID
+	//+NOGRAVITY
+	
+		States
+		{
+			Spawn:
+				SCRB A -1
+				Stop
+		}
+}
+
+ACTOR PurpleScrub2 11628
+{
+	//$Category Decorations/Foliage
+	//$NotAngled
+	//$IsDecoration
+
+	Radius 32
+	Height 32
+	//+SOLID
+	//+NOGRAVITY
+	
+		States
+		{
+			Spawn:
+				SCRB B -1
+				Stop
+		}
+}
+
+ACTOR PurpleScrub3 11629
+{
+	//$Category Decorations/Foliage
+	//$NotAngled
+	//$IsDecoration
+
+	Radius 20
+	Height 20
+	//+SOLID
+	//+NOGRAVITY
+	
+		States
+		{
+			Spawn:
+				SCRB C -1
+				Stop
+		}
+}
+
+ACTOR PurpleScrub4 11630
+{
+	//$Category Decorations/Foliage
+	//$NotAngled
+	//$IsDecoration
+
+	Radius 14
+	Height 40
+	+SOLID
+	//+NOGRAVITY
+	
+		States
+		{
+			Spawn:
+				SCRB D -1
+				Stop
+		}
+}
+
+ACTOR PurpleScrub5 11631
+{
+	//$Category Decorations/Foliage
+	//$NotAngled
+	//$IsDecoration
+
+	Radius 16
+	Height 14
+	//+SOLID
+	//+NOGRAVITY
+	
+		States
+		{
+			Spawn:
+				SCRB E -1
+				Stop
+		}
+}
+
+ACTOR PurpleScrub6 11632
+{
+	//$Category Decorations/Foliage
+	//$NotAngled
+	//$IsDecoration
+
+	Radius 16
+	Height 14
+	//+SOLID
+	//+NOGRAVITY
+	
+		States
+		{
+			Spawn:
+				SCRB F -1
+				Stop
+		}
+}
+
+ACTOR PurpleScrub7 11633
+{
+	//$Category Decorations/Foliage
+	//$NotAngled
+	//$IsDecoration
+
+	Radius 16
+	Height 14
+	//+SOLID
+	//+NOGRAVITY
+	
+		States
+		{
+			Spawn:
+				SCRB G -1
+				Stop
+		}
+}
+
+ACTOR PurpleScrub8 11634
+{
+	//$Category Decorations/Foliage
+	//$NotAngled
+	//$IsDecoration
+
+	Radius 16
+	Height 14
+	//+SOLID
+	//+NOGRAVITY
+	
+		States
+		{
+			Spawn:
+				SCRB H -1
+				Stop
+		}
+}
+
+ACTOR PurpleScrub9 11635
+{
+	//$Category Decorations/Foliage
+	//$NotAngled
+	//$IsDecoration
+
+	Radius 16
+	Height 40
+	+SOLID
+	//+NOGRAVITY
+	
+		States
+		{
+			Spawn:
+				SCRB I -1
+				Stop
+		}
+}
+
+ACTOR PurpleScrub10 11636
+{
+	//$Category Decorations/Foliage
+	//$NotAngled
+	//$IsDecoration
+
+	Radius 16
+	Height 14
+	//+SOLID
+	//+NOGRAVITY
+	
+		States
+		{
+			Spawn:
+				SCRB J -1
+				Stop
+		}
+}
+
+ACTOR PurpleScrub11 11637
+{
+	//$Category Decorations/Foliage
+	//$NotAngled
+	//$IsDecoration
+
+	Radius 16
+	Height 14
+	//+SOLID
+	//+NOGRAVITY
+	
+		States
+		{
+			Spawn:
+				SCRB K -1
+				Stop
+		}
+}
+
+ACTOR PurpleScrub12 11638
+{
+	//$Category Decorations/Foliage
+	//$NotAngled
+	//$IsDecoration
+
+	Radius 16
+	Height 22
+	+SOLID
+	//+NOGRAVITY
+	
+		States
+		{
+			Spawn:
+				SCRB L -1
+				Stop
+		}
+}
+
+//grass
+ACTOR Grass1 11639
+{
+	//$Category Decorations/Foliage
+	//$NotAngled
+	//$IsDecoration
+
+	Radius 16
+	Height 14
+	//+SOLID
+	//+NOGRAVITY
+	
+		States
+		{
+			Spawn:
+				SGRA A -1
+				Stop
+		}
+}
+
+ACTOR Grass2 11640
+{
+	//$Category Decorations/Foliage
+	//$NotAngled
+	//$IsDecoration
+
+	Radius 16
+	Height 14
+	//+SOLID
+	//+NOGRAVITY
+	
+		States
+		{
+			Spawn:
+				SGRA B -1
+				Stop
+		}
+}
+
+ACTOR Grass3 11641
+{
+	//$Category Decorations/Foliage
+	//$NotAngled
+	//$IsDecoration
+
+	Radius 16
+	Height 14
+	//+SOLID
+	//+NOGRAVITY
+	
+		States
+		{
+			Spawn:
+				SGRA C -1
+				Stop
+		}
+}
+
+ACTOR Grass4 11642
+{
+	//$Category Decorations/Foliage
+	//$NotAngled
+	//$IsDecoration
+
+	Radius 16
+	Height 14
+	//+SOLID
+	//+NOGRAVITY
+	
+		States
+		{
+			Spawn:
+				SGRA D -1
+				Stop
+		}
+}
+
+

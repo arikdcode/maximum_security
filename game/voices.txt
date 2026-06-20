@@ -1,0 +1,3 @@
+//map03
+//====================================================
+BLACKGRD  "Voices/Map03/Blackguard/BLACKGRD"

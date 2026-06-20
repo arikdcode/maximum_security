@@ -1,0 +1,25 @@
+Information:
+Name: Undead Warrior
+Difficulty: Easy
+Connections: Hexen iwad required
+Summon: UndeadWarrior
+Melee: Yes
+Distance: Projectile
+Type: Magical, Undead
+Brightmaps: Yes
+Actor modification: No
+ACS: No
+
+Credits:
+Code: Captain Toenail
+GLDefs: Captain Toenail
+Sounds: Return to Castle Wolfenstein
+Sprites: Heretic
+Sprite Edit: Captain Toenail
+Idea Base: A gritty, dark fantasy version of Heretic's Undead Knight enemy, to 
+			better match the atmosphere and tone of Hexen.
+
+Description:
+	Warriors from a bygone era, resurrected through foul rituals. Wielding 
+	flaming throwing axes, they now serve as soldiers in Korax's army of 
+	darkness.

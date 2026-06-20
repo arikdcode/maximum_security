@@ -1,0 +1,198 @@
+ACTOR dukeArmor : basicarmorpickup
+{
+//$Category Monsters/Custom
+   Armor.SavePercent 100
+   Armor.SaveAmount 500
+   States
+   {
+   Spawn:
+      ARMR E 1 
+      Loop
+   }
+ }
+
+ACTOR Hellduke : Cyberdemon 30108
+{
+  Health 3500
+  Tag "Hellduke"
+  SeeSound "hellduke/sight"
+  DeathSound "hellduke/death"
+  Obituary "%o was blasted away by the Hellduke."
+  var float user_LaunchAngle;
+  MeleeRange 72
+  DamageFactor weppoisonlinger, 0.125
+  +ALLOWPAIN
+  +NOTARGET
+  States
+  {
+  Spawn:
+    DUKE A 0
+	DUKE A 1 A_SetInventory("dukeArmor",1)
+    DUKE AB 10 A_Look
+    Goto Spawn+2
+  See:
+    DUKE A 3 A_Hoof
+	DUKE ABB 3 A_Chase
+	DUKE C 3 A_Hoof
+    DUKE CDD 3 A_Chase
+    Loop
+  Missile:
+    DUKE E 0 A_Jump(80,"Missile2")
+    DUKE E 6 A_FaceTarget
+    DUKE F 12 Bright A_CustomMissile("DukeShot",60,-24)
+    DUKE E 12 A_FaceTarget
+    DUKE F 12 Bright A_CustomMissile("DukeShot",60,-24)
+    DUKE E 12 A_FaceTarget
+    DUKE F 12 Bright A_CustomMissile("DukeShot",60,-24)
+    Goto See
+  Missile2:    
+    DUKE Q 0 A_JumpIfCloser(368,"Missile")
+	DUKE Q 0 A_SetUserVar("user_LaunchAngle", frandom(-35,10))
+    DUKE Q 6 A_FaceTarget
+    DUKE R 12 Bright A_SpawnProjectile("DukeNade",78,-27,0,CMF_ABSOLUTEPITCH,user_LaunchAngle)
+    DUKE Q 12 A_FaceTarget
+    DUKE R 12 Bright A_SpawnProjectile("DukeNade",78,-27,0,CMF_ABSOLUTEPITCH,user_LaunchAngle)
+    DUKE Q 12 A_FaceTarget
+    DUKE R 12 Bright A_SpawnProjectile("DukeNade",78,-27,0,CMF_ABSOLUTEPITCH,user_LaunchAngle)
+    Goto See
+  Melee:     
+    DUKE ST 8 A_FaceTarget
+	DUKE U 8 A_CustomMeleeAttack(17 * random(1,10),"baron/melee")
+	DUKE U 0 A_CustomMissile("DukeHit",32)
+	Goto See
+  Pain:
+    DUKE G 10 A_Pain
+    Goto See
+  Death:
+    DUKE H 10 Bright
+    DUKE I 10 Bright A_Scream
+    DUKE JKL 10 Bright
+    DUKE M 10 Bright A_NoBlocking
+    DUKE NO 10 Bright
+    DUKE P 30
+    DUKE P -1 A_BossDeath
+    Stop
+	Raise:
+    DUKE P 10
+	DUKE ONMLKJIH 10 BRIGHT
+    goto See
+  }
+}
+
+ACTOR RedPuff_HD
+{   
+   Radius 0
+   Height 1
+   RENDERSTYLE ADD
+   Alpha 0.85
+   +NOGRAVITY
+   +NOBLOCKMAP
+   +FORCEXYBILLBOARD   
+   States
+   {
+   Spawn:
+      TNT1 A 3 Bright
+      RPUF ABCDE 3 Bright
+      Stop 
+   }
+}
+
+ACTOR RedPuff_HD2 : RedPuff_HD
+{ 
+   States
+   {
+   Spawn:
+      TNT1 A 3 Bright
+      HBA2 EFGHI 3 Bright      
+      Stop 
+   }
+}
+
+ACTOR IrePuff : RedPuff_HD
+{ 
+   States
+   {
+   Spawn:
+      TNT1 A 3 Bright
+      IRFX ABCDEF 3 Bright
+      Stop 
+   }
+}
+
+ACTOR DukeShot : Rocket
+{
+Speed 20
+Renderstyle add
+Alpha 1.0
+SeeSound "weapons/Hellfi"
+DeathSound "weapons/hellex"
++THRUGHOST
++FORCEXYBILLBOARD
++EXPLODEONWATER
+-DEHEXPLOSION
+-ROCKETTRAIL
+States
+	{
+	Spawn: 
+		HDHB ABCD 3 Bright A_SpawnItemEx("IrePuff",0,0,0,0,0,0,0,8)
+		loop
+	Death:
+		HDHB E 4 Bright A_Explode(128,128,1)
+		HDHB FFFFFFFFFFFF 0 Bright A_SpawnItemEx("RedPuff_HD2",0,0,0,3,0,Frandom(-5,5),Frandom(0,360),0,0)
+		HDHB F 4 Bright A_SpawnItemEx("RedPuff_HD2",0,0,0,3,0,Frandom(-5,5),Frandom(0,360),0,0)
+		HDHB GHI 4 Bright
+		stop
+	}
+}
+
+ACTOR DukeNade : DukeShot
+{
+Damage 25 
+BounceCount 3
+Reactiontime 35
+Gravity 0.5
+SeeSound "weapons/firbfi"
+BounceSound "weapons/casbal"
+BounceType "Hexen"
+Obituary "%o couldn't dodge %k's hell-bomb."
++FORCEXYBILLBOARD
++EXPLODEONWATER
++DONTBOUNCEONSHOOTABLES
+-NOGRAVITY   
+States
+	{
+	Spawn: 
+		HBA3 ABC 3 Bright A_SpawnItemEx("RedPuff_HD",0,0,0,0,0,0,0,8)
+		HBA3 A 0 Bright A_CountDown
+		loop
+	Death:
+		HBA3 D 0 A_NoGravity
+		HBA3 D 3 Bright
+		HBA3 E 3 Bright A_Explode(144,144,1,0,32)
+		HBA3 FGHIJKLM 3 Bright
+		stop
+	}
+}
+
+ACTOR DukeHit
+{
+Projectile
+Radius 0
+Height 1
+Speed 0
+Renderstyle none
++PUFFONACTORS
++PUFFGETSOWNER
++LOOKALLAROUND
++NOEXTREMEDEATH
+States
+	{
+	Spawn:
+		TNT1 A 1 
+		TNT1 A 3 Bright A_Explode(24,128,0,0,128)
+		Stop
+	Crash:
+		TNT1 A 3 A_PlaySound("weapons/vblwal")
+		Stop
+	}
+}

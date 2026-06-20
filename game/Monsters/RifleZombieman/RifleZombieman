@@ -1,0 +1,91 @@
+ACTOR RifleGuy 20123
+{
+//$Category Monsters/Custom
+  Health 45
+  Radius 20
+  Height 56
+  Mass 100
+  Speed 8
+  PainChance 64
+  Monster
+  +FLOORCLIP
+  SeeSound "shotguy/sight"
+  PainSound "shotguy/pain"
+  Attacksound "RIFLZOM1"
+  DeathSound "shotguy/death"
+  ActiveSound "shotguy/active"
+  Decal "bulletchip"
+  Obituary "$o was shot by a rifle zombieman"
+  DropItem "SalvagedArmorBonus"
+  //DropItem "BloodyRifle",120
+  States
+  {
+  Spawn:
+    RFLG AB 10 A_Look
+    Loop
+  See:
+    RFLG AABBCCDD 3 A_Chase
+    Loop
+  Missile:
+    RFLG E 10 A_FaceTarget
+    RFLG F 8 Bright A_CustomBulletAttack(10,4,1,random(3,6)* 3,"BulletPuff",0,CBAF_NORANDOM)
+    RFLG E 10
+    Goto See
+  Pain:
+    RFLG G 3
+    RFLG G 3 A_Pain
+    Goto See
+  Death:
+    RFLG H 5
+    RFLG I 5 A_Scream
+    RFLG J 5 A_NoBlocking
+    RFLG K 5
+    RFLG L -1
+    Stop
+  XDeath:
+    RFLG M 5
+    RFLG N 5 A_XScream
+    RFLG O 5 A_NoBlocking
+    RFLG PQRST 5
+    RFLG U -1
+    Stop
+  Raise:
+    RFLG L 5
+    RFLG KJIH 5
+    Goto See
+  }
+}
+
+
+ACTOR deadrifleguy 20124
+{
+  Height 56
+  Radius 12
+  +SOLID
+  States
+  {
+  Spawn:
+    RFGC A 18
+	RFGC B 6
+    Loop
+  }
+}
+
+ACTOR SalvagedArmorBonus : BasicArmorBonus
+{
+  Radius 20
+  Height 16
+  Inventory.PickupMessage "Picked up an armor bonus."
+  Inventory.Icon "ARM1A0"
+  Armor.SavePercent 33.335
+  Armor.SaveAmount 1
+  Armor.MaxSaveAmount 200
+  +INVENTORY.ALWAYSPICKUP
+  States
+  {
+  Spawn:
+    RMBN A 20
+	RMBN BBCCCCCBCCCBCBCCBCCCCBCCCCBB 2
+    Loop
+  }
+}

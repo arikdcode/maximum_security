@@ -1,0 +1,21 @@
+02-21-2013 - MagicWazard
+*Converted projectiles from Doom image format to PNG. (They remain in Doom palette.)
+*Converted monster sprites from truecolor PNG to paletted PNG.
+*Frames I1, I2I8, and I3I7 were in Doom image format and Doom palette instead of PNG, and were lower detail than the other sprites; I recreated them using custom paletted PNGs.
+*Converted WAV and Doom format sounds to OGG. (One FLAC format sound is unchanged.)
+*Added Korax's step sound from Hexen (which the monster linked to but did not originally include).
+*Replaced NULL with TNT1 in DECORATE.  Deleted NULL sprite.
+*Added decals to "Lavaball", "Firebeam", and "DemonMeteor" projectiles.
+*Added INFO and CREDITS lumps.
+
+09-14-2024 - DeVloek
+* renamed a ton of classes to avoid conflicts with other actors that use the same names
+* renamed sprites DIAB to INDM to avoid conflicts with other actors that use the same sprite names.
+
+September 30th, 2024 - Gothic
+* Converted code to Zscript, and heavily cleaned up the old code.
+* Fire and Glyph Explosion sprites are now truecolor.
+* Re-converted sounds in better quality.
+* Removed unused sprites and sounds.
+* Fixed offsets in a couple of frames.
+* Repackaged file in a pk3.

@@ -1,0 +1,44 @@
+actor CrimsonBanner
+{
+//$Category Obstacles/Custom/
+	+SOLID
+	radius 8
+	height 132
+	
+	states
+	{
+	spawn:
+		BNR2 A -1
+		Stop
+	}
+}
+
+actor VioletBanner : CrimsonBanner
+{
+	states
+	{
+	spawn:
+		BNR2 B -1
+		Stop
+	}
+}
+
+actor GreenBanner : CrimsonBanner
+{
+	states
+	{
+	spawn:
+		BNR2 C -1
+		Stop
+	}
+}
+
+actor BlueBanner : CrimsonBanner
+{
+	states
+	{
+	spawn:
+		BNR2 D -1
+		Stop
+	}
+}

@@ -1,0 +1,9 @@
+Information:
+Name: KDiZD sitting corpses
+Connection: None
+Palette: Custom
+Summon: CarcassSittingMarine, CarcassSittingMaintenance
+Ambient Sound: None
+De-/Activatable: N/A
+Destroyable: No
+Special Effects: None

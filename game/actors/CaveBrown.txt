@@ -1,0 +1,308 @@
+ACTOR BrownFloor1 10616
+{
+	//$Title Brown Floor 1
+	//$Category Obstacles/Cave Formations/Brown/Floor
+	//$NotAngled
+	//$IsDecoration
+
+	Radius 12
+	Height 32
+	+SOLID
+	
+		States
+		{
+			Spawn:
+				BIMF A -1
+				Stop
+		}
+}
+
+ACTOR BrownFloor2 10617
+{
+	//$Title Brown Floor 2
+	//$Category Obstacles/Cave Formations/Brown/Floor
+	//$NotAngled
+	//$IsDecoration
+
+	Radius 12
+	Height 32
+	+SOLID
+
+		States
+		{
+			Spawn:
+				BIMF B -1
+				Stop
+		}
+}
+
+ACTOR BrownFloor3 10618
+{
+	//$Title Brown Floor 3
+	//$Category Obstacles/Cave Formations/Brown/Floor
+	//$NotAngled
+	//$IsDecoration
+
+	Radius 12
+	Height 32
+	+SOLID
+
+		States
+		{
+			Spawn:
+				BIMF C -1
+				Stop
+		}
+}
+
+ACTOR BrownFloor4 10619
+{
+	//$Title Brown Floor 4
+	//$Category Obstacles/Cave Formations/Brown/Floor
+	//$NotAngled
+	//$IsDecoration
+
+	Radius 4
+	Height 32
+	+SOLID
+  
+		States
+		{
+			Spawn:
+				BIMF D -1
+				Stop
+		}
+}
+
+ACTOR BrownFloor5 10620
+{
+	//$Title Brown Floor 5
+	//$Category Obstacles/Cave Formations/Brown/Floor
+	//$NotAngled
+	//$IsDecoration
+
+	Radius 4
+	Height 16
+
+		States
+		{
+			Spawn:
+				BIMF E -1
+				Stop
+		}
+}
+
+ACTOR BrownFloor6 10621
+{
+	//$Title Brown Floor 6
+	//$Category Obstacles/Cave Formations/Brown/Floor
+	//$NotAngled
+	//$IsDecoration
+
+	Radius 4
+	Height 16
+  
+		States
+		{
+			Spawn:
+				BIMF F -1
+				Stop
+		}
+}
+
+ACTOR BrownFloor7 10622
+{
+	//$Title Brown Floor 7
+	//$Category Obstacles/Cave Formations/Brown/Floor
+	//$NotAngled
+	//$IsDecoration
+
+	Radius 4
+	Height 16
+  
+		States
+		{
+			Spawn:
+				BIMF G -1
+				Stop
+		}
+}
+
+ACTOR BrownFloor8 10623
+{
+	//$Title Brown Floor 8
+	//$Category Obstacles/Cave Formations/Brown/Floor
+	//$NotAngled
+	//$IsDecoration
+
+	Radius 12
+	Height 48
+	+SOLID
+
+		States
+		{
+			Spawn:
+				BIMK A -1
+				Stop
+		}
+}
+
+ACTOR BrownFloor9 10624
+{
+	//$Title Brown Floor 9
+	//$Category Obstacles/Cave Formations/Brown/Floor
+	//$NotAngled
+	//$IsDecoration
+
+	Radius 12
+	Height 32
+	+SOLID
+  
+		States
+		{
+			Spawn:
+				BIMK B -1
+				Stop
+		}
+}
+
+ACTOR BrownFloor10 10625
+{
+	//$Title Brown Floor 10
+	//$Category Obstacles/Cave Formations/Brown/Floor
+	//$NotAngled
+	//$IsDecoration
+
+	Radius 8
+	Height 16
+  
+		States
+		{
+			Spawn:
+				BIMK C -1
+				Stop
+		}
+}
+
+ACTOR BrownCeiling1 10626
+{
+	//$Title Brown Ceiling 1
+	//$Category Obstacles/Cave Formations/Brown/Ceiling
+	//$NotAngled
+	//$IsDecoration
+
+	Radius 12
+	Height 32
+	+SOLID
+	+SPAWNCEILING
+	+NOGRAVITY
+	
+		States
+		{
+			Spawn:
+				BIMC A -1
+				Stop
+		}
+}
+
+ACTOR BrownCeiling2 10627
+{
+	//$Title Brown Ceiling 2
+	//$Category Obstacles/Cave Formations/Brown/Ceiling
+	//$NotAngled
+	//$IsDecoration
+
+	Radius 12
+	Height 32
+	+SOLID
+	+SPAWNCEILING
+	+NOGRAVITY
+
+		States
+		{
+			Spawn:
+				BIMC B -1
+				Stop
+		}
+}
+
+ACTOR BrownCeiling3 10628
+{
+	//$Title Brown Ceiling 3
+	//$Category Obstacles/Cave Formations/Brown/Ceiling
+	//$NotAngled
+	//$IsDecoration
+
+	Radius 4
+	Height 32
+	+SOLID
+	+SPAWNCEILING
+	+NOGRAVITY
+  
+		States
+		{
+			Spawn:
+				BIMC C -1
+				Stop
+		}
+}
+
+ACTOR BrownCeiling4 10629
+{
+	//$Title Brown Ceiling 4
+	//$Category Obstacles/Cave Formations/Brown/Ceiling
+	//$NotAngled
+	//$IsDecoration
+
+	Radius 4
+	Height 16
+	+SPAWNCEILING
+	+NOGRAVITY
+  
+		States
+		{
+			Spawn:
+				BIMC D -1
+				Stop
+		}
+}
+
+ACTOR BrownCeiling5 10630
+{
+	//$Title Brown Ceiling 5
+	//$Category Obstacles/Cave Formations/Brown/Ceiling
+	//$NotAngled
+	//$IsDecoration
+
+	Radius 4
+	Height 16
+	+SPAWNCEILING
+	+NOGRAVITY
+		
+		States
+		{
+			Spawn:
+				BIMC E -1
+				Stop
+		}
+}
+
+ACTOR BrownCeiling6 10631
+{
+	//$Title Brown Ceiling 6
+	//$Category Obstacles/Cave Formations/Brown/Ceiling
+	//$NotAngled
+	//$IsDecoration
+
+	Radius 4
+	Height 16
+	+SPAWNCEILING
+	+NOGRAVITY
+		
+		States
+		{
+			Spawn:
+				BIMC F -1
+				Stop
+		}
+}

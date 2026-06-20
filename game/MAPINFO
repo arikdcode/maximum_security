@@ -1,0 +1,177 @@
+ gameinfo
+ {
+   titlemusic = "CEMETERY"
+   weaponslot = 1, "Fist", "Chainsaw", "GArma_4"
+   addEventHandlers = "StepEventHandler"
+	//AddEventHandlers = "FriendHelgaSpawnHandler"
+	AddEventHandlers = "FriendHelgaTauntHandler"
+	addEventHandlers = "MyWorldHandler"
+   // add other slots here...
+   	ConversationFont = "SMALLFNT"
+    ConversationChoiceFont = "SMALLFNT"
+    ConversationNameFont = "SMALLFNT"
+   
+   
+ }
+
+
+//Actors
+//=======================================================================
+DoomEdNums
+{
+	3040 = Bible
+	//7007 = DaggerfallSkeleton
+	3041 = Apprentice
+	3042 = RapidFireTrooper
+	3043 = FleshWizard
+	3044 = JetPackZombie
+	3055 = BerserkerCommando
+	3056 = SniperCommando
+	3057 = FogCloud_Generator
+	3058 = BoltRifle
+	3059 = RifleBullets
+	3060 = RifleBulletBox
+	
+	16500 = Turret_Base
+	16501 = Deathknight
+	16502 = Ghoul
+	16503 = InfernoDemon
+	16504 = Fallen
+	16505 = DEWraith
+	16506 = DEWraithThrustable
+	16507 = CrusaderShield
+	16508 = SuperArmorBonus
+	
+	16509 = KnightSaberIdle	
+	16510 = KnightSaberIgnite
+	16511 = DeathknightBoss
+
+	
+	
+}
+//=======================================================================
+
+//Gore
+//=======================================================================
+DoomEdNums
+{
+	4040 = CorpsePile
+	4041 = DeadMaleScientist
+	4042 = DeadFemaleScientist
+	4043 = CarcassSittingMarine
+	4044 = CarcassSittingMaintenance
+	4045 = Skeleton1
+	4046 = Skeleton2
+	4047 = Skeleton3
+	4048 = Skeleton4
+	4049 = Skeleton5
+	4050 = Skeleton6
+	4051 = Skeleton7
+	4052 = Skeleton8
+	4053 = Skeleton9
+	4054 = Skeleton10
+	4055 = Skeleton11
+	4056 = Skeleton12
+	4057 = Skeleton13
+	
+}
+//=======================================================================
+//Weapons
+//=======================================================================
+DoomEdNums
+{
+	22701 = WarriorStatueGold
+	22702 = WarriorStatueGold2
+	22703 = WarriorStatueStone
+	22704 = WarriorStatueStone2
+	22705 = WarriorStatueIron
+	22706 = WarriorStatueIron2
+	22707 = NTOMB1
+	22708 = NTOMB2
+	22709 = NTOMB3
+	22710 = NTOMB4
+	22711 = NTOMB5
+	22712 = VioletBanner
+	22713 = GreenBanner
+	22714 = BlueBanner
+	22720 = BlueMage
+	22721 = ImpWarlord
+	22722 = Cacomancer
+	22723 = Hellion
+	//22715 = BubbleSpawner
+	23112 = Wither
+	32113 = ZSpecOpsMachinegun
+	32114 = UndeadPriest
+	32115 = ZSpecOpsShotgun
+	32116 = ChaingunGuy2
+	32117 = ZSec
+	32118 = ZSecBuddy
+	32119 = UndeadWarrior
+	32120 = UndeadBoss
+	
+}
+//=======================================================================
+DoomEdNums
+{
+	22505 = ZombieScientistAxe
+	22506 = ZombieScientistCleaver
+	22507 = ZombieScientistCrowbar
+	22508 = ZombieScientistFreeze
+	22509 = ZombieScientistGrenade
+	22510 = ZombieScientistHalon
+	22511 = ZombieScientistHammer
+	22512 = ZombieScientistKnife
+	22513 = ZombieScientistPlasma
+	22514 = ZombieScientistPistol
+	22515 = ZombieScientistSyringe
+	22516 = ZombieScientistUzi
+	22517 = ZombieScientistWrench
+	22518 = NNR_FriendHelga
+	22519 = Ellie
+}
+//=========================================================================
+//keys
+//=========================================================================
+DoomEdNums
+{
+	14415 = ShadowHunter
+	14416 = SilveryKey
+	14417 = GoldHeartKey
+	14418 = IronKey
+	14419 = CopperMetalKey
+}
+//taken
+//foodbarrels
+//14500 - 14520
+
+SpawnNums
+{
+	14415 = ShadowHunter
+}
+
+map MAP01 "Maximum Security"
+{
+	sky1 = "SKY2"
+	next = "MAP02"
+	music = "D_MESSAG"
+}
+	
+map MAP02 "Blue Halls"
+{
+	//sky1 = "OSKY33"
+	sky1 = "OSKY33"
+	next = "MAP03"
+	music = "TITNPLNT"
+	airsupply = 20
+
+	}
+	
+map MAP03 "Wanderer Above the Fog"
+{
+	sky1 = "OSKY2B"
+	next = "MAP04"
+	//music = "TITNPLNT"
+	airsupply = 20
+	//fade = 808080
+	skyfog = 255
+}

@@ -1,0 +1,130 @@
+Actor LostSpirit 6006
+{
+	//$Category Monsters/Undead
+	//$Sprite LSPIA1
+	//$Title "Lost Spirit"
+	Health 150
+	Radius 32
+	Height 32
+	Mass 50
+	Speed 16
+	Damage 4
+	Monster
+	+FLOAT
+	+NOGRAVITY
+	//+MISSILEMORE
+	MissileChanceMult 0.5
+	+DONTFALL
+	+NOPAIN
+	+NOTARGET
+	+NOCLIP
+	+GHOST
+	+NOBLOODDECALS
+	+SPAWNFLOAT
+	+WINDTHRUST
+	SeeSound "LostSpirit/active"
+	ActiveSound "LostSpirit/active"
+	DeathSound "LostSpirit/death"
+	RenderStyle Translucent
+	Alpha 0.50
+	BloodType "LostSpiritBlood"
+	Obituary "%o was scared to death by a Lost Spirit"
+	var int user_distance;
+	States
+	{
+	Spawn:
+		LSPI AACCBBDD 4 BRIGHT A_Look 
+		Loop
+	See:
+		LSPI AACCBBDD 4 BRIGHT A_Chase
+		Loop
+	Missile: 
+		TNT1 A 0 A_SetUserVar("user_distance", 0)
+		TNT1 A 0 A_JumpIfCloser(450, 1)
+		Goto Charge
+		TNT1 A 0 A_Jump(200, "Missile2")
+		Goto Charge
+	Charge:	
+		TNT1 A 0 A_Playsound ("LostSpirit/charge")
+		LSPI D 8 BRIGHT A_FaceTarget
+		LSPI C 0 BRIGHT A_SkullAttack
+		LSPI C 2 BRIGHT A_SpawnItemEx ("LostSpiritTrail", -15)
+		TNT1 A 0 A_SetUserVar("user_distance", user_distance+1)
+		TNT1 A 0 A_JumpIf(user_distance == 20, "StopCharge")
+		Goto Charge+3
+	Missile2:
+		TNT1 A 0 A_Playsound ("LostSpirit/shoot")
+		LSPI C 8 BRIGHT A_FaceTarget
+		LSPI D 0 BRIGHT A_CustomMissile("LostSpiritMissile", 0, -24)
+		LSPI D 8 BRIGHT A_CustomMissile("LostSpiritMissile", 0, 24)
+		Goto See
+	StopCharge:
+		TNT1 A 0 A_Stop
+		Goto See
+	Death:
+		LSPI E 6 BRIGHT A_Scream
+		LSPI F 6 BRIGHT
+		LSPI G 6 BRIGHT
+		LSPI H 6 BRIGHT
+		LSPI I 6 BRIGHT
+		LSPI J 6 BRIGHT A_NoBlocking
+		Stop
+	}
+}
+
+Actor LostSpiritTrail
+{
+	Radius 0
+	Height 0
+	Speed 0
+	RenderStyle Translucent
+	Alpha 0.45
+	+NOCLIP
+	+NOGRAVITY
+	+NOTELEPORT
+	States
+	{
+	Spawn:
+		LSPI C 3 BRIGHT A_FadeOut(0.1)
+		loop
+	Death:
+		stop
+	}
+}
+
+Actor LostSpiritMissile
+{
+	Scale 0.5
+	Radius 4
+	Height 8
+	Speed 16
+	Damage 2
+	RenderStyle Translucent
+	Alpha 0.70
+	Projectile
+	+RANDOMIZE
+	States
+	{
+	Spawn:
+		LSBA A 2 BRIGHT
+		LSBA B 2 BRIGHT A_FadeOut(0.1)
+		loop
+	Death:
+		LSBA CDE 3 BRIGHT
+		stop
+	}
+}
+
+Actor LostSpiritBlood
+{
+	RenderStyle Translucent
+	Alpha 0.50
+	+NOBLOCKMAP
+	+NOTELEPORT
+	States
+	{
+	Spawn:
+		LSBL CBA 8 BRIGHT A_FadeOut(0.1)
+		Stop
+	}
+}

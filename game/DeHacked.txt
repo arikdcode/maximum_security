@@ -1,0 +1,27 @@
+Patch File for DeHackEd v3.0
+# Created with WhackEd4 1.3.2
+# Note: Use the pound sign ('#') to start comment lines.
+
+Doom version = 21
+Patch format = 6
+
+Frame 13
+Duration = 3
+
+Frame 14
+Duration = 3
+
+Frame 15
+Duration = 3
+
+Frame 16
+Duration = 3
+
+Frame 17
+Duration = 4
+
+Weapon 0 (Fist)
+Ammo type = 0
+
+Text 4 4
+SSWVSTRM

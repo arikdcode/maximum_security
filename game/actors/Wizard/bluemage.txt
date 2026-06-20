@@ -1,0 +1,12 @@
+actor BlueMage
+{
+	radius 20
+	height 10
+	
+	states
+	{
+	spawn:
+		BMGE A -1
+		Stop
+	}
+}

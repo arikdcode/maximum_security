@@ -1,0 +1,17 @@
+#library "HELGAALLY"
+#include "ZCommon.acs"
+
+SCRIPT "FriendHelga_Enter" ENTER
+{
+	GiveInventory("FriendHelgaProtection", 0x7FFFFFFD);
+}
+
+SCRIPT "FriendHelga_Respawn" RESPAWN
+{
+	GiveInventory("FriendHelgaProtection", 0x7FFFFFFD);
+}
+
+SCRIPT "FriendHelga_Return" RETURN
+{
+	GiveInventory("FriendHelgaProtection", 0x7FFFFFFD);
+}

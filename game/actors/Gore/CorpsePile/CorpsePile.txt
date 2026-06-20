@@ -1,0 +1,13 @@
+Actor CorpsePile
+{
+//$Category Gore/Corpses/
+Radius 24
+Height 60
++SOLID
+States
+{
+Spawn:
+	PILE A -1
+	Stop
+}
+}

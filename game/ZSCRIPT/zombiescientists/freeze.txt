@@ -1,0 +1,138 @@
+Class ZombieScientistFreeze : Actor
+{
+	Default
+	{
+		//$Category Monsters/ZombieScientists
+		//$Title "Freezerifle"
+		obituary "%o was frozen by a zombie scientist.";
+		health 20;
+		mass 100;
+		speed 8;
+		Radius 20;
+		Height 52;
+		painchance 200;
+		seesound "zombiescientistM/sight";
+		painsound "zombiescientistM/pain";
+		deathsound "zombiescientistM/death";
+		activesound "zombiescientistM/active";
+		dropitem "Cell";
+		MONSTER;
+		+FLOORCLIP;
+		+AVOIDMELEE;
+		MissileChanceMult 0.125;
+		+WINDTHRUST;
+	}
+	States
+	{
+	Spawn:
+		SZFR AB 10 A_Look();
+		loop;
+	See:
+		SZFR AABBCCDD 4 A_Chase();
+		loop;
+	Missile:
+		SZFR E 6 A_FaceTarget();
+		SZFR F 5 A_SpawnProjectile("ZombieScientistFreezeBlast",32,7,Random(-3,3),CMF_OFFSETPITCH,frandom(-0.3,0.3));
+		SZFR E 12;
+	goto See;
+		Pain:
+		SZFR G 3;
+		SZFR G 3 A_Pain();
+		goto See;
+	Death:
+		SZFR H 5 A_SpawnItemEx("ZombieScientistFreezeDeathExplosion", 0.0, 0.0, 32.0, 0.0, 0.0, 0.0, 0.0, SXF_NOCHECKPOSITION, 0);
+		SZFR I 5 A_Scream();
+		SZFR J 5 A_NoBlocking();
+		SZFR K 5;
+		SZFR L 5;
+		SZFR M 5;
+		SZFR N -1;
+		stop;
+	XDeath:
+		SZFR O 5 A_SpawnItemEx("ZombieScientistFreezeDeathExplosion", 0.0, 0.0, 32.0, 0.0, 0.0, 0.0, 0.0, SXF_NOCHECKPOSITION, 0);
+		SZFR P 5 A_XScream();
+		SZFR Q 5 A_NoBlocking();
+		SZFR RSTUV 5;
+		SZFR W -1;
+		stop;
+	Raise:
+		SZFR MLKJIH 5;
+		goto See;
+	}
+}
+
+//Why can't we get his freeze rifle?
+//Because it went up in a flash of plasma when he died, that's why. :P
+Class ZombieScientistFreezeDeathExplosion : Actor
+{
+	Default
+	{
+		Radius 1;
+		Height 2;
+		Alpha 0.75;
+		Scale 0.5;
+		RenderStyle "Add";
+		+NOGRAVITY;
+		+NOBLOCKMAP;
+		+NOINTERACTION;
+	}
+	States
+	{
+	Spawn:
+		ZPLX A 4 Nodelay Bright A_StartSound("weapons/plasmax");
+		ZPLX BCDE 4 Bright;
+		Stop;
+	}
+}
+
+Class ZombieScientistFreezeBlast : Actor
+{
+	Default
+	{
+		Radius 13;
+		Height 8;
+		Speed 25;
+		Damage 6;
+		RenderStyle "Add";
+		Decal "ZSFreezeBlastMelt";
+		Alpha 0.75;
+		scale 0.5;
+		SeeSound "zombiescientist/iceshot";
+		DamageType "Ice";
+		Projectile;
+		+RANDOMIZE;
+	}
+
+	States
+	{
+	Spawn:
+		FBLS A 1 bright A_SpawnItemEx("ZombieScientistFreezeBlastTrail",-20);
+		loop;
+	Death:
+		FBLS B 4 bright A_StartSound("zombiescientist/icehit");
+		FBLS CDE 4 bright;
+		stop;
+	}
+}
+
+Class ZombieScientistFreezeBlastTrail : Actor
+{
+	Default
+	{
+		RenderStyle "Add";
+		Alpha 0.6;
+		+RANDOMIZE;
+		+NOBLOCKMAP;
+		+NOINTERACTION;
+	}
+
+	States
+	{
+	Spawn:
+		FRTR ABC 2 bright A_FadeOut(0.2);
+		loop;
+	Death:
+		FRTR ABC 4 bright;
+		stop;
+	}
+}

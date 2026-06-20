@@ -1,0 +1,236 @@
+#include "Actors/Doomplayer2/Doomplayer2.txt"
+#include "Monsters/DaggerfallSkeleton/Decorate/DaggerfallSkeleton.txt"
+#include "Weapons/THammer/DECORATE/THammer.txt"
+#include "Monsters/Blot/Decorate/Blot.txt"
+#include "Monsters/HellsGuard/HellsGuard.txt"
+#include "Monsters/RifleZombieman/RifleZombieman"
+#include "Monsters/FormerRanger/FormerRanger"
+#include "Monsters/ChainsawZombie/ChainsawZombie"
+#include "Monsters/Zsec/Zsec.txt"
+#include "Monsters/HeavyCarbineGuy/HeavyCarbineGuy.txt"
+#include "actors/Skeletons/Skeletons.txt"
+#include "Monsters/LostSpirit/LostSpirit.txt"
+
+#include "actors/RevenantTank.txt"
+
+#include "Actors/CrusaderShield/CrusaderShield.txt"
+#include "Actors/SuperArmorBonus/SuperArmorBonus.txt"
+
+//Thunder
+#include "actors/Thunder/Thunder.txt"
+
+//RSWORD
+#include "Weapons/RSWORD/RSWORD.txt"
+
+#include "actors/CustomDecor.txt"
+
+
+
+//Gore
+#include "actors/Gore/CorpsePile/CorpsePile.txt"
+#include "actors/Gore/ImpaledMarines/ImpaledMarines.txt"
+#include "actors/Gore/DeadScientists/DeadScientists.txt"
+#include "actors/Gore/MarineCorpses/MarineCorpses.txt"
+#include "actors/Gore/SittingCorpses/SittingCorpses.txt"
+
+
+#include "Monsters/ImpWarlord/ImpWarlord.txt"
+#include "Monsters/HellDuke/HellDuke.txt"
+
+#include "actors/CaveLimestone.txt"
+#include "actors/CaveBrown.txt"
+#include "actors/CaveTan.txt"
+#include "actors/CaveVolcanic.txt"
+//terrain
+#include "terrain/terrain.txt"
+#include "Actors/CrimsonBanner/CrimsonBanner.txt"
+#include "Actors/Tombstone/Tombstone.txt"
+#include "Actors/WarriorStatue/WarriorStatue.txt"
+
+#include "Actors/Ember/Ember.txt"
+#include "Actors/Sparks.txt"
+#include "Actors/Wizard/BlueMage.txt"
+//#include "actors/Bubbles/Bubbles.txt"
+#include "actors/FoodBarrel/FoodBarrel.txt"
+
+#include "Actors/Fog/Fog.txt"
+#include "Actors/SPARKLEFX/SPARKLEFX.txt"
+
+#include "Actors/StrobeLights/StrobeLights.txt"
+#include "Actors/Tree/Grovetree.txt"
+
+#include "actors/HelgaAlly/HelgaAlly.txt"
+#include "actors/Cultist/Cultist.txt"
+#include "Weapons/Boltrifle/boltrifle.txt"
+#include "actors/Helga/HelgaChained/HelgaChained.txt"
+#include "Monsters/UndeadPriest/UndeadPriest.txt"
+
+//Potions
+#include "actors/Potions.txt"
+#include "Monsters/Ritual/Ritual.txt"
+#include "Monsters/Typo/Typo.txt"
+#include "actors/Fire/Fire.txt"
+
+//Decorations
+#include "Models/BlackObelisk.txt"
+#include "Actors/blacktorch/blacktorch.txt"
+#include "actors/HexenWallCandles.txt"
+#include "actors/HexenStandCandles.txt"
+
+
+Actor Bible
+{
+  +FloorClip
+  Scale 0.4
+  States
+  {
+  Spawn:
+    BIBL A -1
+    Stop
+  }
+}
+
+ACTOR SmallTree1 10700
+{
+  Radius 16
+  Height 96
+  +SOLID
+  States
+  {
+  Spawn:
+    TREN A -1
+    Stop
+  }
+}
+
+ACTOR SmallTree2 10701
+{
+  Radius 16
+  Height 64
+  +SOLID
+  States
+  {
+  Spawn:
+    TREN B -1
+    Stop
+  }
+}
+//treesnbushes
+ACTOR SmallBush1 10702
+{
+  Radius 16
+  Height 24
+  +SOLID
+  States
+  {
+  Spawn:
+    BUSN A -1
+    Stop
+  }
+}
+
+ACTOR SmallBush2 10703
+{
+  Radius 16
+  Height 40
+  +SOLID
+  States
+  {
+  Spawn:
+    BUSN B -1
+    Stop
+  }
+}
+//treesnbushes
+Actor FootstepsWalker 
+{
+  speed 15
++NOBLOCKMAP
+  +NOSECTOR
+  +NOGRAVITY
+  +DONTSPLASH
+  +Floorhugger
+  projectile
+  damage 0
+  states
+  {
+  spawn:
+  TNT1 AAAAAAAAAAAA 20 a_playsound("footstep/default",CHAN_BODY)
+  death:
+  TNT1 A -1
+  stop
+}
+}
+
+Actor Footstepsrunner 
+{
+  speed 20
++NOBLOCKMAP
+  +NOSECTOR
+  +NOGRAVITY
+  +DONTSPLASH
+  +Floorhugger
+  projectile
+  damage 0
+  states
+  {
+  spawn:
+  TNT1 AAAAAAAAAAAAAAAAAAAAAAAAAA 10 a_playsound("footstep/default",CHAN_BODY)
+  death:
+  TNT1 A -1
+  stop
+}
+}
+
+
+actor Bubble
+{
+  Radius 2
+  Height 2
+  Speed 1
+  Scale 0.05
+  Alpha 0.25
+  RenderStyle Add
+  projectile
+  +CLIENTSIDEONLY
+  +FORCEXYBILLBOARD
+  +NOCLIP
+  States
+  {
+  Spawn:
+    SBUB A 1
+    //fall through
+  Rise:
+    SBUB A 0 A_JumpIf(waterlevel == 0, "Death")
+    SBUB A 1 A_Jump (32, "Jiggle")
+    loop
+  Jiggle:
+    SBUB A 0 A_JumpIf(waterlevel == 0, "Death")
+    SBUB A 1 A_SetAngle (random (0, 360)) 
+    SBUB A 0 A_Recoil (0.1)
+    goto Rise
+  Death:
+    TNT1 A 1
+    stop
+  }
+}
+
+actor BubbleSpawner : SwitchableDecoration 22715
+{
+  Radius 2
+  Height 2
+  RenderStyle None
+  +NOINTERACTION
+  States
+  {
+  Spawn:
+  Active:
+    SBUB A 2 nodelay A_PlaySound("World/Bubbles", CHAN_6, 1, TRUE)
+  Bubbles:
+    SBUB A 2 A_SpawnItemEx ("Bubble", random (-Args[0], Args[0]), 0, 0, 0, 0, 2, random (0, 360), 0, 128)
+    loop
+  Inactive:
+    SBUB A -1 A_StopSound (CHAN_6)
+	stop
+  }
+}

@@ -1,0 +1,5 @@
+Submitted: flyingbrick
+Code: Amuscaria, flyingbrick
+GLDefs: SkyMarshall, SamVision
+Sounds: Raven Software, Monolith Productions, DBThanatos
+Sprites: Amuscaria, Raven Software

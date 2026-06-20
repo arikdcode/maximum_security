@@ -1,0 +1,16 @@
+Name: Shadow Hunter
+Difficulty: Medium
+Connections: None
+Summon: ShadowHunter
+Melee: No
+Distance: Projectile
+Type: Ghost
+Brightmaps: No
+Added States: No
+ACS: No
+
+Description: A shadowy ghost that stalks its prey in the dead of night and shoots
+bullets of compressed shadows that fly at high speeds. Their enemies have a hard
+time hitting them due to the many ghostly doubles that surround them and by quickly
+teleporting around the crowd. They can also vanish and reappear somewhere else
+after a time to try and dissonant their prey.

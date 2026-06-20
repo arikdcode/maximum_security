@@ -1,0 +1,14 @@
+Name: Zombie Scientist (Plasma)
+Difficulty: Very Easy
+Connections: None
+Summon: ZombieScientistPlasma
+Melee: No
+Distance: Projectile
+Type: Human, Undead
+Brightmaps: Yes
+Actor modification: No
+ACS: No
+
+Description:
+A scientist monster based on scalliano's great zombie scientist suite. It carries a plasma pistol
+that does 11-15 damage per hit. It is about as tough as an imp, but moves a little faster.

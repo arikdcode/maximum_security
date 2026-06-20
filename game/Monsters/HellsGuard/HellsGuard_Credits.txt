@@ -1,0 +1,17 @@
+Name: Hell's Guard
+Difficulty: Medium
+Connection: Hell Knight audio (resources included)
+Summon: HellGuard 
+Melee: No
+Distance: Projectile
+Type: Demon, Medieval
+Brightmaps: Yes
+Added States: None
+ACS: N/A
+
+Submitted: Tormentor667
+Decorate: Espi
+GLDEFs: Ghastly Dragon, MagicWazard (brightmaps)
+Sounds: Id Software, Raven Software
+Sprites: Id Software, Raven Software
+Sprite Edit: Espi

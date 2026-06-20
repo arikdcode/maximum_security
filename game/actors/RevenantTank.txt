@@ -1,0 +1,47 @@
+ACTOR RevenantTank: SwitchableDecoration 10900
+{
+	//$Title Revenant Tank
+	//$Category Obstacles/
+	//$NotAngled
+	
+
+	Radius 36
+	Height 128
+	Health 20
+	mass 300
+	+SOLID
+	+SHOOTABLE
+	+NOBLOOD
+	+ACTIVATEMCROSS
+	+DONTGIB
+	+NOICEDEATH
+	DeathSound "GLASSHAT"
+	
+	
+		States
+		{
+			Spawn:
+				TANI A 140 BRIGHT
+				TANI BCDEFGHIJ 8 BRIGHT
+				TANI J 140 BRIGHT
+				TANI K 12 BRIGHT
+			Loop
+			
+			Inactive:
+				TANO A -1 A_ChangeFlag("SHOOTABLE", false)
+			Stop
+			
+			Active:
+				TANO A 0			
+			Goto Spawn
+		
+		
+			Death:
+				TANS A 70 BRIGHT A_Scream
+				TANS B 20 BRIGHT  A_SpawnItemEx ("Revenant", 10, 0, 32, 5, 0, 10, 0, SXF_SETTARGET)
+				TANS CD 20 BRIGHT
+				TANS EFG 6 BRIGHT
+				TANS H -1 BRIGHT
+			Stop
+		}
+}

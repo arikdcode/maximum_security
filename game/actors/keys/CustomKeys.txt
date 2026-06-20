@@ -1,0 +1,63 @@
+class SilveryKey : Key
+{
+//$Category Keys
+	Default
+	{
+		Inventory.PickupMessage "Picked up the silver key.";
+		Inventory.Icon "KEYSA0";
+	}
+	States
+	{
+	Spawn:
+		KEYS A -1;
+		stop;
+	}
+}
+
+class GoldHeartKey : Key
+{
+//$Category Keys
+	Default
+	{
+		Inventory.PickupMessage "Picked up the golden key.";
+		Inventory.Icon "KEYGA0";
+	}
+	States
+	{
+	Spawn:
+		KEYG A -1;
+		stop;
+	}
+}
+
+class IronKey : Key
+{
+//$Category Keys
+	Default
+	{
+		Inventory.PickupMessage "Picked up the iron key.";
+		Inventory.Icon "KEYBA0";
+	}
+	States
+	{
+	Spawn:
+		KEYB A -1;
+		stop;
+	}
+}
+
+class CopperMetalKey : Key
+{
+//$Category Keys
+	Default
+	{
+		Inventory.PickupMessage "Picked up the copper key.";
+		Inventory.Icon "KEYCA0";
+	}
+	States
+	{
+	Spawn:
+		KEYC A -1;
+		stop;
+	}
+}

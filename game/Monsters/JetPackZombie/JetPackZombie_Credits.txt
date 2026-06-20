@@ -1,0 +1,13 @@
+Name: Jetpack Zombie
+Difficulty: Medium
+Connection: none
+Summon: JetpackZombie
+Melee: No
+Distance: Hitscan
+Type: Human, Undead
+
+Decorate: Ghastly_dragon, Captain Toenail, DeVloek (Update)
+GLDefs: Ghastly_dragon
+Sounds: Id Software
+Sprites: Id Software, Rogue Entertainment, 3d Realms
+Sprite Edit: Captain Toenail

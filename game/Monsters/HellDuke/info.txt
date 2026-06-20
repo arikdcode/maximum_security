@@ -1,0 +1,9 @@
+Name: Hell Duke
+Difficulty: Hard
+Summon: Hellduke
+Melee: Yes
+Connections: Cyberdemon
+Distance: Projectile, Melee
+Type: Demon/Mechanical
+Brightmaps: no
+ACS: No

@@ -1,0 +1,22 @@
+Submitted: MagicWazard
+Decorate: MagicWazard
+GLDefs: MagicWazard
+Sounds: Midway Software
+Sprites: id Software
+Sprite Edit: MagicWazard
+Idea Base: Replacement for the Wolfenstein SS
+
+Name: Former Ranger
+Difficulty: Very Easy/Easy
+Connections: Zombieman (sound effects)
+Summon: FormerRanger, RangerCorpse
+Melee: No
+Distance: Hitscan
+Type: Human, Undead
+Brightmaps: Yes
+Added States: No
+ACS: No
+
+
+Statistically similar to the Wolfenstein SS, this zombie fires continuous 3-round bursts at close
+range, and single shots at longer range.

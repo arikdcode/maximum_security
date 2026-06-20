@@ -1,0 +1,44 @@
+Name: Zombie Scientist Pack
+Difficulty: Very Easy
+Connections: None
+Summon: ZombieScientist[Axe,Cleaver,Crowbar,Freeze,Grenade,Halon,Hammer,Knife,Plasma,Pistol,Syringe,Uzi,Wrench]
+Melee: Yes
+Distance: Yes
+Type: Human, Undead
+Brightmaps: Yes
+Actor modification: No
+ACS: No
+
+Description:
+Every Zombie Scientist submitted so far in a single pack.
+
+Submitted: scalliano, DavidN, Devloek (compilation)
+Code: scalliano, DavidN, Enjay, Ghastly (ZScript), DeVloek (Update)
+Sounds: DavidRaven, id Software, Raven Software, Konami, Bohemia Interactive, Valve, Volition, TheDarkArchon 
+Sprites: id Software, Xim, JoeyTD, Skulltag, DavidRaven, Marty Kirra, scalliano, high councilor, tsran, Mike12, Kronos, NMN, Tormentor667, Woolie Wool, solarsnowfall, Vader, Enjay, DeVloek
+Idea Base: The UAC's apparent lack of staff
+
+Check inside the credits+info directory for more specific credits.
+
+09/28/2024 Update - DeVloek
+* new: ZombieScientistFreeze
+* new: ZombieScientistGrenade
+* new: ZombieScientistPistol
+* streamlined all classnames by weapon:
+	- ZombieScientistAxe
+	- ZombieScientistCleaver
+	- ZombieScientistCrowbar
+	- ZombieScientistHalon
+	- ZombieScientistHammer
+	- ZombieScientistKnife
+	- ZombieScientistPlasma
+	- ZombieScientistSyringe
+	- ZombieScientistUzi
+	- ZombieScientistWrench	
+* ZombieScientistHalon overhauled, now also drops his FireExtinguisher which explodes when damaged
+* replaced male and female voice sounds, streamlined all sound names
+* adjusted sprite offsets, some minor edits to a few sprites
+* removed unused and duplicate assets
+* fixed incorrect obituaries and missing decals
+* updated zscript, replaced deprecated functions
+* adjusted all zombie stats to be more in line with each other

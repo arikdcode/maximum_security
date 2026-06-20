@@ -1,0 +1,372 @@
+class ShadowHunter : Actor
+{
+	Default
+	{
+	//$Category Monsters
+	//$Title "Shadow Hunter"
+	Monster;
+	Health 180;
+	GibHealth 30;
+	Radius 16;
+	Height 56;
+	Speed 8;
+	PainChance 50;
+	+FLOORCLIP;
+	+CANTSEEK;
+	+SEEINVISIBLE;
+	+AVOIDMELEE;
+	+SHADOW;
+	+NOBLOOD;
+	MissileChanceMult 0.125;
+	RenderStyle 'Translucent';
+	Alpha 0.5;
+	SeeSound "ShadowHunter/See";
+	ActiveSound "ShadowHunter/Idle";
+	PainSound "ShadowHunter/Pain";
+	Obituary "%o didn't see the Shadow Hunter's bullet.";
+	}
+	States
+	{
+		Spawn:
+			SHAH AB 10 A_Look;
+			loop;
+		See://Spawns decoy doubles around itself as it moves
+			SHAH A 4
+			{
+				A_Chase();
+				A_SpawnItemEx("HuntersDouble",random(-150,150), random(-150,150),0,0,0,0,0, SXF_SETMASTER);
+			}
+			SHAH B 4
+			{
+				A_Chase();
+				A_SpawnItemEx("HuntersDouble",random(-150,150), random(-150,150),0,0,0,0,0, SXF_SETMASTER);
+			}
+			SHAH C 4
+			{
+				A_Chase();
+				A_SpawnItemEx("HuntersDouble",random(-150,150), random(-150,150),0,0,0,0,0, SXF_SETMASTER);
+			}
+			SHAH D 4
+			{
+				A_Chase();
+				A_SpawnItemEx("HuntersDouble",random(-150,150), random(-150,150),0,0,0,0,0, SXF_SETMASTER);
+			}
+			TNT1 A 0 A_Jump(56, "QuickV");
+			TNT1 A 0 A_Jump(15, "LongV");
+			loop;
+		Missile://Fires its shadow bullet
+			SHAG AAAA 5
+			{
+				A_FaceTarget();
+				A_SpawnItemEx("HuntersDouble",random(-150,150), random(-150,150),0,0,0,0,0, SXF_SETMASTER);
+			}
+			TNT1 A 0 A_StartSound("ShadowHunter/Fire");
+			THT1 A 0 A_SpawnProjectile("ShadowBullet", 32, 0, 0, CMF_OFFSETPITCH, 0);
+			SHAG B 5 Bright;
+			SHAG A 10;
+			TNT1 A 0 A_Jump(56, "QuickV", "Missile");
+			TNT1 A 0 A_Jump(15, "LongV");
+			Goto See;
+		QuickV://Quick vanish meant to quickly reposition itself among its own decoys.
+			SHAH A 1 A_SetInvulnerable;
+			SHAH AAAAA 1 A_FadeOut(0.1);
+			TNT1 A 0
+			{
+				bSOLID = False;
+				bNOTAUTOAIMED = True;
+			}
+			SHAH AAAAAAAAAA 1 A_Wander;
+			TNT1 A 0
+			{
+				bSOLID = True;
+				bNOTAUTOAIMED = False;
+			}
+			SHAH AAAAA 1 A_FadeIn(0.1);
+			SHAH A 1 A_UnSetInvulnerable;
+			Goto See;
+		LongV://Long vanish meant to reposition itself further away and disorient the player. Will spawn a few decoys as it moves to help the play keep track of where it will show up.
+			SHAH A 1 A_SetInvulnerable;
+			SHAH AAAAA 1 A_FadeOut(0.1);
+			TNT1 A 0
+			{
+				bSOLID = False;
+				bNOTAUTOAIMED = True;
+				A_SetSpeed(20);
+			}
+			SHAH AAAAAAAAAA 1 A_Wander;
+			TNT1 A 0 A_SpawnItemEx("HuntersDouble",random(-150,150), random(-150,150),0,0,0,0,0, SXF_SETMASTER);
+			SHAH AAAAAAAAAA 1 A_Wander;
+			TNT1 A 0 A_SpawnItemEx("HuntersDouble",random(-150,150), random(-150,150),0,0,0,0,0, SXF_SETMASTER);
+			SHAH AAAAAAAAAA 1 A_Wander;
+			TNT1 A 0 A_SpawnItemEx("HuntersDouble",random(-150,150), random(-150,150),0,0,0,0,0, SXF_SETMASTER);
+			SHAH AAAAAAAAAA 1 A_Wander;
+			TNT1 A 0 A_SpawnItemEx("HuntersDouble",random(-150,150), random(-150,150),0,0,0,0,0, SXF_SETMASTER);
+			SHAH AAAAAAAAAA 1 A_Wander;
+			TNT1 A 0 A_SpawnItemEx("HuntersDouble",random(-150,150), random(-150,150),0,0,0,0,0, SXF_SETMASTER);
+			TNT1 A 100;
+			TNT1 A 0 A_SpawnItemEx("HuntersDouble",random(-150,150), random(-150,150),0,0,0,0,0, SXF_SETMASTER);
+			TNT1 A 5;
+			TNT1 A 0 A_SpawnItemEx("HuntersDouble",random(-150,150), random(-150,150),0,0,0,0,0, SXF_SETMASTER);
+			TNT1 A 0
+			{
+				bSOLID = True;
+				bNOTAUTOAIMED = False;
+				A_SetSpeed(8);
+			}
+			SHAH AAAAA 1 A_FadeIn(0.1);
+			SHAH A 1 A_UnSetInvulnerable;
+			Goto See;
+		Pain://Pain will always result in a Long vanish
+			SHAP A 10 A_Pain;
+			Goto LongV;
+		Death://Death
+			TNT1 A 0 A_StartSound("ShadowHunter/Death");
+			SHAD ABCDE 5 A_NoBlocking();
+		DFade://Fades away because it's a ghost
+			SHAD E 0 A_FadeOut(0.1);
+			TNT1 A 0 A_SpawnItemEx("HuntersDeadDouble",0,0,0,0,0,2,0);
+			SHAD E 5;
+			TNT1 A 0 A_SpawnItemEx("HuntersDeadDouble",0,0,0,0,0,2,0);
+			SHAD E 5;
+			SHAD E 0 A_FadeOut(0.1);
+			TNT1 A 0 A_SpawnItemEx("HuntersDeadDouble2",0,0,0,0,0,2,0);
+			SHAD E 5;
+			TNT1 A 0 A_SpawnItemEx("HuntersDeadDouble2",0,0,0,0,0,2,0);
+			SHAD E 5;
+			SHAD E 0 A_FadeOut(0.1);
+			TNT1 A 0 A_SpawnItemEx("HuntersDeadDouble3",0,0,0,0,0,2,0);
+			SHAD E 5;
+			TNT1 A 0 A_SpawnItemEx("HuntersDeadDouble3",0,0,0,0,0,2,0);
+			SHAD E 5;
+			SHAD E 0 A_FadeOut(0.1);
+			TNT1 A 0 A_SpawnItemEx("HuntersDeadDouble4",0,0,0,0,0,2,0);
+			SHAD E 5;
+			TNT1 A 0 A_SpawnItemEx("HuntersDeadDouble4",0,0,0,0,0,2,0);
+			SHAD E 5;
+			SHAD E 0 A_FadeOut(0.1);
+			TNT1 A 0 A_SpawnItemEx("HuntersDeadDouble5",0,0,0,0,0,2,0);
+			SHAD E 5;
+			TNT1 A 0 A_SpawnItemEx("HuntersDeadDouble5",0,0,0,0,0,2,0);
+			SHAD E 5;
+			SHAD E 0 A_FadeOut(0.1);
+			Stop;
+		XDeath://Big death
+			TNT1 A 0 A_StartSound("ShadowHunter/Death");
+			SHXD ABCDEFGH 4 A_NoBlocking();
+		XFade://Still ghost, so fades away
+			SHXD I 0 A_FadeOut(0.1);
+			TNT1 A 0 A_SpawnItemEx("HuntersDeadXDouble",0,0,0,0,0,2,0);
+			SHXD I 5;
+			TNT1 A 0 A_SpawnItemEx("HuntersDeadXDouble",0,0,0,0,0,2,0);
+			SHXD I 5;
+			SHXD I 0 A_FadeOut(0.1);
+			TNT1 A 0 A_SpawnItemEx("HuntersDeadXDouble2",0,0,0,0,0,2,0);
+			SHXD I 5;
+			TNT1 A 0 A_SpawnItemEx("HuntersDeadXDouble2",0,0,0,0,0,2,0);
+			SHXD I 5;
+			SHXD I 0 A_FadeOut(0.1);
+			TNT1 A 0 A_SpawnItemEx("HuntersDeadXDouble3",0,0,0,0,0,2,0);
+			SHXD I 5;
+			TNT1 A 0 A_SpawnItemEx("HuntersDeadXDouble3",0,0,0,0,0,2,0);
+			SHXD I 5;
+			SHXD I 0 A_FadeOut(0.1);
+			TNT1 A 0 A_SpawnItemEx("HuntersDeadXDouble4",0,0,0,0,0,2,0);
+			SHXD I 5;
+			TNT1 A 0 A_SpawnItemEx("HuntersDeadXDouble4",0,0,0,0,0,2,0);
+			SHXD I 5;
+			SHXD I 0 A_FadeOut(0.1);
+			TNT1 A 0 A_SpawnItemEx("HuntersDeadXDouble5",0,0,0,0,0,2,0);
+			SHXD I 5;
+			TNT1 A 0 A_SpawnItemEx("HuntersDeadXDouble5",0,0,0,0,0,2,0);
+			SHXD I 5;
+			SHXD I 0 A_FadeOut(0.1);
+			Stop;
+	}
+}
+
+//The Shadow Hunter's decoys.
+//They fade in and appear to walk around and shoot before fading back out.
+class HuntersDouble : Actor
+{
+	Default
+	{
+	Monster;
+	Speed 6;
+	+FLOORCLIP;
+	+NOBLOOD;
+	+NOTAUTOAIMED;
+	+NONSHOOTABLE;
+	-COUNTKILL;
+	-SOLID;
+	RenderStyle 'Translucent';
+	Alpha 0.1;
+	}
+	States
+    {
+        Spawn:
+            TNT1 A 0 NoDelay SetOrigin((pos.x, pos.y, floorz),false);
+            SHAH ABCD 4
+            {
+            A_FadeIn(0.1);
+            A_Chase();
+            }
+            Goto See;
+        See:
+            TNT1 A 0 CA_CheckMaster();
+            SHAH ABCD 4 A_Chase;
+            TNT1 A 0 A_Jump(25, "DecoyFire");
+            TNT1 A 0 A_Jump(10, "See");
+            Goto Fadeout;
+        DecoyFire:
+            SHAG AAAA 5 A_FaceTarget;
+            TNT1 A 0 CA_CheckMaster();
+            SHAG B 5 Bright;
+            SHAG A 10;
+            Goto Fadeout;
+        Fadeout:
+            TNT1 A 0 CA_CheckMaster();
+            SHAH ABC 4 A_Chase;
+            SHAH D 4 A_FadeOut(0.1);
+            loop;
+        DecoyDeath:
+            SHAD AB 5;
+            SHAD CDEEE 5 A_FadeOut(0.1);
+            Stop;
+    }
+	void CA_CheckMaster()
+	{
+		if (master && master.health < 1)
+			SetStateLabel("DecoyDeath");
+		if (!master)
+			SetStateLabel("Null");
+	}
+}
+
+class HuntersDeadDouble : Actor
+{
+	Default
+	{
+	Speed 4;
+	+FLOORCLIP;
+	+NOGRAVITY;
+	RenderStyle 'Translucent';
+	Alpha 0.5;
+	}
+	States
+	{
+		Spawn:
+			SHAD E 1;
+			Goto Fadeout;
+		Fadeout:
+			SHAD E 2 A_FadeOut(0.1);
+			loop;
+	}
+}
+
+class HuntersDeadDouble2 : HuntersDeadDouble
+{
+	Default
+	{
+	Alpha 0.4;
+	}
+}
+
+class HuntersDeadDouble3 : HuntersDeadDouble
+{
+	Default
+	{
+	Alpha 0.3;
+	}
+}
+
+class HuntersDeadDouble4 : HuntersDeadDouble
+{
+	Default
+	{
+	Alpha 0.2;
+	}
+}
+
+class HuntersDeadDouble5 : HuntersDeadDouble
+{
+	Default
+	{
+	Alpha 0.1;
+	}
+}
+
+class HuntersDeadXDouble : Actor
+{
+	Default
+	{
+	Speed 4;
+	+FLOORCLIP;
+	+NOGRAVITY;
+	RenderStyle 'Translucent';
+	Alpha 0.5;
+	}
+	States
+	{
+		Spawn:
+			SHXD I 1;
+			Goto Fadeout;
+		Fadeout:
+			SHXD I 2 A_FadeOut(0.1);
+			loop;
+	}
+}
+
+class HuntersDeadXDouble2 : HuntersDeadXDouble
+{
+	Default
+	{
+	Alpha 0.4;
+	}
+}
+
+class HuntersDeadXDouble3 : HuntersDeadXDouble
+{
+	Default
+	{
+	Alpha 0.3;
+	}
+}
+
+class HuntersDeadXDouble4 : HuntersDeadXDouble
+{
+	Default
+	{
+	Alpha 0.2;
+	}
+}
+
+class HuntersDeadXDouble5 : HuntersDeadXDouble
+{
+	Default
+	{
+	Alpha 0.1;
+	}
+}
+
+//The bullet that the Shadow Hunter fires from its ghostly gun!
+//Very fast and hard to see, but easily avoidable and not too much damage.
+class ShadowBullet : Actor
+{
+	Default
+	{
+	Radius 8;
+	Height 5;
+	Damage 5;
+	Speed 50;
+	Projectile;
+	}
+	States
+	{
+		Spawn:
+			SSHO A 1;
+			loop;
+		Death:
+			SSHO A 1;
+			Stop;
+	}
+}

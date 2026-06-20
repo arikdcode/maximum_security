@@ -1,0 +1,13 @@
+Name: Zombie Scientist (Pistol)
+Difficulty: Very Easy
+Connections: None
+Summon: ZombieScientistPistol
+Melee: No
+Distance: Hitscan
+Type: Human, Undead
+Brightmaps: No
+Actor modification: No
+ACS: No
+
+Description:
+A former scientist wielding a pistol.

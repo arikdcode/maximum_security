@@ -1,0 +1,308 @@
+ACTOR LimestoneFloor1 10600
+{
+	//$Title Limestone Floor 1
+	//$Category Obstacles/Cave Formations/Limestone/Floor
+	//$NotAngled
+	//$IsDecoration
+
+	Radius 12
+	Height 32
+	+SOLID
+	
+		States
+		{
+			Spawn:
+				LIMF A -1
+				Stop
+		}
+}
+
+ACTOR LimestoneFloor2 10601
+{
+	//$Title Limestone Floor 2
+	//$Category Obstacles/Cave Formations/Limestone/Floor
+	//$NotAngled
+	//$IsDecoration
+
+	Radius 12
+	Height 32
+	+SOLID
+
+		States
+		{
+			Spawn:
+				LIMF B -1
+				Stop
+		}
+}
+
+ACTOR LimestoneFloor3 10602
+{
+	//$Title Limestone Floor 3
+	//$Category Obstacles/Cave Formations/Limestone/Floor
+	//$NotAngled
+	//$IsDecoration
+
+	Radius 12
+	Height 32
+	+SOLID
+
+		States
+		{
+			Spawn:
+				LIMF C -1
+				Stop
+		}
+}
+
+ACTOR LimestoneFloor4 10603
+{
+	//$Title Limestone Floor 4
+	//$Category Obstacles/Cave Formations/Limestone/Floor
+	//$NotAngled
+	//$IsDecoration
+
+	Radius 4
+	Height 32
+	+SOLID
+  
+		States
+		{
+			Spawn:
+				LIMF D -1
+				Stop
+		}
+}
+
+ACTOR LimestoneFloor5 10604
+{
+	//$Title Limestone Floor 5
+	//$Category Obstacles/Cave Formations/Limestone/Floor
+	//$NotAngled
+	//$IsDecoration
+
+	Radius 4
+	Height 16
+
+		States
+		{
+			Spawn:
+				LIMF E -1
+				Stop
+		}
+}
+
+ACTOR LimestoneFloor6 10605
+{
+	//$Title Limestone Floor 6
+	//$Category Obstacles/Cave Formations/Limestone/Floor
+	//$NotAngled
+	//$IsDecoration
+
+	Radius 4
+	Height 16
+  
+		States
+		{
+			Spawn:
+				LIMF F -1
+				Stop
+		}
+}
+
+ACTOR LimestoneFloor7 10606
+{
+	//$Title Limestone Floor 7
+	//$Category Obstacles/Cave Formations/Limestone/Floor
+	//$NotAngled
+	//$IsDecoration
+
+	Radius 4
+	Height 16
+  
+		States
+		{
+			Spawn:
+				LIMF G -1
+				Stop
+		}
+}
+
+ACTOR LimestoneFloor8 10607
+{
+	//$Title Limestone Floor 8
+	//$Category Obstacles/Cave Formations/Limestone/Floor
+	//$NotAngled
+	//$IsDecoration
+
+	Radius 12
+	Height 48
+	+SOLID
+
+		States
+		{
+			Spawn:
+				LIMK A -1
+				Stop
+		}
+}
+
+ACTOR LimestoneFloor9 10608
+{
+	//$Title Limestone Floor 9
+	//$Category Obstacles/Cave Formations/Limestone/Floor
+	//$NotAngled
+	//$IsDecoration
+
+	Radius 12
+	Height 32
+	+SOLID
+  
+		States
+		{
+			Spawn:
+				LIMK B -1
+				Stop
+		}
+}
+
+ACTOR LimestoneFloor10 10609
+{
+	//$Title Limestone Floor 10
+	//$Category Obstacles/Cave Formations/Limestone/Floor
+	//$NotAngled
+	//$IsDecoration
+
+	Radius 8
+	Height 16
+  
+		States
+		{
+			Spawn:
+				LIMK C -1
+				Stop
+		}
+}
+
+ACTOR LimestoneCeiling1 10610
+{
+	//$Title Limestone Ceiling 1
+	//$Category Obstacles/Cave Formations/Limestone/Ceiling
+	//$NotAngled
+	//$IsDecoration
+
+	Radius 12
+	Height 32
+	+SOLID
+	+SPAWNCEILING
+	+NOGRAVITY
+	
+		States
+		{
+			Spawn:
+				LIMC A -1
+				Stop
+		}
+}
+
+ACTOR LimestoneCeiling2 10611
+{
+	//$Title Limestone Ceiling 2
+	//$Category Obstacles/Cave Formations/Limestone/Ceiling
+	//$NotAngled
+	//$IsDecoration
+
+	Radius 12
+	Height 32
+	+SOLID
+	+SPAWNCEILING
+	+NOGRAVITY
+
+		States
+		{
+			Spawn:
+				LIMC B -1
+				Stop
+		}
+}
+
+ACTOR LimestoneCeiling3 10612
+{
+	//$Title Limestone Ceiling 3
+	//$Category Obstacles/Cave Formations/Limestone/Ceiling
+	//$NotAngled
+	//$IsDecoration
+
+	Radius 4
+	Height 32
+	+SOLID
+	+SPAWNCEILING
+	+NOGRAVITY
+  
+		States
+		{
+			Spawn:
+				LIMC C -1
+				Stop
+		}
+}
+
+ACTOR LimestoneCeiling4 10613
+{
+	//$Title Limestone Ceiling 4
+	//$Category Obstacles/Cave Formations/Limestone/Ceiling
+	//$NotAngled
+	//$IsDecoration
+
+	Radius 4
+	Height 16
+	+SPAWNCEILING
+	+NOGRAVITY
+  
+		States
+		{
+			Spawn:
+				LIMC D -1
+				Stop
+		}
+}
+
+ACTOR LimestoneCeiling5 10614
+{
+	//$Title Limestone Ceiling 5
+	//$Category Obstacles/Cave Formations/Limestone/Ceiling
+	//$NotAngled
+	//$IsDecoration
+
+	Radius 4
+	Height 16
+	+SPAWNCEILING
+	+NOGRAVITY
+		
+		States
+		{
+			Spawn:
+				LIMC E -1
+				Stop
+		}
+}
+
+ACTOR LimestoneCeiling6 10615
+{
+	//$Title Limestone Ceiling 6
+	//$Category Obstacles/Cave Formations/Limestone/Ceiling
+	//$NotAngled
+	//$IsDecoration
+
+	Radius 4
+	Height 16
+	+SPAWNCEILING
+	+NOGRAVITY
+		
+		States
+		{
+			Spawn:
+				LIMC F -1
+				Stop
+		}
+}

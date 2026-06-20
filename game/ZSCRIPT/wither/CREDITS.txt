@@ -1,0 +1,5 @@
+Code: DeVloek
+Sounds: id Software
+Sprites: Burgish, id Software
+Sprite Edit: DeVloek
+Idea base: random idea after seeing Burgish's original sprites

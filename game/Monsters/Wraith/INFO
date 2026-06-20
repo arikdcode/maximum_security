@@ -1,0 +1,14 @@
+Name: Wraith
+Difficulty: Medium
+Connection: None
+Summon: DEWraith
+Melee: Yes
+Distance: Charge, Revive
+Type: Undead, Ghost
+Brightmaps: No
+Actor modification: No
+ACS: No
+
+
+A weak swarm monster that charges at the target. Can also sacrifice itself to revive a nearby
+dead monster.

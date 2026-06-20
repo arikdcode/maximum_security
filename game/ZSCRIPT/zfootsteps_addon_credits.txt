@@ -1,0 +1,20 @@
+eharper256 - Otex/hexen and heretic step definitions
+Valve Software - Wood sounds, new crete sounds and the rest of the new footstep sounds
+Turtle Rock Studios - Most of the in mod footstep sounds
+The Zombie Killer - The creator of the mod that is the base for DenisBelmondo Zscript implementation
+DenisBelmondo - The creator of Zfootsteps
+Vrymaa - Gold Coins Sounds
+Shitmizer3D(Bronnculus Fuckwiz) - The rest of the step definitions and sound edits
+
+-As of 25/04/2025 these are the Wads/Texture sets that are compatible
+
+CC4tex 
+2048/VR/
+Valiant 
+BTSX E1
+Anything using OTEX (eviternity 1. eviternity 2 has some new textures so it's partial for it)
+Ancient Aliens (and any wad that uses it's textures)
+HACX 2.0 (and any wad that uses it's textures)
+FOXTEX (and any wad that uses it's textures)
+LiquidTexturePack 7.0 (for maps that use the builder variants of the textures)
+Epic 2

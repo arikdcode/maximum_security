@@ -1,0 +1,308 @@
+ACTOR VolcanicFloor1 10648
+{
+	//$Title Volcanic Floor 1
+	//$Category Obstacles/Cave Formations/Volcanic/Floor
+	//$NotAngled
+	//$IsDecoration
+
+	Radius 12
+	Height 32
+	+SOLID
+	
+		States
+		{
+			Spawn:
+				VIMF A -1
+				Stop
+		}
+}
+
+ACTOR VolcanicFloor2 10649
+{
+	//$Title Volcanic Floor 2
+	//$Category Obstacles/Cave Formations/Volcanic/Floor
+	//$NotAngled
+	//$IsDecoration
+
+	Radius 12
+	Height 32
+	+SOLID
+
+		States
+		{
+			Spawn:
+				VIMF B -1
+				Stop
+		}
+}
+
+ACTOR VolcanicFloor3 10650
+{
+	//$Title Volcanic Floor 3
+	//$Category Obstacles/Cave Formations/Volcanic/Floor
+	//$NotAngled
+	//$IsDecoration
+
+	Radius 12
+	Height 32
+	+SOLID
+
+		States
+		{
+			Spawn:
+				VIMF C -1
+				Stop
+		}
+}
+
+ACTOR VolcanicFloor4 10651
+{
+	//$Title Volcanic Floor 4
+	//$Category Obstacles/Cave Formations/Volcanic/Floor
+	//$NotAngled
+	//$IsDecoration
+
+	Radius 4
+	Height 32
+	+SOLID
+  
+		States
+		{
+			Spawn:
+				VIMF D -1
+				Stop
+		}
+}
+
+ACTOR VolcanicFloor5 10652
+{
+	//$Title Volcanic Floor 5
+	//$Category Obstacles/Cave Formations/Volcanic/Floor
+	//$NotAngled
+	//$IsDecoration
+
+	Radius 4
+	Height 16
+
+		States
+		{
+			Spawn:
+				VIMF E -1
+				Stop
+		}
+}
+
+ACTOR VolcanicFloor6 10653
+{
+	//$Title Volcanic Floor 6
+	//$Category Obstacles/Cave Formations/Volcanic/Floor
+	//$NotAngled
+	//$IsDecoration
+
+	Radius 4
+	Height 16
+  
+		States
+		{
+			Spawn:
+				VIMF F -1
+				Stop
+		}
+}
+
+ACTOR VolcanicFloor7 10654
+{
+	//$Title Volcanic Floor 7
+	//$Category Obstacles/Cave Formations/Volcanic/Floor
+	//$NotAngled
+	//$IsDecoration
+
+	Radius 4
+	Height 16
+  
+		States
+		{
+			Spawn:
+				VIMF G -1
+				Stop
+		}
+}
+
+ACTOR VolcanicFloor8 10655
+{
+	//$Title Volcanic Floor 8
+	//$Category Obstacles/Cave Formations/Volcanic/Floor
+	//$NotAngled
+	//$IsDecoration
+
+	Radius 12
+	Height 48
+	+SOLID
+
+		States
+		{
+			Spawn:
+				VIMK A -1
+				Stop
+		}
+}
+
+ACTOR VolcanicFloor9 10656
+{
+	//$Title Volcanic Floor 9
+	//$Category Obstacles/Cave Formations/Volcanic/Floor
+	//$NotAngled
+	//$IsDecoration
+
+	Radius 12
+	Height 32
+	+SOLID
+  
+		States
+		{
+			Spawn:
+				VIMK B -1
+				Stop
+		}
+}
+
+ACTOR VolcanicFloor10 10657
+{
+	//$Title Volcanic Floor 10
+	//$Category Obstacles/Cave Formations/Volcanic/Floor
+	//$NotAngled
+	//$IsDecoration
+
+	Radius 8
+	Height 16
+  
+		States
+		{
+			Spawn:
+				VIMK C -1
+				Stop
+		}
+}
+
+ACTOR VolcanicCeiling1 10658
+{
+	//$Title Volcanic Ceiling 1
+	//$Category Obstacles/Cave Formations/Volcanic/Ceiling
+	//$NotAngled
+	//$IsDecoration
+
+	Radius 12
+	Height 32
+	+SOLID
+	+SPAWNCEILING
+	+NOGRAVITY
+	
+		States
+		{
+			Spawn:
+				VIMC A -1
+				Stop
+		}
+}
+
+ACTOR VolcanicCeiling2 10659
+{
+	//$Title Volcanic Ceiling 2
+	//$Category Obstacles/Cave Formations/Volcanic/Ceiling
+	//$NotAngled
+	//$IsDecoration
+
+	Radius 12
+	Height 32
+	+SOLID
+	+SPAWNCEILING
+	+NOGRAVITY
+
+		States
+		{
+			Spawn:
+				VIMC B -1
+				Stop
+		}
+}
+
+ACTOR VolcanicCeiling3 10660
+{
+	//$Title Volcanic Ceiling 3
+	//$Category Obstacles/Cave Formations/Volcanic/Ceiling
+	//$NotAngled
+	//$IsDecoration
+
+	Radius 4
+	Height 32
+	+SOLID
+	+SPAWNCEILING
+	+NOGRAVITY
+  
+		States
+		{
+			Spawn:
+				VIMC C -1
+				Stop
+		}
+}
+
+ACTOR VolcanicCeiling4 10661
+{
+	//$Title Volcanic Ceiling 4
+	//$Category Obstacles/Cave Formations/Volcanic/Ceiling
+	//$NotAngled
+	//$IsDecoration
+
+	Radius 4
+	Height 16
+	+SPAWNCEILING
+	+NOGRAVITY
+  
+		States
+		{
+			Spawn:
+				VIMC D -1
+				Stop
+		}
+}
+
+ACTOR VolcanicCeiling5 10662
+{
+	//$Title Volcanic Ceiling 5
+	//$Category Obstacles/Cave Formations/Volcanic/Ceiling
+	//$NotAngled
+	//$IsDecoration
+
+	Radius 4
+	Height 16
+	+SPAWNCEILING
+	+NOGRAVITY
+		
+		States
+		{
+			Spawn:
+				VIMC E -1
+				Stop
+		}
+}
+
+ACTOR VolcanicCeiling6 10663
+{
+	//$Title Volcanic Ceiling 6
+	//$Category Obstacles/Cave Formations/Volcanic/Ceiling
+	//$NotAngled
+	//$IsDecoration
+
+	Radius 4
+	Height 16
+	+SPAWNCEILING
+	+NOGRAVITY
+		
+		States
+		{
+			Spawn:
+				VIMC F -1
+				Stop
+		}
+}

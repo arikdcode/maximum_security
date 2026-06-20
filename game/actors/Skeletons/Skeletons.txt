@@ -1,0 +1,236 @@
+ACTOR Skeleton1
+{
+	//$Category Gore/Skeletons/
+	//$NotAngled
+	//$IsDecoration
+	Radius 25
+	Height 32
+	+SOLID
+	
+		States
+		{
+			Spawn:
+				SKLL A -1
+				Stop
+		}
+}
+
+ACTOR Skeleton2
+{
+	//$Category Gore/Skeletons/
+	//$NotAngled
+	//$IsDecoration
+
+	Radius 16
+	Height 12
+	+SOLID
+	
+		States
+		{
+			Spawn:
+				SKLL B -1
+				Stop
+		}
+}
+
+ACTOR Skeleton3
+{
+	//$Category Gore/Skeletons/
+	//$NotAngled
+	//$IsDecoration
+
+	Radius 16
+	Height 32
+	+SOLID
+	
+		States
+		{
+			Spawn:
+				SKLL C -1
+				Stop
+		}
+}
+
+ACTOR Skeleton4
+{
+	//$Category Gore/Skeletons/
+	//$NotAngled
+	//$IsDecoration
+
+	Radius 16
+	Height 20
+	+SOLID
+	
+		States
+		{
+			Spawn:
+				SKLL D -1
+				Stop
+		}
+}
+
+ACTOR Skeleton5
+{
+	//$Category Gore/Skeletons/
+	//$NotAngled
+	//$IsDecoration
+
+	Radius 16
+	Height 12
+	+SOLID
+	
+		States
+		{
+			Spawn:
+				SKLL E -1
+				Stop
+		}
+}
+
+ACTOR Skeleton6
+{
+	//$Category Gore/Skeletons/
+	//$NotAngled
+	//$IsDecoration
+
+	Radius 16
+	Height 12
+	+SOLID
+	
+		States
+		{
+			Spawn:
+				SKLL F -1
+				Stop
+		}
+}
+
+ACTOR Skeleton7
+{
+	//$Category Gore/Skeletons/
+	//$NotAngled
+	//$IsDecoration
+
+	Radius 16
+	Height 12
+	+SOLID
+	
+		States
+		{
+			Spawn:
+				SKLL G -1
+				Stop
+		}
+}
+
+ACTOR Skeleton8
+{
+	//$Category Gore/Skeletons/
+	//$NotAngled
+	//$IsDecoration
+
+	Radius 16
+	Height 12
+	+SOLID
+	
+		States
+		{
+			Spawn:
+				SKLL H -1
+				Stop
+		}
+}
+
+ACTOR Skeleton9
+{
+	//$Category Gore/Skeletons/
+	//$NotAngled
+	//$IsDecoration
+
+	Radius 16
+	Height 12
+	+SOLID
+	
+		States
+		{
+			Spawn:
+				SKLL I -1
+				Stop
+		}
+}
+
+ACTOR Skeleton10
+{
+	//$Category Gore/Skeletons/
+	//$NotAngled
+	//$IsDecoration
+
+	Radius 16
+	Height 12
+	+SOLID
+	
+		States
+		{
+			Spawn:
+				SKLL J -1
+				Stop
+		}
+}
+
+ACTOR Skeleton11
+{
+	//$Category Gore/Skeletons/
+	//$NotAngled
+	//$IsDecoration
+
+	Radius 32
+	Height 8
+	+SOLID
+	
+		States
+		{
+			Spawn:
+				SKLL K -1
+				Stop
+		}
+}
+
+
+ACTOR Skeleton12
+{
+	//$Category Gore/Skeletons/
+	//$NotAngled
+	//$IsDecoration
+
+	Radius 32
+	Height 8
+	+SOLID
+	
+		States
+		{
+			Spawn:
+				SKLL L -1
+				Stop
+		}
+}
+
+
+ACTOR Skeleton13
+{
+	//$Category Gore/Skeletons/
+	//$NotAngled
+	//$IsDecoration
+
+	Radius 32
+	Height 12
+	+SOLID
+	
+		States
+		{
+			Spawn:
+				SKLL M -1
+				Stop
+		}
+}
+
+

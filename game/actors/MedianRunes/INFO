@@ -1,0 +1,12 @@
+Name: Median Runes
+Type: Ammo
+Palette: Custom
+Summon: MedianRunes
+Use Type: Instant
+Duration: Instant
+Brightmaps: No
+Actor modification: No
+ACS: No
+
+
+A medium sized ammo pickup that will give you 50 runes.

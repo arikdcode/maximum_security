@@ -1,0 +1,64 @@
+Actor NTomb1
+{
+Radius 15
+Height 68
++SOLID
+States
+{
+Spawn:
+	NTOM A -1
+	Stop
+}
+}
+
+Actor NTomb2
+{
+Radius 15
+Height 62
++SOLID
+States
+{
+Spawn:
+	NTOM B -1
+	Stop
+}
+}
+
+Actor NTomb3
+{
+Radius 15
+Height 48
++SOLID
+States
+{
+Spawn:
+	NTOM C -1
+	Stop
+}
+}
+
+Actor NTomb4
+{
+Radius 15
+Height 43
++SOLID
+States
+{
+Spawn:
+	NTOM D -1
+	Stop
+}
+}
+
+Actor NTomb5
+{
+Radius 12
+Height 35
++SOLID
+States
+{
+Spawn:
+	NTOM E -1
+	Stop
+}
+}

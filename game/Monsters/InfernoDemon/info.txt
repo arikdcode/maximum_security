@@ -1,0 +1,10 @@
+Name: Inferno Demon
+Difficulty: Very Hard
+Connection: Korax (sound resource and assignment are included)
+Summon: InfernoDemon
+Melee: No
+Distance: Projectile
+Type: Demon
+Brightmaps: No
+Added States: None
+ACS: N/A

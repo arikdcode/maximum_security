@@ -1,0 +1,12 @@
+actor SuperArmorBonus : ArmorBonus
+{
+//$Category Health and Armor
+	Inventory.Pickupmessage "Picked up a super armor bonus."
+	Armor.SaveAmount 10
+	States
+	{
+	Spawn:
+		BON4 ABCDCB 6
+		Loop
+	}
+}

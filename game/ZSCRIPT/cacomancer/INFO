@@ -1,0 +1,19 @@
+Name: Cacomancer
+Difficulty: Medium
+Connections: none
+Summon: Cacomancer
+Melee: no
+Distance: projectile
+Type: Demon, healer, support
+Brightmaps: yes
+Actor modification: no
+ACS: no
+
+Description:
+The Cacomancer is a smaller and less sturdy Cacodemon subspecies
+that can turn the tide of a battle with several support abilities:
+- emits a protective aura that makes monsters more resilient and heals them
+- casts a buff on individual monsters that increases their speed and damage
+- resurrects dead monsters (but cannot be resurrected itself)
+- prioritizes healing and buffing monsters over attacking enemies
+- tends to stay above the battlefield and tries to dodge attackers

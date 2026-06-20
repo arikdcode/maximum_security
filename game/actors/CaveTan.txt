@@ -1,0 +1,308 @@
+ACTOR TanFloor1 10632
+{
+	//$Title Tan Floor 1
+	//$Category Obstacles/Cave Formations/Tan/Floor
+	//$NotAngled
+	//$IsDecoration
+
+	Radius 12
+	Height 32
+	+SOLID
+	
+		States
+		{
+			Spawn:
+				SIMF A -1
+				Stop
+		}
+}
+
+ACTOR TanFloor2 10633
+{
+	//$Title Tan Floor 2
+	//$Category Obstacles/Cave Formations/Tan/Floor
+	//$NotAngled
+	//$IsDecoration
+
+	Radius 12
+	Height 32
+	+SOLID
+
+		States
+		{
+			Spawn:
+				SIMF B -1
+				Stop
+		}
+}
+
+ACTOR TanFloor3 10634
+{
+	//$Title Tan Floor 3
+	//$Category Obstacles/Cave Formations/Tan/Floor
+	//$NotAngled
+	//$IsDecoration
+
+	Radius 12
+	Height 32
+	+SOLID
+
+		States
+		{
+			Spawn:
+				SIMF C -1
+				Stop
+		}
+}
+
+ACTOR TanFloor4 10635
+{
+	//$Title Tan Floor 4
+	//$Category Obstacles/Cave Formations/Tan/Floor
+	//$NotAngled
+	//$IsDecoration
+
+	Radius 4
+	Height 32
+	+SOLID
+  
+		States
+		{
+			Spawn:
+				SIMF D -1
+				Stop
+		}
+}
+
+ACTOR TanFloor5 10636
+{
+	//$Title Tan Floor 5
+	//$Category Obstacles/Cave Formations/Tan/Floor
+	//$NotAngled
+	//$IsDecoration
+
+	Radius 4
+	Height 16
+
+		States
+		{
+			Spawn:
+				SIMF E -1
+				Stop
+		}
+}
+
+ACTOR TanFloor6 10637
+{
+	//$Title Tan Floor 6
+	//$Category Obstacles/Cave Formations/Tan/Floor
+	//$NotAngled
+	//$IsDecoration
+
+	Radius 4
+	Height 16
+  
+		States
+		{
+			Spawn:
+				SIMF F -1
+				Stop
+		}
+}
+
+ACTOR TanFloor7 10638
+{
+	//$Title Tan Floor 7
+	//$Category Obstacles/Cave Formations/Tan/Floor
+	//$NotAngled
+	//$IsDecoration
+
+	Radius 4
+	Height 16
+  
+		States
+		{
+			Spawn:
+				SIMF G -1
+				Stop
+		}
+}
+
+ACTOR TanFloor8 10639
+{
+	//$Title Tan Floor 8
+	//$Category Obstacles/Cave Formations/Tan/Floor
+	//$NotAngled
+	//$IsDecoration
+
+	Radius 12
+	Height 48
+	+SOLID
+
+		States
+		{
+			Spawn:
+				SIMK A -1
+				Stop
+		}
+}
+
+ACTOR TanFloor9 10640
+{
+	//$Title Tan Floor 9
+	//$Category Obstacles/Cave Formations/Tan/Floor
+	//$NotAngled
+	//$IsDecoration
+
+	Radius 12
+	Height 32
+	+SOLID
+  
+		States
+		{
+			Spawn:
+				SIMK B -1
+				Stop
+		}
+}
+
+ACTOR TanFloor10 10641
+{
+	//$Title Tan Floor 10
+	//$Category Obstacles/Cave Formations/Tan/Floor
+	//$NotAngled
+	//$IsDecoration
+
+	Radius 8
+	Height 16
+  
+		States
+		{
+			Spawn:
+				SIMK C -1
+				Stop
+		}
+}
+
+ACTOR TanCeiling1 10642
+{
+	//$Title Tan Ceiling 1
+	//$Category Obstacles/Cave Formations/Tan/Ceiling
+	//$NotAngled
+	//$IsDecoration
+
+	Radius 12
+	Height 32
+	+SOLID
+	+SPAWNCEILING
+	+NOGRAVITY
+	
+		States
+		{
+			Spawn:
+				SIMC A -1
+				Stop
+		}
+}
+
+ACTOR TanCeiling2 10643
+{
+	//$Title Tan Ceiling 2
+	//$Category Obstacles/Cave Formations/Tan/Ceiling
+	//$NotAngled
+	//$IsDecoration
+
+	Radius 12
+	Height 32
+	+SOLID
+	+SPAWNCEILING
+	+NOGRAVITY
+
+		States
+		{
+			Spawn:
+				SIMC B -1
+				Stop
+		}
+}
+
+ACTOR TanCeiling3 10644
+{
+	//$Title Tan Ceiling 3
+	//$Category Obstacles/Cave Formations/Tan/Ceiling
+	//$NotAngled
+	//$IsDecoration
+
+	Radius 4
+	Height 32
+	+SOLID
+	+SPAWNCEILING
+	+NOGRAVITY
+  
+		States
+		{
+			Spawn:
+				SIMC C -1
+				Stop
+		}
+}
+
+ACTOR TanCeiling4 10645
+{
+	//$Title Tan Ceiling 4
+	//$Category Obstacles/Cave Formations/Tan/Ceiling
+	//$NotAngled
+	//$IsDecoration
+
+	Radius 4
+	Height 16
+	+SPAWNCEILING
+	+NOGRAVITY
+  
+		States
+		{
+			Spawn:
+				SIMC D -1
+				Stop
+		}
+}
+
+ACTOR TanCeiling5 10646
+{
+	//$Title Tan Ceiling 5
+	//$Category Obstacles/Cave Formations/Tan/Ceiling
+	//$NotAngled
+	//$IsDecoration
+
+	Radius 4
+	Height 16
+	+SPAWNCEILING
+	+NOGRAVITY
+		
+		States
+		{
+			Spawn:
+				SIMC E -1
+				Stop
+		}
+}
+
+ACTOR TanCeiling6 10647
+{
+	//$Title Tan Ceiling 6
+	//$Category Obstacles/Cave Formations/Tan/Ceiling
+	//$NotAngled
+	//$IsDecoration
+
+	Radius 4
+	Height 16
+	+SPAWNCEILING
+	+NOGRAVITY
+		
+		States
+		{
+			Spawn:
+				SIMC F -1
+				Stop
+		}
+}

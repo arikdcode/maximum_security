@@ -1,0 +1,167 @@
+class BerserkerCommando : Actor
+{
+//$Category Monsters/Custom
+	int punches;
+	int combopunches;
+	int chargedist;
+	bool particledust;
+	override void PostBeginPlay()
+	{
+		combopunches = 3;	// number of punches required to perform powerpunch
+		chargedist = 13; //charge distance within melee range
+		particledust = true; //toggle charge particle dust
+		Super.PostBeginPlay();
+	}
+	
+	Default
+	{
+		Health 140;
+		GibHealth -70;
+		PainChance 10;
+		Speed 20;
+		Radius 20;
+		Height 56;
+		Mass 100;
+		MeleeRange 80;
+		MeleeThreshold 80;
+		Monster;
+		+FLOORCLIP
+		+DROPOFF
+		SeeSound "chainguy/sight";
+		PainSound "chainguy/pain";
+		DeathSound "chainguy/death";
+		ActiveSound "chainguy/active";
+		Obituary "%o was beaten to death by a Berserker Commando.";
+	}
+	States
+	{
+	Spawn:
+		VBRS AB 10 A_Look;
+		Loop;
+	See:
+		TNT1 A 0
+		{
+			punches = combopunches;
+		}
+		VBRS AAABBBCCCDDD 2 Fast A_Chase;
+		Loop;
+	Melee:
+		VBRS D 4
+		{
+			if (target && target.health > 0 && CheckMeleeRange())
+			{
+				A_SkelWhoosh();
+				A_FaceTarget();
+				A_Recoil(-chargedist);
+				A_ParticleDust();
+			}
+			else SetStateLabel("See");
+		}
+		VBRS E 12
+		{
+			if (target && target.health > 0)
+			{
+				A_FaceTarget();
+				A_Recoil(-chargedist);
+				A_ParticleDust();
+				if (punches > 0)
+				{
+					punches--;
+					A_BerserkerPunch();
+				}
+				else A_BerserkerPowerPunch();
+			}
+			else SetStateLabel("See");
+		}
+		VBRS B 4
+		{
+			if (target && target.health > 0 && CheckMeleeRange())
+			{
+				A_SkelWhoosh();
+				A_FaceTarget();
+				A_Recoil(-chargedist);
+				A_ParticleDust();
+			}
+			else SetStateLabel("See");
+		}
+		VBRS F 12
+		{
+			if (target && target.health > 0)
+			{
+				A_FaceTarget();
+				A_Recoil(-chargedist);
+				A_ParticleDust();
+				if (punches > 0)
+				{
+					punches--;
+					A_BerserkerPunch();
+				}
+				else A_BerserkerPowerPunch();
+			}
+			else SetStateLabel("See");
+		}
+		Loop;
+	Pain:
+		VBRS G 5 Fast;
+		VBRS G 5 Fast A_Pain;
+		Goto See;
+	Death:
+		VBRS H 5;
+		VBRS I 5 A_Scream;
+		VBRS J 4;
+		VBRS K 4 A_NoBlocking;
+		VBRS L 4;
+		VBRS M 4;
+		VBRS N -1;
+		Stop;
+	XDeath:
+		VBRS H 5;
+		VBRS O 5 A_XScream;
+		VBRS P 4;
+		VBRS Q 4 A_NoBlocking;
+		VBRS R 4;
+		VBRS S 4;
+		VBRS T -1;
+		Stop;
+	Raise:
+		VBRS N 5;
+		VBRS MLKJIH 5;
+		Goto See;
+	}
+
+	void A_BerserkerPunch()
+	{
+		let victim = target;
+		if (victim == null) return;
+		A_FaceTarget();
+		if (CheckMeleeRange())
+		{
+			A_StartSound ("*fist");
+			int damage = random(3, 5) * 3;
+			int newdam = victim.DamageMobj (self, self, damage, 'Melee');
+			victim.TraceBleed (newdam > 0 ? newdam : damage, self);
+			victim.Thrust(2,angle);
+		}
+		else SetStateLabel("See");
+	}
+	void A_BerserkerPowerPunch()
+	{
+		let victim = target;
+		if (victim == null) return;
+		A_FaceTarget();
+		if (CheckMeleeRange())
+		{
+			A_StartSound("skeleton/melee");
+			int damage = random(6, 10) * 6;
+			int newdam = victim.DamageMobj (self, self, damage, 'Melee');
+			victim.TraceBleed (newdam > 0 ? newdam : damage, self);
+			victim.Thrust(20,angle);
+			punches = combopunches;
+		}
+		else SetStateLabel("See");
+	}
+	void A_ParticleDust()
+	{
+		if (particledust) A_SpawnParticle("grey",SPF_RELATIVE,100,10,0,0,random(-24,24),3,0,0,1,0,0,0,0.4,-1,5);
+	}
+}

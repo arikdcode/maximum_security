@@ -1,0 +1,78 @@
+ACTOR HexenStandCandleWhite 14335
+{
+	//$Title Stand Candles White
+	//$Category Light sources/Candles/Stand
+	//$IsDecoration
+	//$NotAngled
+	
+	Radius 6
+	Height 60
+	+SOLID
+
+		States
+		{
+			Spawn:
+				SCAN ABC 4 Bright
+				Loop
+		}
+}
+
+ACTOR HexenStandCandleRed : HexenStandCandleWhite 14336
+{
+	//$Title Stand Candles Red
+
+		States
+		{
+			Spawn:
+				SCAN DEF 4 Bright
+				Loop
+		}
+}
+
+ACTOR HexenStandCandleBlack : HexenStandCandleWhite 14337
+{
+	//$Title Stand Candles Black
+
+		States
+		{
+			Spawn:
+				SCAN GHI 4 Bright
+				Loop
+		}
+}
+
+ACTOR HexenStandCandleTan : HexenStandCandleWhite 14338
+{
+	//$Title Stand Candles Tan
+
+		States
+		{
+			Spawn:
+				SCAN JKL 4 Bright
+				Loop
+		}
+}
+
+ACTOR HexenStandCandleGreen : HexenStandCandleWhite 14339
+{
+	//$Title Stand Candles Green
+
+		States
+		{
+			Spawn:
+				SCAN MNO 4 Bright
+				Loop
+		}
+}
+
+ACTOR HexenStandCandleBlue : HexenStandCandleWhite 14340
+{
+	//$Title Stand Candles Blue
+
+		States
+		{
+			Spawn:
+				SCAN PQR 4 Bright
+				Loop
+		}
+}

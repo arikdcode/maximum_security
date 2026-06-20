@@ -1,0 +1,13 @@
+Name: Zombie Scientist (Halon)
+Difficulty: Very Easy
+Connections: None
+Summon: ZombieScientistHalon
+Melee: Yes
+Distance: No
+Type: Human, Undead
+Brightmaps: No
+Actor modification: No
+ACS: No
+
+Description:
+A former scientist wielding a fire extinguisher.

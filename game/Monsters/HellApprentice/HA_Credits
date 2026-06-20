@@ -1,0 +1,19 @@
+Name: Hell Apprentice
+Difficulty: Very Hard
+Connection: None
+Summon: Apprentice
+Melee: Yes
+Distance: Projectile, Charge
+Type: Demon
+Brightmaps: No
+Actor modification: No
+ACS: No
+
+
+Code: Amuscaria, Ghastly Dragon (ZScript conversion)
+GLDefs: Ghastly Dragon
+Sounds: Raven Software
+Sprites: Raven Software
+Sprite Edit: Amuscaria
+Idea Base: Diablo 2 Hellforge Smith Demon, Heretic Maulotaur
+

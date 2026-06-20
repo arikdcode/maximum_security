@@ -1,0 +1,118 @@
+Class ZombieScientistSyringe : Actor
+{
+	Default
+	{
+		//$Category Monsters/ZombieScientists
+		//$Title "Syringe"
+		obituary "%o was poisoned by a zombie scientist.";
+		health 18;
+		mass 70;
+		speed 20;
+		Radius 19;
+		Height 52;
+		painchance 200;
+		seesound "zombiescientistF/sight";
+		painsound "zombiescientistF/pain";
+		deathsound "zombiescientistF/death";
+		activesound "zombiescientistF/active";
+		DamageType "Poison";
+		MONSTER;
+		+FLOORCLIP;
+		+WINDTHRUST;
+	}
+	States
+	{
+	Spawn:
+		FSZS AB 10 A_Look();
+		loop;
+	See:
+		FSZS AABB 4 A_Chase();
+		TNT1 A 0 A_JumpIfCloser (128, "Squirt");
+		FSZS CCDD 4 A_Chase();
+		TNT1 A 0 A_JumpIfCloser (128, "Squirt");
+		loop;
+	Melee:
+		FSZS E 4 A_FaceTarget();
+		FSZS E 0 A_SkelWhoosh();
+		FSZS F 8 A_CustomMeleeAttack(random (1, 5) *3, "zombiescientist/sharphit", "zombiescientist/swing");
+		FSZS F 0 A_SpawnProjectile("ZombieScientistPoisonDrop", 32, 8, 0, CMF_OFFSETPITCH, -12);
+		goto See;
+	Squirt:
+		FSZS E 4 A_FaceTarget();
+		FSZS F 0 A_StartSound("zombiescientist/swing");
+		FSZS F 1 A_SpawnProjectile("ZombieScientistPoisonDrop", 32, 8, 0, CMF_OFFSETPITCH, -12);
+		FSZS F 1 A_SpawnProjectile("ZombieScientistPoisonDummy", 32, 8, 0, CMF_OFFSETPITCH, -12);
+		FSZS F 1 A_SpawnProjectile("ZombieScientistPoisonDummy", 32, 8, 0, CMF_OFFSETPITCH, -12);
+		FSZS F 1 A_SpawnProjectile("ZombieScientistPoisonDummy", 32, 8, 0, CMF_OFFSETPITCH, -12);
+		FSZS F 1 A_SpawnProjectile("ZombieScientistPoisonDrop", 32, 8, 0, CMF_OFFSETPITCH, -12);
+		FSZS F 1 A_SpawnProjectile("ZombieScientistPoisonDummy", 32, 8, 0, CMF_OFFSETPITCH, -12);
+		FSZS F 1 A_SpawnProjectile("ZombieScientistPoisonDummy", 32, 8, 0, CMF_OFFSETPITCH, -12);
+		FSZS F 1 A_SpawnProjectile("ZombieScientistPoisonDummy", 32, 8, 0, CMF_OFFSETPITCH, -12);
+		FSZS D 4;
+		goto See;
+	Pain:
+		FSZS G 3;
+		FSZS G 3 A_Pain();
+		goto See;
+	Death:
+		FSZS H 5;
+		FSZS I 5 A_Scream();
+		FSZS J 5 A_NoBlocking();
+		FSZS K 5;
+		FSZS L 5;
+		FSZS M 5;
+		FSZS N -1;
+		stop;
+	XDeath:
+		FSZS O 5;
+		FSZS P 5 A_XScream();
+		FSZS Q 5 A_NoBlocking();
+		FSZS RSTUV 5;
+		FSZS W -1;
+		stop;
+	Raise:
+		FSZS MLKJIH 5;
+		goto See;
+	}
+}
+
+Class ZombieScientistPoisonDrop : Actor
+{
+	Default
+	{
+		Radius 3;
+		Height 3;
+		Scale 0.5;
+		Speed 10;
+		FastSpeed 15;
+		Damage 1;
+		PoisonDamage 5;
+		bloodcolor "DarkGreen";
+		Decal "BloodSplat";
+		Projectile;
+		DamageType "Poison";
+		-NOGRAVITY
+		+RANDOMIZE
+	}
+
+	states
+	{
+	Spawn:
+		ZPOI ABCD 4;
+		goto Active;
+	Active:
+		ZPOI D 4;
+		loop;
+	Death:
+		TNT1 A 1;
+		stop;
+	}
+}
+
+Class ZombieScientistPoisonDummy : ZombieScientistPoisonDrop
+{
+	Default
+	{
+		Damage 0;
+	}
+}

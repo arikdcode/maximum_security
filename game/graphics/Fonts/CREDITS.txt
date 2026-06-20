@@ -1,0 +1,7 @@
+Credits:
+Submitted: Jimmy
+Author: Jimmy / Thomas van der Velden
+Original font: Found on TVR! credit pic
+Idea Base: Full font based on short bit of custom text on the CREDIT pic of Thomas van der Velden's "Revolution!" megawad.
+           "Teevee Dark" is the original color of the font.
+		   Only glyphs changed from original are A and L. Numbers and symbols all custom.

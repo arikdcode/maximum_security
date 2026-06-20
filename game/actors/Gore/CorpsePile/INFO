@@ -1,0 +1,10 @@
+Name: Corpse Pile
+Connection: None
+Palette: Doom
+Summon: CorpsePile
+Ambient Sound: No
+De-/Activatable: No
+Destroyable: No
+Special Effects: No
+Brightmaps: No
+ACS: No

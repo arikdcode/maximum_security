@@ -1,0 +1,15 @@
+Code: Melvin, Ghastly Dragon (ZScript conversion)
+GLDefs: Ghastly Dragon
+Sounds: Raven Software
+Sprites: Freedoom
+
+Name: Flesh Wizard
+Difficulty: Medium
+Connection: None
+Summon: FleshWizard, XWizard
+Melee: No
+Distance: Projectile, Teleport
+Type: Demon
+Brightmaps: No
+Actor modification: No
+ACS: No

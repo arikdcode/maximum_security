@@ -1,0 +1,20 @@
+Name: Rapid Fire Trooper
+Difficulty: Very Easy
+Connection: None
+Summon: RapidFireTrooper
+Melee: No
+Distance: Hitscan
+Type: Human, Undead
+Brightmaps: Yes
+Actor modification: No
+ACS: No
+
+
+Similar to the ordinary Former Human, the Rapid-Fire Trooper doesn't stop firing. A little more
+dangerous than the standard, but still easy to kill.
+
+Code: Graf Zahl, Ghastly (ZScript conversion)
+GLDefs: Lights.pk3, Sandypaper (Brightmaps)
+Sounds: Id Software, Rogue Entertainment
+Sprites: Id Software
+Sprite Edit: NMN, Tormentor667

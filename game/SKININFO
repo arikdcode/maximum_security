@@ -1,0 +1,62 @@
+{
+Class = DoomMarine
+Name = FistMarine //Hurr hurr hurr
+Sprite = PLA1
+CrouchSprite = PL1C
+}
+
+{
+Class = DoomMarine
+Name = ChainsawMarine
+Sprite = PLA0
+CrouchSprite = PL8C
+}
+
+{
+Class = DoomMarine
+Name = PistolMarine
+Sprite = PLA2
+CrouchSprite = PL2C
+}
+
+{
+Class = DoomMarine
+Name = ShotgunMarine
+Sprite = PLA3
+CrouchSprite = PL3C
+}
+
+{
+Class = DoomMarine
+Name = SSGMarine
+Sprite = PLA9
+CrouchSprite = PL9C
+}
+
+{
+Class = DoomMarine
+Name = ChaingunMarine
+Sprite = PLA4
+CrouchSprite = PL4C
+}
+
+{
+Class = DoomMarine
+Name = RocketMarine
+Sprite = PLA5
+CrouchSprite = PL5C
+}
+
+{
+Class = DoomMarine
+Name = PlasmaMarine
+Sprite = PLA6
+CrouchSprite = PL6C
+}
+
+{
+Class = DoomMarine
+Name = BFGMarine
+Sprite = PLA7
+CrouchSprite = PL7C
+}

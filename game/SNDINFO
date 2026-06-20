@@ -1,0 +1,1721 @@
+#include "voices.txt"
+
+Bar/Break      FBRBRK
+//Break Wall
+CONBREAK  "sounds/effects/CONBREAK"
+//stone pusher
+CONSCRAPE "sounds/effects/CONSCRAPE"
+//glass crash
+GLASSHAT "sounds/effects/GLASSHAT"
+//doors
+PSIDOORS "sounds/effects/PSIDOORS"
+STONESTP "sounds/effects/STONESTP"
+//break metal
+METALBREAK "sounds/effects/METALBREAK"
+//crackle
+CRACKLE "sounds/effects/CRACKLE"
+WILHELM "sounds/effects/WILHELM"
+SHAKE "sounds/effects/SHAKE"
+//fireplace
+FIREPLACE "sounds/effects/FIREPLACE"
+$alias Fireloop	FIREPLACE		 
+$ambient 1 Fireloop point continuous 1.0
+
+//Ambient
+DUNGEON1 "sounds/ambient/DUNGEONAMB1"
+$alias DUNGLOOP	DUNGEON1		 
+$ambient 2 DUNGLOOP surround continuous 1.0
+WATERDRP "sounds/ambient/WATERAMB1"
+$alias WTRLOOP	WATERDRP		 
+$ambient 3 WTRLOOP point random 5 20 1.0
+BIRDAMB1 "sounds/ambient/BIRDSAMB1"
+$alias BIRDLOOP	BIRDAMB1		 
+$ambient 4 BIRDLOOP point random 10 20 1.0
+WATERFAL "Sounds/Effects/WATERFAL"
+$ambient 5 WATERFAL point continuous 1.0
+GENERATR "sounds/ambient/GENERATR"
+$ambient 6 GENERATR point continuous 1.0
+
+//Monster and horror
+GROWLACT "sounds/HORROR/GROWLACT"
+SNARLACT "sounds/HORROR/SNARLACT"
+MUSICBOX "Music/MUSICBOX"
+$alias Musicloop	MUSICBOX
+$ambient 7 Musicloop point continuous 0.3
+
+
+//wind
+WINDLOOP WINDLOOP
+CRYSTALS CRYSTALS
+$ambient 8 Windloop point continuous 1.0
+$ambient 9 CRYSTALS point continuous 1.0
+
+//whispers
+WHISPERS "sounds/effects/WHISPERS"
+WHISPERL "sounds/effects/WHISPERL"
+$ambient 10 Whispers point random 5 20 1.0
+$ambient 11 Whisperl point continuous 1.0
+
+LAVA "Sounds/AMBIENT/LAVALOOP"
+$alias Lavaloop	LAVA		 
+$ambient 12 Lavaloop point continuous 1.0
+ELECLOOP "Sounds/Ambient/ELECLOOP"
+$alias Electric	ELECLOOP		 
+$ambient 13 Electric point continuous 1.0
+
+//sci fi
+SCISTIN "Sounds/Effects/SCISTIN"
+SCIHUM "Sounds/Effects/SCIHUM"	
+$alias SciHumming	SCIHUM		 
+$ambient 14 SciHumming point continuous 1.0	
+
+//Ambient Ghosts
+GHOST1 "sounds/GHOSTS/GHOST1"
+GHOST2 "sounds/GHOSTS/GHOST2"
+GHOST3 "sounds/GHOSTS/GHOST3"
+GHOST4 "sounds/GHOSTS/GHOST4"
+GHOST5 "sounds/GHOSTS/GHOST5"
+GHOST6 "sounds/GHOSTS/GHOST6"
+RILED "sounds/GHOSTS/RILED"
+$random GHOSTS { GHOST1 GHOST2 GHOST3 GHOST4 GHOST5 GHOST6 }
+$alias GHOSTLOOP GHOSTS		 
+$ambient 15 GHOSTLOOP point random 10 30 1.0
+
+$random ROCKFALL { ROCKFAL1 ROCKFAL2 ROCKFAL3 ROCKFAL4 ROCKFAL5 }
+ROCKFAL1 "sounds/AMBIENT/ROCKFALL"
+ROCKFAL2 "sounds/effects/AMB2"
+ROCKFAL3 "sounds/effects/AMB4"
+ROCKFAL4 "sounds/effects/AMB11"
+ROCKFAL5 "sounds/effects/SORDBON"
+$alias ROCKLOOP ROCKFALL
+$ambient 16 ROCKLOOP point random 10 60 1.0
+
+CRICKAMB "Sounds/AMBIENT/CRICKAMB"
+$alias Cricloop	CRICKAMB		 
+$ambient 17 Cricloop point continuous 1.0
+
+DRVELOOP "Sounds/AMBIENT/DRVELOOP"		 
+$ambient 18 DRVELOOP point continuous 1.0
+
+EAT1 "Sounds/AMBIENT/EAT1"
+EAT2 "Sounds/AMBIENT/EAT2"
+EAT3 "Sounds/AMBIENT/EAT3"
+EAT4 "Sounds/AMBIENT/EAT4"
+EAT5 "Sounds/AMBIENT/EAT5"
+$random EATERS { EAT1 EAT2 EAT3 EAT4 EAT5 }
+$ambient 19 EATERS point random 5 10 0.4
+
+//custom Undead Warrior
+monsters/KNIGHTACTIVE "Sounds/UndeadWarrior/KGSIT"
+monsters/KNIGHTATTK "Sounds/UndeadWarrior/KGTATK"
+monsters/KNIGHTSTRIKE "Sounds/UndeadWarrior/KGTAT2"
+SaberLight "Sounds/UndeadKnight/SABRLIGT"
+DUEL "Sounds/Effects/Duel"
+
+LANDSLIDE "Sounds/Effects/LANDSLIDE"
+
+
+
+
+
+//Ghoul remix
+Ghoul/ZOMB1 "sounds/Ghoul/ZOMB1"
+Ghoul/ZOMB2 "sounds/Ghoul/ZOMB2"
+Ghoul/ZOMB3 "sounds/Ghoul/ZOMB3"
+$random Ghoul/ZOMBIE {Ghoul/ZOMB1 Ghoul/ZOMB2 Ghoul/ZOMB3}
+
+//FUSEBOX
+FUSEBOX "sounds/effects/FUSE"
+
+TYPE1 "sounds/effects/TYPE1"
+TYPE2 "sounds/effects/TYPE2"
+SNIFF "sounds/effects/SNIFF"
+
+//beeps
+BEEPYES "sounds/Effects/BEEPYES"
+BEEPNO "sounds/Effects/BEEPNO"
+
+//eating
+GULP "sounds/effects/GULP"
+BITE "sounds/effects/BITE"
+
+//keyfall
+KEYFALL "Sounds/effects/KEYFALL"
+
+TEAR "Sounds/effects/Tear"
+
+//GateOepn
+GATEOPEN "Sounds/effects/GATEOPEN"
+
+//Achtung alarm
+ACHTUNG "sounds/effects/ACHTUNG"
+//strobelights
+Strobelight/Alarm	DSKLAXON
+$attenuation Strobelight/Alarm 3
+
+
+
+
+
+//boltrifle
+SAKO/FIRE DSFSAKO
+SAKO/BOLT DSBSAKO
+
+
+
+//sniper
+SNIPE1 "sounds/effects/snipe1"
+SNIPE2 "sounds/effects/snipe2"
+SNIPE3 "sounds/effects/snipe3"
+$random SNIPE { SNIPE1 SNIPE2 SNIPE3 }
+RICOCHET1 "sounds/effects/RICOCHET1"
+RICOCHET2 "sounds/effects/RICOCHET2"
+RICOCHET3 "sounds/effects/RICOCHET3"
+$random RICOCHET { RICOCHET1 RICOCHET2 RICOCHET3 }
+AHPISS "sounds/effects/AHPISS"
+ALERT  "sounds/effects/ALERT"
+IMPACT1 "sounds/effects/impact1"
+
+
+
+
+$random Ghoul/ZOMBIE {Ghoul/ZOMB1 Ghoul/ZOMB2 Ghoul/ZOMB3}
+
+
+//phone
+PHONRING "sounds/effects/PHONRING"
+//Doors
+DOORSQEK "SOUNDS/Doors/DOORSQEK"
+DOORCLOS "SOUNDS/Doors/DOORCLOS"
+
+//Creepy Laugh
+CREEPLAF "sounds/effects/CREEPLAF"
+DSVILACT "sounds/effects/DSVILACT"
+
+//Eyeless Jack Scream
+JACKSCRM "sounds/effects/JACKSCRM"
+
+//TitanHammer_Modified
+hamfall hamfall
+
+//DaggerfallSkeleton
+HellScreech   DGFALSCE
+DagfallAxeFall   DGFALAXF
+DagfallExplode   DGFALSEX
+$random YellPain { HellYell HellPain HellDeath }
+HellYell  DGFALYEL 
+HellPain  DGFALPIN
+HellDeath  DGFALDIE
+$random DagfallAxeR { DagfallAxe1 DagfallAxe2 DagfallAxe3 }
+DagfallAxe1   DGFALAX1
+DagfallAxe2   DGFALAX2
+DagfallAxe3   DGFALAX3
+$random DagfallBoneDrop { DagfallBoneR1 DagfallBoneR2 DagfallBoneR3 }
+DagfallBoneR1   DGFALBD1
+DagfallBoneR2   DGFALBD2
+DagfallBoneR3   DGFALBD3
+
+//Blot
+Blot/Death		DSBLOTDI
+Blot/Attack		DSBLOTAT
+
+
+//HellApprentice
+weapons/hellfi		      dshellfi
+weapons/hellex	              dshellex
+weapons/firex3                dsfirex3
+weapons/suldth                dssuldth
+weapons/diasht                dsdiasht
+weapons/bigbrn                dsbigbrn
+monster/smiths                dssmiths
+monster/smitha                dssmitha
+monster/smitht                dssmitht
+monster/smithp                dssmithp
+monster/smithd                dssmithd
+monster/smithr                dssmithr
+monster/smithw                dssmithw
+monster/hamswg                dshamswg
+monster/hamflr                dshamflr
+monster/hamhit                dshamhit
+monster/hamsht                dshamsht
+weapons/HAMPICK				  HAMPICK
+monster/dash                  dshdash
+monster/bullhoof DSHOOF
+
+//HellsGuard
+hellguard/sight hgsee
+hellguard/death hgdeath
+hellguard/idle hgidle
+hellguard/shot hgshot1
+hellguard/shothit hgshot2
+knight/pain dsdmpain //taken from Doom; this is necessary for Heretic or Hexen, but not needed if you're using this in a Doom environment
+
+//FleshWizard
+
+wizard/tele1                    dwiztel1
+wizard/tele2                    dwiztel2
+$random wizard/tele 		{ wizard/tele1  wizard/tele2 }
+wizard/pain                     dwizpain
+wizard/sight                    dwizact
+wizard/active                   dwizact
+wizard/death                    dwizdth                    
+
+//JetPackZombie
+$Random JetpackZombie/Sight	{ JPZMSIG1 JPZMSIG2 JPZMSIG3 }
+JPZMSIG1			JPZMSIG1
+JPZMSIG2			JPZMSIG2
+JPZMSIG3			JPZMSIG3
+JetpackZombie/Fly		JPZMFLY
+$Random JetpackZombie/Active	{ JPZMACT1 JPZMACT2 JPZMACT3 }
+JPZMACT1			JPZMACT1
+JPZMACT2			JPZMACT2
+JPZMACT3			JPZMACT3
+$Random JetpackZombie/Fire	{ JPZMFIR1 JPZMFIR2 JPZMFIR3 }
+JPZMFIR1			JPZMFIR1
+JPZMFIR2			JPZMFIR2
+JPZMFIR3			JPZMFIR3
+$Random JetpackZombie/Pain	{ JPZMPAI1 JPZMPAI2 JPZMPAI3 }
+JPZMPAI1			JPZMPAI1
+JPZMPAI2			JPZMPAI2
+JPZMPAI3			JPZMPAI3
+
+$volume JetpackZombie/Fly 0.8
+$volume JetpackZombie/Active 0.7
+$limit JetpackZombie/Fire 0
+
+//Ranger's sound assignment
+grunt/attack2 POSSATK2
+
+//ZombieScientists
+// male
+zombiescientistM/sight1	ZSCMSIT1
+zombiescientistM/sight2	ZSCMSIT2
+zombiescientistM/act1	ZSCMACT1
+zombiescientistM/act2	ZSCMACT2
+zombiescientistM/pain1	ZSCMPAI1
+zombiescientistM/pain2	ZSCMPAI2
+zombiescientistM/death1	ZSCMDTH1
+zombiescientistM/death2	ZSCMDTH2
+$random zombiescientistM/sight	{ zombiescientistM/sight1 zombiescientistM/sight2 }
+$random zombiescientistM/active	{ zombiescientistM/act1 zombiescientistM/act2 }
+$random zombiescientistM/pain	{ zombiescientistM/pain1 zombiescientistM/pain2 }
+$random zombiescientistM/death	{ zombiescientistM/death1 zombiescientistM/death2 }
+
+// female
+zombiescientistF/sight1	ZSCFSIT1
+zombiescientistF/sight2	ZSCFSIT2
+zombiescientistF/act1	ZSCFACT1
+zombiescientistF/act2	ZSCFACT2
+zombiescientistF/pain1	ZSCFPAI1
+zombiescientistF/pain2	ZSCFPAI2
+zombiescientistF/death1	ZSCFDTH1
+zombiescientistF/death2	ZSCFDTH2
+$random zombiescientistF/sight	{ zombiescientistF/sight1 zombiescientistF/sight2 }
+$random zombiescientistF/active	{ zombiescientistF/act1 zombiescientistF/act2 }
+$random zombiescientistF/pain	{ zombiescientistF/pain1 zombiescientistF/pain2 }
+$random zombiescientistF/death	{ zombiescientistF/death1 zombiescientistF/death2 }
+
+// headless
+zombiescientistHL/sight		ZSCHSIT
+zombiescientistHL/active	ZSCHACT
+zombiescientistHL/pain		ZSCHPAIN
+zombiescientistHL/death		ZSCHDTH
+
+// weapons
+zombiescientist/swing		ZSCSWING
+zombiescientist/sharphit	ZSCSHARP
+zombiescientist/blunthit	ZSCBLUNT
+zombiescientist/plasmafire	ZSCPLASM
+zombiescientist/halonfire	ZSCHALON
+zombiescientist/gunfire1	ZSCGFIR1
+zombiescientist/gunfire2	ZSCGFIR2
+zombiescientist/guncock		ZSCGCOCK
+$random zombiescientist/gunfire	{ zombiescientist/gunfire1 zombiescientist/gunfire2 }
+$limit zombiescientist/gunfire 0
+zombiescientist/iceshot		ZSCICESH
+zombiescientist/icehit		ZSCICEHT
+$limit zombiescientist/iceshot 0
+zombiescientist/grenbounce	ZSCGRENB
+zombiescientist/grenexplode	ZSCGRENX
+$limit zombiescientist/grenbounce 0
+$limit zombiescientist/grenexplode 0
+
+//seeyou
+SEEYOU "sounds/effects/SEEYOU"
+
+
+
+//snipercommando
+M40RIF1 				M40RIF1
+M40RIF2 				M40RIF2
+M40RIF3 				M40RIF3
+M40RIF4 				M40RIF4
+
+M40Rifle/Fire  			M40RIF1
+M40Rifle/Scope 			M40RIF2
+M40Rifle/Bolt1 			M40RIF3
+M40Rifle/Bolt2 			M40RIF4
+
+$Singular 				M40Rifle/Fire
+
+//splashes (duped from Heretic and Hexen, since they don't load in Doom natively by default)
+world/drip gloop
+world/watersplash gloop
+world/lavasizzle acid5
+world/sludgegloop muck5
+//you can override the limit values so multiple splashes can play simultaneously
+//note that this sounds bad if multiple splashes play all at once (such as when firing a shotgun into liquid), so override these values at your own discretion
+/*$Limit world/drip 4
+$Limit world/watersplash 4
+$Limit world/lavasizzle 4
+$Limit world/sludgegloop 4*/
+
+//footsteps
+step/carpet1 carpet1
+step/carpet2 carpet2
+step/carpet3 carpet3
+step/carpet4 carpet4
+$random step/carpet
+	{ step/carpet1 step/carpet2 step/carpet3 step/carpet4 }
+
+step/crete1 crete1
+step/crete2 crete2
+step/crete3 crete3
+step/crete4 crete4
+$random step/crete
+	{ step/crete1 step/crete2 step/crete3 step/crete4 }
+
+step/default1 default1
+step/default2 default2
+step/default3 default3
+step/default4 default4
+$random step/default
+	{ step/default1 step/default2 step/default3 step/default4 }
+
+step/dirt1 dirt1
+step/dirt2 dirt2
+step/dirt3 dirt3
+step/dirt4 dirt4
+$random step/dirt
+	{ step/dirt1 step/dirt2 step/dirt3 step/dirt4 }
+
+step/step1 step1
+step/step2 step2
+step/step3 step3
+step/step4 step4
+$random step/step
+	{ step/step1 step/step2 step/step3 step/step4 }
+
+step/gross1 gross1
+step/gross2 gross2
+step/gross3 gross3
+step/gross4 gross4
+$random step/gross
+	{ step/gross1 step/gross2 step/gross3 step/gross4 }
+
+step/grass1 grass1
+step/grass2 grass2
+step/grass3 grass3
+step/grass4 grass4
+$random step/grass
+	{ step/grass1 step/grass2 step/grass3 step/grass4 }
+
+step/gravel1 gravel1
+step/gravel2 gravel2
+step/gravel3 gravel3
+step/gravel4 gravel4
+$random step/gravel
+	{ step/gravel1 step/gravel2 step/gravel3 step/gravel4 }
+
+step/hot hot1
+$alias step/lava step/hot
+
+step/panel1 panel1
+step/panel2 panel2
+step/panel3 panel3
+step/panel4 panel4
+step/panel5 panel5
+$random step/panel
+	{ step/panel1 step/panel2 step/panel3 step/panel4 step/panel5 }
+$volume step/panel 0.6
+
+step/plank1 plank1
+step/plank2 plank2
+step/plank3 plank3
+step/plank4 plank4
+$random step/plank
+	{ step/plank1 step/plank2 step/plank3 step/plank4 }
+$volume step/plank 0.8
+
+step/slosh1 slosh1
+step/slosh2 slosh2
+step/slosh3 slosh3
+step/slosh4 slosh4
+$random step/slosh
+	{ step/slosh1 step/slosh2 step/slosh3 step/slosh4 }
+
+step/tile1 tile1
+step/tile2 tile2
+step/tile3 tile3
+step/tile4 tile4
+$random step/tile
+	{ step/tile1 step/tile2 step/tile3 step/tile4 }
+
+step/tin1 tin1
+step/tin2 tin2
+step/tin3 tin3
+step/tin4 tin4
+$random step/tin
+	{ step/tin1 step/tin2 step/tin3 step/tin4 }
+
+step/wood1 wood1
+step/wood2 wood2
+step/wood3 wood3
+step/wood4 wood4
+$random step/wood
+	{ step/wood1 step/wood2 step/wood3 step/wood4 }
+step/Digital1 Digital1
+step/Digital2 Digital2
+step/Digital3 Digital3
+step/Digital4 Digital4
+$random step/Digital
+    { step/Digital1 step/Digital2 step/Digital3 step/Digital4 }
+$volume step/Digital 2.0
+	
+step/glass1 glass1
+step/glass2 glass2
+step/glass3 glass3
+step/glass4 glass4
+$random step/glass
+    { step/glass1 step/glass2 step/glass3 step/glass4 }
+$volume step/glass 2.0
+	
+step/ceiling1 ceiling1
+step/ceiling2 ceiling2
+step/ceiling3 ceiling3
+step/ceiling4 ceiling4
+$random step/ceiling
+    { step/ceiling1 step/ceiling2 step/ceiling3 step/ceiling4 }
+$volume step/ceiling 2.0
+
+step/Comp1 Comp1
+step/Comp2 Comp2
+step/Comp3 Comp3
+step/Comp4 Comp4
+$random step/Comp
+    { step/Comp1 step/Comp2 step/Comp3 step/Comp4 }
+$volume step/Comp 2.0
+
+step/sand1 sand1
+step/sand2 sand2
+step/sand3 sand3
+step/sand4 sand4
+$random step/sand
+    { step/sand1 step/sand2 step/sand3 step/sand4 }
+$volume step/sand 2.0
+	
+step/plastic1 plastic1
+step/plastic2 plastic2
+step/plastic3 plastic3
+step/plastic4 plastic4
+$random step/plastic
+    { step/plastic1 step/plastic2 step/plastic3 step/plastic4 }
+$volume step/plastic 2.0
+
+step/Body1 Body1
+step/Body2 Body2
+step/Body3 Body3
+step/Body4 Body4
+$random step/Body
+    { step/Body1 step/Body2 step/Body3 step/Body4 }
+$volume step/Body 2.0
+
+step/sludge1 sludge1
+step/sludge2 sludge2
+step/sludge3 sludge3
+step/sludge4 sludge4
+$random step/sludge
+    { step/sludge1 step/sludge2 step/sludge3 step/sludge4 }
+$volume step/sludge 2.0
+
+step/Snow1 Snow1
+step/Snow2 Snow2
+step/Snow3 Snow3
+step/Snow4 Snow4
+$random step/Snow
+    { step/Snow1 step/Snow2 step/Snow3 step/Snow4 }
+
+step/Ice1 Ice1
+step/Ice2 Ice2
+step/Ice3 Ice3
+step/Ice4 Ice4
+$random step/Ice
+    { step/Ice1 step/Ice2 step/Ice3 step/Ice4 }
+	
+step/Void1 Void1
+step/Void2 Void2
+step/Void3 Void3
+step/Void4 Void4
+$random step/Void
+    { step/Void1 step/Void2 step/Void3 step/Void4 }
+
+step/Metal1 Metal1
+step/Metal2 Metal2
+step/Metal3 Metal3
+step/Metal4 Metal4
+$random step/Metal
+	{ step/Metal1 step/Metal2 step/Metal3 step/Metal4 }
+	
+step/Coins1 Coins1
+step/Coins2 Coins2
+step/Coins3 Coins3
+step/Coins4 Coins4
+$random step/Coins
+	{ step/Coins1 step/Coins2 step/Coins3 step/Coins4 }
+
+$alias step/nuke step/slosh
+//$alias step/sludge step/slosh
+
+World/Bubbles	DSBUBBLE
+$attenuation World/Bubbles 4
+$volume World/Bubbles 0.5
+
+
+
+//Whirr mechanical
+WHIRR "sounds/effects/WHIRR"
+WHIRSTOP "sounds/effects/WHIRSTOP"
+
+//Imp Warlord
+$RANDOM implord/macehit { implord/macehit1 implord/macehit2 }
+implord/macehit1 macehit1
+implord/macehit2 macehit2
+
+implord/maceswing maceswng
+implord/shieldshot shldshot
+
+implord/shieldshothit shldhit
+
+implord/familiarspawn fspawn
+
+
+$RANDOM batfam/idle { batfam/idle1 batfam/idle2 }
+batfam/idle1 batidle1
+batfam/idle2 batidle2
+
+batfam/pain batpain
+batfam/death batdie
+batfam/crash batcrash
+dragonfam/see dfsee
+dragonfam/pain dfpain
+dragonfam/death dfdie
+dragonfam/idle dfidle
+dragonfam/attack dfattack
+
+//these assignments are taken from Doom; they are necessary for Heretic/Hexen usage
+//note that you don't need to copy these definitions over if you're using this creature in Doom, nor do you need to copy the associated sound files
+$random imp/sight		{ imp/sight1  imp/sight2 }
+$random imp/death		{ imp/death1  imp/death2 }
+imp/sight1			dsbgsit1
+imp/sight2			dsbgsit2
+imp/active			dsbgact
+imp/pain			dspopain
+imp/death1			dsbgdth1
+imp/death2			dsbgdth2
+imp/attack			dsfirsht
+imp/shotx			dsfirxpl
+
+//cacomancer
+Cacomancer/active	VCCMACT
+Cacomancer/attack	VCCMATK
+Cacomancer/buff		VCCMBUFF
+Cacomancer/death	VCCMDETH
+Cacomancer/heal		VCCMHEAL
+Cacomancer/pain		VCCMPAIN
+Cacomancer/see		VCCMSEE
+
+//ShadowHunter
+$random ShadowHunter/Idle { ShadowHunter/Idle1 ShadowHunter/Idle2 ShadowHunter/Idle3 ShadowHunter/Idle4 }
+$random ShadowHunter/Pain { ShadowHunter/Pain1 ShadowHunter/Pain2 }
+
+ShadowHunter/Idle1	SHIDLE1
+ShadowHunter/Idle2 	SHIDLE2
+ShadowHunter/Idle3	SHIDLE3
+ShadowHunter/Idle4	SHIDLE4
+ShadowHunter/See	SHSEE
+ShadowHunter/Pain1	SHPAIN1
+ShadowHunter/Pain2	SHPAIN2
+ShadowHunter/Death	SHDEATH
+ShadowHunter/Fire	SHFIRE
+
+//Hellion
+monster/hlnsit                  dshlnsit
+monster/hlnact                  dshlnact
+monster/hlnpai                  dshlnpai
+monster/hlndth                  dshlndth
+monster/hlnatk                  dshlnatk
+monster/hlnexp                  dshlnexp
+
+//Pageflip
+PAGEFLP "Sounds/EFFECTS/PAGEFLIP"
+PAGEFLP2 "Sounds/EFFECTS/PAGEFLP2"
+
+/*
+menu/activate		PAGEFLP2
+menu/backup			PAGEFLIP
+menu/prompt			PAGEFLP2
+menu/cursor			PAGEFLP2
+menu/change			PAGEFLP2
+menu/invalid		PAGEFLP2
+menu/dismiss		PAGEFLP2
+menu/choose			PAGEFLP2
+menu/clear			PAGEFLP2
+menu/quit1          PAGEFLP2
+menu/quit2          PAGEFLP2
+*/
+misc/chat			PAGEFLP2
+misc/chat2			PAGEFLP2
+
+//Wither
+wither/see WITHSEE
+wither/act WITHACT
+wither/pain WITHPAIN
+wither/death WITHDTH
+wither/bones WITHBONE
+$pitchset wither/see 0.7 0.8
+$pitchset wither/act 0.8 0.9
+$pitchset wither/pain 0.7 0.9
+$pitchset wither/death 0.9 1.0
+$pitchset wither/bones 0.7 1.0
+$volume wither/bones 0.5
+
+//HellDuke
+Hellduke/sight                	dsduksit
+Hellduke/death                	dsdukdth
+weapons/hellfi		      	    dshellfi
+weapons/firbfi                	dsfirbfi
+weapons/casbal		      	    dscasbal
+weapons/hellex	              	dshellex
+weapons/vblwal                	dsvblwal
+
+// Skyrim - Female Nord
+
+//Guns (Done)
+
+FriendHelga/Swing HELGSWIN
+
+FriendHelga/KnifeHit01 HELGKH01
+FriendHelga/KnifeHit02 HELGKH02
+FriendHelga/KnifeHit03 HELGKH03
+
+$Random FriendHelga/KnifeHit
+{
+	FriendHelga/KnifeHit01
+	FriendHelga/KnifeHit02
+	FriendHelga/KnifeHit03
+}
+
+FriendHelga/KnifeMiss01 HELGKM01
+FriendHelga/KnifeMiss02 HELGKM02
+FriendHelga/KnifeMiss03 HELGKM03
+
+$Random FriendHelga/KnifeMiss
+{
+	FriendHelga/KnifeMiss01
+	FriendHelga/KnifeMiss02
+	FriendHelga/KnifeMiss03
+}
+
+FriendHelga/BowDraw1 HELGBOD1
+FriendHelga/BowDraw2 HELGBOD2
+
+$Random FriendHelga/BowDraw //Currently unused...
+{
+	FriendHelga/BowDraw1
+	FriendHelga/BowDraw2
+}
+
+FriendHelga/BowReady1 HELGBOR1
+FriendHelga/BowReady2 HELGBOR2
+FriendHelga/BowReady3 HELGBOR3
+
+$Random FriendHelga/BowReady
+{
+	FriendHelga/BowReady1
+	FriendHelga/BowReady2
+	FriendHelga/BowReady3
+}
+
+FriendHelga/BowShot1 HELGBOF1
+FriendHelga/BowShot2 HELGBOF2
+FriendHelga/BowShot3 HELGBOF3
+
+$Random FriendHelga/BowShot
+{
+	FriendHelga/BowShot1
+	FriendHelga/BowShot2
+	FriendHelga/BowShot3
+}
+
+FriendHelga/ArrowFly HELGARRM
+
+FriendHelga/ArrowHit1 HELGARH1
+FriendHelga/ArrowHit2 HELGARH2
+FriendHelga/ArrowHit3 HELGARH3
+
+$Random FriendHelga/ArrowHit
+{
+	FriendHelga/ArrowHit1
+	FriendHelga/ArrowHit2
+	FriendHelga/ArrowHit3
+}
+
+FriendHelga/ReLoad1 HELGBOA1
+FriendHelga/ReLoad2 HELGBOA2
+FriendHelga/ReLoad3 HELGBOA3
+
+$Random FriendHelga/BowReLoad
+{
+	FriendHelga/ReLoad1
+	FriendHelga/ReLoad2
+	FriendHelga/ReLoad3
+}
+
+FriendHelga/BowHolster1 HELGBOH1
+FriendHelga/BowHolster2 HELGBOH2
+
+$Random FriendHelga/BowHolster //Currently unused...
+{
+	FriendHelga/BowHolster1
+	FriendHelga/BowHolster2
+}
+
+FriendHelga/IceCharge HELGICEC
+FriendHelga/IceFire HELGICEF
+FriendHelga/IceImpact HELGICEH
+
+FriendHelga/FireCharge HELGFIRC
+FriendHelga/FireFire HELGFIRF
+
+FriendHelga/ShockCharge HELGSHOC
+FriendHelga/ShockFire HELGSHOF
+FriendHelga/ShockImpact HELGSHOH
+
+FriendHelga/Waiting HELGWAIT //Currently unused...
+
+FriendHelga/DropItem HELGDROP //Currently unused...
+
+FriendHelga/Magic01Prepare HUIPIZDA
+FriendHelga/Magic01Cast HUIPIZDA //For projectile seeing like for rocket!
+FriendHelga/Magic01Explode HUIPIZDA
+
+//Revive (Done)
+
+FriendHelga/Help01 HELGHE01
+FriendHelga/Help02 HELGHE02
+FriendHelga/Help03 HELGHE03
+FriendHelga/Help04 HELGHE04
+FriendHelga/Help05 HELGHE05
+FriendHelga/Help06 HELGHE06
+FriendHelga/Help07 HELGHE07
+FriendHelga/Help08 HELGHE08
+FriendHelga/Help09 HELGHE09
+FriendHelga/Help10 HELGHE10
+FriendHelga/Help11 HELGHE11
+FriendHelga/Help12 HELGHE12
+FriendHelga/Help13 HELGHE13
+FriendHelga/Help14 HELGHE14
+FriendHelga/Help15 HELGHE15
+FriendHelga/Help16 HELGHE16
+FriendHelga/Help17 HELGHE17
+FriendHelga/Help18 HELGHE18
+FriendHelga/Help19 HELGHE19
+FriendHelga/Help20 HELGHE20
+FriendHelga/Help21 HELGHE21
+FriendHelga/Help22 HELGHE22
+FriendHelga/Help23 HELGHE23
+FriendHelga/Help24 HELGHE24
+
+$Random FriendHelga/Help
+{
+	FriendHelga/Help01
+	FriendHelga/Help02
+	FriendHelga/Help03
+	FriendHelga/Help04
+	FriendHelga/Help05
+	FriendHelga/Help06
+	FriendHelga/Help07
+	FriendHelga/Help08
+	FriendHelga/Help09
+	FriendHelga/Help10
+	FriendHelga/Help11
+	FriendHelga/Help12
+	FriendHelga/Help13
+	FriendHelga/Help14
+	FriendHelga/Help15
+	FriendHelga/Help16
+	FriendHelga/Help17
+	FriendHelga/Help18
+	FriendHelga/Help19
+	FriendHelga/Help20
+	FriendHelga/Help21
+	FriendHelga/Help22
+	FriendHelga/Help23
+	FriendHelga/Help24
+}
+
+//Pain (Done)
+
+FriendHelga/Pain01 HELGPA01
+FriendHelga/Pain02 HELGPA02
+FriendHelga/Pain03 HELGPA03
+FriendHelga/Pain04 HELGPA04
+FriendHelga/Pain05 HELGPA05
+FriendHelga/Pain06 HELGPA06
+FriendHelga/Pain07 HELGPA07
+FriendHelga/Pain08 HELGPA08
+FriendHelga/Pain09 HELGPA09
+FriendHelga/Pain10 HELGPA10
+FriendHelga/Pain11 HELGPA11
+FriendHelga/Pain12 HELGPA12
+FriendHelga/Pain13 HELGPA13
+FriendHelga/Pain14 HELGPA14
+FriendHelga/Pain15 HELGPA15
+FriendHelga/Pain16 HELGPA16
+FriendHelga/Pain17 HELGPA17
+FriendHelga/Pain18 HELGPA18
+FriendHelga/Pain19 HELGPA19
+FriendHelga/Pain20 HELGPA20
+FriendHelga/Pain21 HELGPA21
+FriendHelga/Pain22 HELGPA22
+
+$Random FriendHelga/Pain
+{
+	FriendHelga/Pain01
+	FriendHelga/Pain02
+	FriendHelga/Pain03
+	FriendHelga/Pain04
+	FriendHelga/Pain05
+	FriendHelga/Pain06
+	FriendHelga/Pain07
+	FriendHelga/Pain08
+	FriendHelga/Pain09
+	FriendHelga/Pain10
+	FriendHelga/Pain11
+	FriendHelga/Pain12
+	FriendHelga/Pain13
+	FriendHelga/Pain14
+	FriendHelga/Pain15
+	FriendHelga/Pain16
+	FriendHelga/Pain17
+	FriendHelga/Pain18
+	FriendHelga/Pain19
+	FriendHelga/Pain20
+	FriendHelga/Pain21
+	FriendHelga/Pain22
+}
+
+//Death (Done)
+
+FriendHelga/Death01 HELGDE01
+FriendHelga/Death02 HELGDE02
+FriendHelga/Death03 HELGDE03
+FriendHelga/Death04 HELGDE04
+FriendHelga/Death05 HELGDE05
+FriendHelga/Death06 HELGDE06
+FriendHelga/Death07 HELGDE07
+FriendHelga/Death08 HELGDE08
+FriendHelga/Death09 HELGDE09
+FriendHelga/Death10 HELGDE10
+FriendHelga/Death11 HELGDE11
+FriendHelga/Death12 HELGDE12
+
+$Random FriendHelga/Death
+{
+	FriendHelga/Death01
+	FriendHelga/Death02
+	FriendHelga/Death03
+	FriendHelga/Death04
+	FriendHelga/Death05
+	FriendHelga/Death06
+	FriendHelga/Death07
+	FriendHelga/Death08
+	FriendHelga/Death09
+	FriendHelga/Death10
+	FriendHelga/Death11
+	FriendHelga/Death12
+}
+
+//Intro (Done)
+
+FriendHelga/Intro01 HELGIN01
+FriendHelga/Intro02 HELGIN02
+FriendHelga/Intro03 HELGIN03
+
+$Random FriendHelga/Intro
+{
+	FriendHelga/Intro01
+	FriendHelga/Intro02
+	FriendHelga/Intro03
+}
+
+FriendHelga/Draw HELGDRAW
+
+//Melee (Done)
+
+FriendHelga/Melee01 HELGME01
+FriendHelga/Melee02 HELGME02
+FriendHelga/Melee03 HELGME03
+FriendHelga/Melee04 HELGME04
+FriendHelga/Melee05 HELGME05
+FriendHelga/Melee06 HELGME06
+FriendHelga/Melee07 HELGME07
+FriendHelga/Melee08 HELGME08
+FriendHelga/Melee09 HELGME09
+FriendHelga/Melee10 HELGME10
+FriendHelga/Melee11 HELGME11
+FriendHelga/Melee12 HELGME12
+FriendHelga/Melee13 HELGME13
+FriendHelga/Melee14 HELGME14
+FriendHelga/Melee15 HELGME15
+FriendHelga/Melee16 HELGME16
+FriendHelga/Melee17 HELGME17
+FriendHelga/Melee18 HELGME18
+FriendHelga/Melee19 HELGME19
+FriendHelga/Melee20 HELGME20
+FriendHelga/Melee21 HELGME21
+FriendHelga/Melee22 HELGME22
+FriendHelga/Melee23 HELGME23
+FriendHelga/Melee24 HELGME24
+FriendHelga/Melee25 HELGME25
+FriendHelga/Melee26 HELGME26
+FriendHelga/Melee27 HELGME27
+FriendHelga/Melee28 HELGME28
+FriendHelga/Melee29 HELGME29
+FriendHelga/Melee30 HELGME30
+FriendHelga/Melee31 HELGME31
+FriendHelga/Melee32 HELGME32
+FriendHelga/Melee33 HELGME33
+FriendHelga/Melee34 HELGME34
+FriendHelga/Melee35 HELGME35
+
+$Random FriendHelga/Melee
+{
+	FriendHelga/Melee01
+	FriendHelga/Melee02
+	FriendHelga/Melee03
+	FriendHelga/Melee04
+	FriendHelga/Melee05
+	FriendHelga/Melee06
+	FriendHelga/Melee07
+	FriendHelga/Melee08
+	FriendHelga/Melee09
+	FriendHelga/Melee10
+	FriendHelga/Melee11
+	FriendHelga/Melee12
+	FriendHelga/Melee13
+	FriendHelga/Melee14
+	FriendHelga/Melee15
+	FriendHelga/Melee16
+	FriendHelga/Melee17
+	FriendHelga/Melee18
+	FriendHelga/Melee19
+	FriendHelga/Melee20
+	FriendHelga/Melee21
+	FriendHelga/Melee22
+	FriendHelga/Melee23
+	FriendHelga/Melee24
+	FriendHelga/Melee25
+	FriendHelga/Melee26
+	FriendHelga/Melee27
+	FriendHelga/Melee28
+	FriendHelga/Melee29
+	FriendHelga/Melee30
+	FriendHelga/Melee31
+	FriendHelga/Melee32
+	FriendHelga/Melee33
+	FriendHelga/Melee34
+	FriendHelga/Melee35
+}
+//Idle (Done)
+
+FriendHelga/Idle01 HELGID01
+FriendHelga/Idle02 HELGID02
+FriendHelga/Idle03 HELGID03
+FriendHelga/Idle04 HELGID04
+FriendHelga/Idle05 HELGID05
+FriendHelga/Idle06 HELGID06
+FriendHelga/Idle07 HELGID07
+FriendHelga/Idle08 HELGID08
+FriendHelga/Idle09 HELGID09
+FriendHelga/Idle10 HELGID10
+FriendHelga/Idle11 HELGID11
+FriendHelga/Idle12 HELGID12
+FriendHelga/Idle13 HELGID13
+FriendHelga/Idle14 HELGID14
+FriendHelga/Idle15 HELGID15
+FriendHelga/Idle16 HELGID16
+FriendHelga/Idle17 HELGID17
+FriendHelga/Idle18 HELGID18
+FriendHelga/Idle19 HELGID19
+FriendHelga/Idle20 HELGID20
+FriendHelga/Idle21 HELGID21
+FriendHelga/Idle22 HELGID22
+FriendHelga/Idle23 HELGID23
+FriendHelga/Idle24 HELGID24
+FriendHelga/Idle25 HELGID25
+FriendHelga/Idle26 HELGID26
+FriendHelga/Idle27 HELGID27
+FriendHelga/Idle28 HELGID28
+FriendHelga/Idle29 HELGID29
+FriendHelga/Idle30 HELGID30
+FriendHelga/Idle31 HELGID31
+FriendHelga/Idle32 HELGID32
+FriendHelga/Idle33 HELGID33
+FriendHelga/Idle34 HELGID34
+FriendHelga/Idle35 HELGID35
+FriendHelga/Idle36 HELGID36
+FriendHelga/Idle37 HELGID37
+FriendHelga/Idle38 HELGID38
+FriendHelga/Idle39 HELGID39
+FriendHelga/Idle40 HELGID40
+FriendHelga/Idle41 HELGID41
+FriendHelga/Idle42 HELGID42
+FriendHelga/Idle43 HELGID43
+FriendHelga/Idle44 HELGID44
+FriendHelga/Idle45 HELGID45
+FriendHelga/Idle46 HELGID46
+FriendHelga/Idle47 HELGID47
+FriendHelga/Idle48 HELGID48
+FriendHelga/Idle49 HELGID49
+FriendHelga/Idle50 HELGID50
+FriendHelga/Idle51 HELGID51
+FriendHelga/Idle52 HELGID52
+FriendHelga/Idle53 HELGID53
+FriendHelga/Idle54 HELGID54
+FriendHelga/Idle55 HELGID55
+FriendHelga/Idle56 HELGID56
+FriendHelga/Idle57 HELGID57
+FriendHelga/Idle58 HELGID58
+FriendHelga/Idle59 HELGID59
+FriendHelga/Idle60 HELGID60
+FriendHelga/Idle61 HELGID61
+FriendHelga/Idle62 HELGID62
+FriendHelga/Idle63 HELGID63
+FriendHelga/Idle64 HELGID64
+FriendHelga/Idle65 HELGID65
+FriendHelga/Idle66 HELGID66
+FriendHelga/Idle67 HELGID67
+FriendHelga/Idle68 HELGID68
+FriendHelga/Idle69 HELGID69
+FriendHelga/Idle70 HELGID70
+FriendHelga/Idle71 HELGID71
+FriendHelga/Idle72 HELGID72
+FriendHelga/Idle73 HELGID73
+FriendHelga/Idle74 HELGID74
+FriendHelga/Idle75 HELGID75
+FriendHelga/Idle76 HELGID76
+FriendHelga/Idle77 HELGID77
+FriendHelga/Idle78 HELGID78
+FriendHelga/Idle79 HELGID79
+FriendHelga/Idle80 HELGID80
+FriendHelga/Idle81 HELGID81
+FriendHelga/Idle82 HELGID82
+FriendHelga/Idle83 HELGID83
+FriendHelga/Idle84 HELGID84
+
+$Random FriendHelga/Idle
+{
+	FriendHelga/Idle01
+	FriendHelga/Idle02
+	FriendHelga/Idle03
+	FriendHelga/Idle04
+	FriendHelga/Idle05
+	FriendHelga/Idle06
+	FriendHelga/Idle07
+	FriendHelga/Idle08
+	FriendHelga/Idle09
+	FriendHelga/Idle10
+	FriendHelga/Idle11
+	FriendHelga/Idle12
+	FriendHelga/Idle13
+	FriendHelga/Idle14
+	FriendHelga/Idle15
+	FriendHelga/Idle16
+	FriendHelga/Idle17
+	FriendHelga/Idle18
+	FriendHelga/Idle19
+	FriendHelga/Idle20
+	FriendHelga/Idle21
+	FriendHelga/Idle22
+	FriendHelga/Idle23
+	FriendHelga/Idle24
+	FriendHelga/Idle25
+	FriendHelga/Idle26
+	FriendHelga/Idle27
+	FriendHelga/Idle28
+	FriendHelga/Idle29
+	FriendHelga/Idle30
+	FriendHelga/Idle31
+	FriendHelga/Idle32
+	FriendHelga/Idle33
+	FriendHelga/Idle34
+	FriendHelga/Idle35
+	FriendHelga/Idle36
+	FriendHelga/Idle37
+	FriendHelga/Idle38
+	FriendHelga/Idle39
+	FriendHelga/Idle40
+	FriendHelga/Idle41
+	FriendHelga/Idle42
+	FriendHelga/Idle43
+	FriendHelga/Idle44
+	FriendHelga/Idle45
+	FriendHelga/Idle46
+	FriendHelga/Idle47
+	FriendHelga/Idle48
+	FriendHelga/Idle49
+	FriendHelga/Idle50
+	FriendHelga/Idle51
+	FriendHelga/Idle52
+	FriendHelga/Idle53
+	FriendHelga/Idle54
+	FriendHelga/Idle55
+	FriendHelga/Idle56
+	FriendHelga/Idle57
+	FriendHelga/Idle58
+	FriendHelga/Idle59
+	FriendHelga/Idle60
+	FriendHelga/Idle61
+	FriendHelga/Idle62
+	FriendHelga/Idle63
+	FriendHelga/Idle64
+	FriendHelga/Idle65
+	FriendHelga/Idle66
+	FriendHelga/Idle67
+	FriendHelga/Idle68
+	FriendHelga/Idle69
+	FriendHelga/Idle70
+	FriendHelga/Idle71
+	FriendHelga/Idle72
+	FriendHelga/Idle73
+	FriendHelga/Idle74
+	FriendHelga/Idle75
+	FriendHelga/Idle76
+	FriendHelga/Idle77
+	FriendHelga/Idle78
+	FriendHelga/Idle79
+	FriendHelga/Idle80
+	FriendHelga/Idle81
+	FriendHelga/Idle82
+	FriendHelga/Idle83
+	FriendHelga/Idle84
+}
+
+FriendHelga/Holster HELGHOLS
+
+//Attack (Done)
+
+FriendHelga/Attack01 HELGAT01
+FriendHelga/Attack02 HELGAT02
+FriendHelga/Attack03 HELGAT03
+FriendHelga/Attack04 HELGAT04
+FriendHelga/Attack05 HELGAT05
+FriendHelga/Attack06 HELGAT06
+FriendHelga/Attack07 HELGAT07
+FriendHelga/Attack08 HELGAT08
+FriendHelga/Attack09 HELGAT09
+FriendHelga/Attack10 HELGAT10
+FriendHelga/Attack11 HELGAT11
+FriendHelga/Attack12 HELGAT12
+FriendHelga/Attack13 HELGAT13
+FriendHelga/Attack14 HELGAT14
+FriendHelga/Attack15 HELGAT15
+FriendHelga/Attack16 HELGAT16
+FriendHelga/Attack17 HELGAT17
+FriendHelga/Attack18 HELGAT18
+FriendHelga/Attack19 HELGAT19
+FriendHelga/Attack20 HELGAT20
+FriendHelga/Attack21 HELGAT21
+FriendHelga/Attack22 HELGAT22
+FriendHelga/Attack23 HELGAT23
+FriendHelga/Attack24 HELGAT24
+FriendHelga/Attack25 HELGAT25
+
+$Random FriendHelga/Attack
+{
+	FriendHelga/Attack01
+	FriendHelga/Attack02
+	FriendHelga/Attack03
+	FriendHelga/Attack04
+	FriendHelga/Attack05
+	FriendHelga/Attack06
+	FriendHelga/Attack07
+	FriendHelga/Attack08
+	FriendHelga/Attack09
+	FriendHelga/Attack10
+	FriendHelga/Attack11
+	FriendHelga/Attack12
+	FriendHelga/Attack13
+	FriendHelga/Attack14
+	FriendHelga/Attack15
+	FriendHelga/Attack16
+	FriendHelga/Attack17
+	FriendHelga/Attack18
+	FriendHelga/Attack19
+	FriendHelga/Attack20
+	FriendHelga/Attack21
+	FriendHelga/Attack22
+	FriendHelga/Attack23
+	FriendHelga/Attack24
+	FriendHelga/Attack25
+}
+
+//Taunt (Done)
+
+FriendHelga/Taunt01 HELGTA01
+FriendHelga/Taunt02 HELGTA02
+FriendHelga/Taunt03 HELGTA03
+FriendHelga/Taunt04 HELGTA04
+FriendHelga/Taunt05 HELGTA05
+FriendHelga/Taunt06 HELGTA06
+FriendHelga/Taunt07 HELGTA07
+FriendHelga/Taunt08 HELGTA08
+FriendHelga/Taunt09 HELGTA09
+FriendHelga/Taunt10 HELGTA10
+FriendHelga/Taunt11 HELGTA11
+FriendHelga/Taunt12 HELGTA12
+FriendHelga/Taunt13 HELGTA13
+FriendHelga/Taunt14 HELGTA14
+FriendHelga/Taunt15 HELGTA15
+FriendHelga/Taunt16 HELGTA16
+FriendHelga/Taunt17 HELGTA17
+FriendHelga/Taunt18 HELGTA18
+FriendHelga/Taunt19 HELGTA19
+FriendHelga/Taunt20 HELGTA20
+FriendHelga/Taunt21 HELGTA21
+FriendHelga/Taunt22 HELGTA22
+FriendHelga/Taunt23 HELGTA23
+FriendHelga/Taunt24 HELGTA24
+FriendHelga/Taunt25 HELGTA25
+FriendHelga/Taunt26 HELGTA26
+FriendHelga/Taunt27 HELGTA27
+FriendHelga/Taunt28 HELGTA28
+FriendHelga/Taunt29 HELGTA29
+FriendHelga/Taunt30 HELGTA30
+FriendHelga/Taunt31 HELGTA31
+FriendHelga/Taunt32 HELGTA32
+FriendHelga/Taunt33 HELGTA33
+FriendHelga/Taunt34 HELGTA34
+FriendHelga/Taunt35 HELGTA35
+FriendHelga/Taunt36 HELGTA36
+FriendHelga/Taunt37 HELGTA37
+FriendHelga/Taunt38 HELGTA38
+FriendHelga/Taunt39 HELGTA39
+FriendHelga/Taunt40 HELGTA40
+FriendHelga/Taunt41 HELGTA41
+FriendHelga/Taunt42 HELGTA42
+FriendHelga/Taunt43 HELGTA43
+FriendHelga/Taunt44 HELGTA44
+FriendHelga/Taunt45 HELGTA45
+FriendHelga/Taunt46 HELGTA46
+FriendHelga/Taunt47 HELGTA47
+FriendHelga/Taunt48 HELGTA48
+FriendHelga/Taunt49 HELGTA49
+FriendHelga/Taunt50 HELGTA50
+FriendHelga/Taunt51 HELGTA51
+FriendHelga/Taunt52 HELGTA52
+FriendHelga/Taunt53 HELGTA53
+FriendHelga/Taunt54 HELGTA54
+FriendHelga/Taunt55 HELGTA55
+FriendHelga/Taunt56 HELGTA56
+FriendHelga/Taunt57 HELGTA57
+FriendHelga/Taunt58 HELGTA58
+FriendHelga/Taunt59 HELGTA59
+FriendHelga/Taunt60 HELGTA60
+FriendHelga/Taunt64 HELGTA61
+FriendHelga/Taunt63 HELGTA62
+FriendHelga/Taunt62 HELGTA63
+FriendHelga/Taunt61 HELGTA64
+
+$Random FriendHelga/Taunt
+{
+	FriendHelga/Taunt01
+	FriendHelga/Taunt02
+	FriendHelga/Taunt03
+	FriendHelga/Taunt04
+	FriendHelga/Taunt05
+	FriendHelga/Taunt06
+	FriendHelga/Taunt07
+	FriendHelga/Taunt08
+	FriendHelga/Taunt09
+	FriendHelga/Taunt10
+	FriendHelga/Taunt11
+	FriendHelga/Taunt12
+	FriendHelga/Taunt13
+	FriendHelga/Taunt14
+	FriendHelga/Taunt15
+	FriendHelga/Taunt16
+	FriendHelga/Taunt17
+	FriendHelga/Taunt18
+	FriendHelga/Taunt19
+	FriendHelga/Taunt20
+	FriendHelga/Taunt21
+	FriendHelga/Taunt22
+	FriendHelga/Taunt23
+	FriendHelga/Taunt24
+	FriendHelga/Taunt25
+	FriendHelga/Taunt26
+	FriendHelga/Taunt27
+	FriendHelga/Taunt28
+	FriendHelga/Taunt29
+	FriendHelga/Taunt30
+	FriendHelga/Taunt31
+	FriendHelga/Taunt32
+	FriendHelga/Taunt33
+	FriendHelga/Taunt34
+	FriendHelga/Taunt35
+	FriendHelga/Taunt36
+	FriendHelga/Taunt37
+	FriendHelga/Taunt38
+	FriendHelga/Taunt39
+	FriendHelga/Taunt40
+	FriendHelga/Taunt41
+	FriendHelga/Taunt42
+	FriendHelga/Taunt43
+	FriendHelga/Taunt44
+	FriendHelga/Taunt45
+	FriendHelga/Taunt46
+	FriendHelga/Taunt47
+	FriendHelga/Taunt48
+	FriendHelga/Taunt49
+	FriendHelga/Taunt50
+	FriendHelga/Taunt51
+	FriendHelga/Taunt52
+	FriendHelga/Taunt53
+	FriendHelga/Taunt54
+	FriendHelga/Taunt55
+	FriendHelga/Taunt56
+	FriendHelga/Taunt57
+	FriendHelga/Taunt58
+	FriendHelga/Taunt59
+	FriendHelga/Taunt60
+	FriendHelga/Taunt61
+	FriendHelga/Taunt62
+	FriendHelga/Taunt63
+	FriendHelga/Taunt64
+}
+
+//Healing
+
+FriendHelga/LechenieDo HELGLEDO
+FriendHelga/LecheniePosle HELGLEPO
+
+FriendHelga/Heal01 HELGHL01
+FriendHelga/Heal02 HELGHL02
+FriendHelga/Heal03 HELGHL03
+FriendHelga/Heal04 HELGHL04
+FriendHelga/Heal05 HELGHL05
+FriendHelga/Heal06 HELGHL06
+FriendHelga/Heal07 HELGHL07
+FriendHelga/Heal08 HELGHL08
+
+$Random FriendHelga/Heal
+{
+	FriendHelga/Heal01
+	FriendHelga/Heal02
+	FriendHelga/Heal03
+	FriendHelga/Heal04
+	FriendHelga/Heal05
+	FriendHelga/Heal06
+	FriendHelga/Heal07
+	FriendHelga/Heal08
+}
+
+//cultist
+$RANDOM monster/culsit { monster/culsi1 monster/culsi2 monster/culsi3 monster/culsi4 }
+monster/culsi1 dsculsi1
+monster/culsi2 dsculsi2
+monster/culsi3 dsculsi3
+monster/culsi4 dsculsi4
+
+monster/culatk dsculatk
+monster/culpai dsculpai
+$RANDOM monster/culdth { monster/culdt1 monster/culdt2 }
+monster/culdt1 dsculdt1
+monster/culdt2 dsculdt2
+
+$RANDOM monster/culact { monster/culac1 monster/culac2 }
+monster/culac1 dsculac1
+monster/culac2 dsculac2
+
+monster/disht1 dsdisht1
+misc/gibbed		DSSLOP
+
+monster/culcus DSCULAC3
+monster/culcut DSCULAC4
+
+
+
+//zspecops machinegun
+$Random ZSpecOps/Sight	{ ZSPCSIG1 ZSPCSIG2 ZSPCSIG3 }
+ZSPCSIG1	ZSPCSIG1
+ZSPCSIG2	ZSPCSIG2
+ZSPCSIG3	ZSPCSIG3
+$Random ZSpecOps/MGun	{ ZSPCMGN1 ZSPCMGN2 ZSPCMGN3 }
+ZSPCMGN1	ZSPCMGN1
+ZSPCMGN2	ZSPCMGN2
+ZSPCMGN3	ZSPCMGN3
+$Random ZSpecOps/Pain	{ ZSPCPAI1 ZSPCPAI2 ZSPCPAI3 }
+ZSPCPAI1	ZSPCPAI1
+ZSPCPAI2	ZSPCPAI2
+ZSPCPAI3	ZSPCPAI3
+$Random ZSpecOps/Death	{ ZSPCDEA1 ZSPCDEA2 ZSPCDEA3 ZSPCDEA4 }
+ZSPCDEA1	ZSPCDEA1
+ZSPCDEA2	ZSPCDEA2
+ZSPCDEA3	ZSPCDEA3
+ZSPCDEA4	ZSPCDEA4
+
+$Limit ZSpecOps/MGun	0
+
+
+
+
+//undead Priest
+DSUNDPN1	DSUNDPN1
+DSUNDPN2	DSUNDPN2
+DSUNDPN3	DSUNDPN3
+
+DSUNDIE1	DSUNDIE1
+DSUNDIE2	DSUNDIE2
+DSUNDIE3	DSUNDIE3
+
+DSUNDSHT	DSUNDSHT
+
+UndeadPriest/Shoot	DSUNDSHT
+UndeadPriest/Shoot2	DSUNDSHT
+$limit UndeadPriest/Shoot 0
+$limit UndeadPriest/Shoot2 0
+$random UndeadPriest/Pain	{ DSUNDPN1 DSUNDPN2 DSUNDPN3 }
+$random UndeadPriest/Die	{ DSUNDIE1 DSUNDIE2 DSUNDIE3 }
+
+//fire
+SFX/FireStart	FIRESTRT
+SFX/FireLoop1	FIRELOP1
+SFX/FireLoop2	FIRELOP2
+SFX/FireLoop3	FIRELOP3
+SFX/FireDie	FIREDIE
+
+$Limit SFX/FireStart	0
+$Limit SFX/FireLoop	0
+$Limit SFX/FireDie	0
+
+Turret/Sight	dsbspsit
+Turret/Idle		dsbspact
+Turret/Death	dsbspdth
+Turret/Pain		dsbspdth
+Turret/Shoot	3DTURPLS
+
+$pitchset "Turret/Sight" 1.5
+$pitchset "Turret/Idle" 1.5
+$pitchset "Turret/Death" 1.25
+$pitchset "Turret/Pain" 2
+
+$limit Turret/Shoot 0
+
+//ZSec Gun Sounds//
+
+$random ZSec/attack	{ ZSECMG1 ZSECMG2 ZSECMG3 }	
+	ZSec/dryFire	ZDRYFIRE
+	ZSec/reload	ZRELOADG
+	ZSec/bounce	ZSECGBCE
+
+//ZSec Zombie Sounds//
+
+$random ZSec/sight	{ ZSECSEE1 ZSECSEE2 ZSECSEE3 ZSECSEE4 ZSECSEE5 ZSECSEE6 }				
+$random	ZSec/active     { ZSECIDL1 ZSECIDL2 ZSECIDL3 ZSECIDL4 ZSECIDL5 ZSECIDL6 ZSECIDL7 }
+$random	ZSec/death	{ ZSECDIE1 ZSECDIE2 ZSECDIE3 ZSECDIE4 }
+$random ZSec/pain	{ ZSECPAI1 ZSECPAI2 }
+		
+ZSECSEE1	ZSECSEE1
+ZSECSEE2	ZSECSEE2
+ZSECSEE3	ZSECSEE3
+ZSECSEE4	ZSECSEE4
+ZSECSEE5	ZSECSEE5
+ZSECSEE6	ZSECSEE6
+
+ZSECIDL1	ZSECIDL1
+ZSECIDL2	ZSECIDL2
+ZSECIDL3	ZSECIDL3
+ZSECIDL4	ZSECIDL4
+ZSECIDL5	ZSECIDL5
+ZSECIDL6	ZSECIDL6
+ZSECIDL7	ZSECIDL7
+
+ZSECDIE1	ZSECDIE1
+ZSECDIE2	ZSECDIE2
+ZSECDIE3	ZSECDIE3
+ZSECDIE4	ZSECDIE4
+
+ZSECMG1		ZSECMG1
+ZSECMG2		ZSECMG2
+ZSECMG3		ZSECMG3
+
+ZSECPAI1	ZSECPAI1
+ZSECPAI2	ZSECPAI2
+ZSECPAI3	ZSECPAI3
+
+HCSHOT  HCSHOT
+HCSTAB  HCSTAB
+MGPDTH1 MGPDTH1
+MGPDTH2 MGPDTH2
+$random MGzombiedeath
+{
+MGPDTH1		
+MGPDTH2									
+}
+MGPPAIN MGPPAIN
+MGPSACT MGPSACT
+MGPSEE1 MGPSEE1
+MGPSEE2 MGPSEE2
+$random MGzombiesee
+{
+MGPSEE1
+MGPSEE2
+}
+$limit HCSHOT 0
+
+//Undead Warrior
+KNIXIDL1	KNIXIDL1
+KNIXIDL2	KNIXIDL2
+
+KNIXPAN1	KNIXPAN1
+KNIXPAN2	KNIXPAN2
+
+KNIXSEE1	KNIXSEE1
+KNIXSEE2	KNIXSEE2
+KNIXSEE3	KNIXSEE3
+
+KNIXDIE1	KNIXDIE1
+KNIXDIE2	KNIXDIE2
+
+$random UndeadWarrior/Sight { KNIXSEE1 KNIXSEE2 KNIXSEE3 }
+$random UndeadWarrior/Active { KNIXIDL1 KNIXIDL2 }
+$random UndeadWarrior/Pain	{ KNIXPAN1 KNIXPAN2 }
+$random UndeadWarrior/Death	{ KNIXDIE1 KNIXDIE2 }
+UndeadWarrior/Armor	armorexp
+UndeadWarrior/Burn	plrburn
+UndeadWarrior/Throw	sword2
+UndeadWarrior/Hit	impact3
+UndeadWarrior/Spin	hamfly1
+$pitchset	UndeadWarrior/Throw	1.5
+$pitchset	UndeadWarrior/Hit	1.5
+$pitchset	UndeadWarrior/Spin	1.5
+
+//DeathKnight
+monster/dknhit dsdknhit
+monster/dknsit dsdknsit
+monster/dknpai dsdknpai
+monster/dkndth dsdkndth
+monster/dknact dsdknact
+monster/dknswg dsdknswg
+
+monster/dkndrt dsdkndrt
+weapons/firex2 dsfirex2
+monster/dknmsl dsdknmsl
+weapons/boom1 dsboom1
+weapons/boltfi dsboltfi
+weapons/firex4 dsfirex4
+weapons/scorch dsscorch
+
+//Ghoul
+monster/ghlsit dsghlsit
+monster/ghlhit dsghlhit
+monster/ghlpai dsghlpai
+monster/ghldth dsghldth
+monster/ghlact dsghlact
+monster/ghlswg dsghlswg
+weapons/skulfi dsskulfi
+weapons/bloodx dsbloodx
+weapons/poof1 dspoof1
+
+//Inferno Demon
+Inferno/Alert	INFRALRT
+Inferno/Walk	INFRWALK
+Inferno/Die		INFRDEAD
+Inferno/Active	INFRACTV
+Apocalypse/Meteor COMETLNC
+Apocalypse/Death COMETEXP
+Meteor/Call DFATTACK
+weapons/firmfi dsfirmfi
+weapons/firex3 dsfirex3
+weapons/firbfi dsfirbfi
+weapons/hellex dshellex
+weapons/justfi dsjustfi
+monster/bomb FIREBALL
+monster/firebeamdeath IMPFIRE2
+monster/firebeamstart DARKFLAM
+$limit monster/firebeamstart 0
+pyro/explosion DSPIPEX1
+Glyph/Start FLAMESTR
+
+Infdem/see BE-SPOT1
+Infdem/active BE-GROWL
+Infdem/pain BE-PAIN1
+Infdem/death DYING
+
+KoraxStep               step//this is present in Hexen, but needs to be defined for Doom or Heretic
+
+//Fallen
+monster/falsit dsfalsit
+monster/falpai dsfalpai
+monster/faldth dsfaldth
+monster/falact dsfalact
+monster/falwng dsfalwng
+weapons/firmfi dsfirmfi
+weapons/firex5 dsfirex5
+
+
+//Wraith
+monster/sprsit dsspract
+monster/spratk dsspratk
+
+monster/sprdth dssprdth
+
+//Lost Spirit
+LostSpirit/shoot DSLSPISH
+LostSpirit/charge DSLSPICH
+LostSpirit/death DSLSPIDE
+LostSpirit/active DSLSPIAC
+
+
+//Thunder
+$random thunder/hit { thunder/hit1 thunder/hit2 }
+thunder/hit1 THNDS01
+thunder/hit2 THNDS02
+
+//RSWORD
+$random weapons/ESWORD/attack  { ESDCHOPM ESDCHOPL }
+
+
+ESDCHOPM ESDCHOPM
+ESDCHOPL ESDCHOPL
+ESDSCHWL ESDSCHWL
+ESDSLSHG ESDSLSHG
+
+weapons/ESWORD/pickup WPNUP
+$random weapons/ESWORD/strike { weapons/ESWORD/PHOSHT weapons/ESWORD/HRNPOW }
+
+weapons/ESWORD/STFCRK STFCRK
+weapons/ESWORD/BLSSHT BLSSHT 
+weapons/ESWORD/BLSHIT BLSHIT
+weapons/ESWORD/SORATK SORATK
+weapons/ESWORD/SORRISE SORRISE //need heavier
+weapons/ESWORD/SORZAP SORZAP
+weapons/ESWORD/PHOSHT PHOSHT
+weapons/ESWORD/HRNSHT HRNSHT
+weapons/ESWORD/HRNPOW HRNPOW
+
+weapons/ESWORD/SABERLIT1 SABRLIT1
+weapons/ESWORD/SABERLIT2 SABRLIT2
+

@@ -1,0 +1,22 @@
+Name: Berserker Commando
+Difficulty: medium
+Connections: uses Doom 2 sounds
+Summon: BerserkerCommando
+Melee: yes
+Distance: no
+Type: Human, Undead
+Brightmaps: yes
+Actor modification: no
+ACS: no
+
+Description:
+This former commando has been injected with an experimental Berserk serum.
+Now he is twice as sturdy, very fast, extremely pain resistant and packs a deadly punch.
+Can perform an attack combo, every 4th punch in a row is extra devastating. Keep your distance!
+
+Code: DeVloek
+GLDefs: DeVloek
+Sounds: id Software
+Sprites: id Software, David G.
+Sprite Edit: DeVloek
+Idea Base: a zombie that used the Berserk pack

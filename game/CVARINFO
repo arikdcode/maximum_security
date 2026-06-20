@@ -1,0 +1,2 @@
+Server Int blnkHelga_idletalk = 10;
+Server Int blnkHelga_helpHeal = 60;

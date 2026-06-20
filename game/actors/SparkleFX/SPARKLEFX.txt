@@ -1,0 +1,86 @@
+////////////////////////////
+// SPARKLE SPAWNERS ////////
+// for REALM667     ////////
+// by Tormentor667  ////////
+////////////////////////////
+
+
+///////////////////////////////// DOOM VARIANT /////////////////////////////////////////////
+
+Actor BaseSparkle
+{
+ +Missile
+ +NoGravity
+ +NoBlockmap
+ +NoInteraction
+ -Solid
+ Radius 0
+ Height 0
+ RenderStyle Add
+ Alpha 1.0
+ Scale 0.1
+ States
+ {
+  Spawn:
+   SKFX A 0 Bright
+   SKFX A 1 Bright A_FadeOut(0.1)   
+   SKFX A 1 Bright A_SetScale(0.2)   
+   SKFX A 1 Bright A_FadeOut(0.1)   
+   SKFX A 1 Bright A_SetScale(0.3)   
+   SKFX A 1 Bright A_FadeOut(0.1)   
+   SKFX A 1 Bright A_SetScale(0.4)   
+   SKFX A 1 Bright A_FadeOut(0.1)   
+   SKFX A 1 Bright A_SetScale(0.5)   
+   SKFX A 1 Bright A_FadeOut(0.1)   
+   SKFX A 1 Bright A_SetScale(0.6)   
+   SKFX A 1 Bright A_FadeOut(0.1)   
+   SKFX A 1 Bright A_SetScale(0.7)   
+   SKFX A 1 Bright A_FadeOut(0.1)   
+   SKFX A 1 Bright A_SetScale(0.8)   
+   SKFX A 1 Bright A_FadeOut(0.1)   
+   SKFX A 1 Bright A_SetScale(0.9)   
+   SKFX A 1 Bright A_FadeOut(0.1)   
+   SKFX A 1 Bright A_SetScale(1.0)   
+   SKFX A 1 Bright A_FadeOut(0.1)   
+   Stop
+ }
+}
+
+actor GreenSparkleSpawner 501
+{
+//$Category Stronghold_PowerUpPads
+	+NoBlockMap +NoGravity +NoSector +NoInteraction +NoClip -Solid +CLIENTSIDEONLY
+        states
+        {
+        Spawn:
+           Active:
+        	TNT1 A 0
+        	TNT1 A 1 A_SpawnItemEx ("BaseSparkle", random(-Args[1],Args[1]), random(-Args[1],Args[1]), random(0,2*Args[1]), 0, 0, 0, 0, 129, Args[2]) 
+        	Loop
+           Inactive:
+		TNT1 A 1
+		Loop
+        }     
+        
+}
+
+actor BlueSparkleSpawner : GreenSparkleSpawner 502
+{
+	translation "112:127=196:207"
+}
+
+actor WhiteSparkleSpawner : GreenSparkleSpawner 503
+{
+	translation "112:127=80:111"
+}
+
+actor RedSparkleSpawner : GreenSparkleSpawner 504
+{
+	translation "112:127=176:191"
+}
+
+actor OrangeSparkleSpawner: GreenSparkleSpawner 505
+{
+	translation "112:127=214:223"
+}
+

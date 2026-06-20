@@ -1,0 +1,62 @@
+ACTOR HexenWallCandleRed : ZCandle 14330
+{
+	//$Title Wall Candles Red
+	//$Category Light sources/Candles/Wall mounted
+	//$IsDecoration
+	//$NotAngled
+
+		States
+		{
+			Spawn:
+				WCAN ABC 4 Bright
+				Loop
+		}
+}
+
+ACTOR HexenWallCandleBlack : HexenWallCandleRed 14331
+{
+	//$Title Wall Candles Black
+
+		States
+		{
+			Spawn:
+				WCAN DEF 4 Bright
+				Loop
+		}
+}
+
+ACTOR HexenWallCandleTan : HexenWallCandleRed 14332
+{
+	//$Title Wall Candles Tan
+
+		States
+		{
+			Spawn:
+				WCAN GHI 4 Bright
+				Loop
+		}
+}
+
+ACTOR HexenWallCandleGreen : HexenWallCandleRed 14333
+{
+	//$Title Wall Candles Green
+
+		States
+		{
+			Spawn:
+				WCAN JKL 4 Bright
+				Loop
+		}
+}
+
+ACTOR HexenWallCandleBlue : HexenWallCandleRed 14334
+{
+	//$Title Wall Candles Blue
+
+		States
+		{
+			Spawn:
+				WCAN MNO 4 Bright
+				Loop
+		}
+}

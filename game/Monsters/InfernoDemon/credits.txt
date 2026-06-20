@@ -1,0 +1,6 @@
+Submitted: Maelstrom
+Code: Maelstrom, Gothic (cleanup & zscript conversion)
+GLDefs: Pyroscourge
+Sounds: Monolith Software, Raven Software, Blizzard Entertainment, id Software.
+Sprites: Raven Software, id Software, 3D Realms, Nanami, Amuscaria, Keksdose, Jimmy.
+Sprite Edit: Pyroscourge, Maelstrom

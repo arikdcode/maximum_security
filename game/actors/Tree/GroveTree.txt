@@ -1,0 +1,55 @@
+ACTOR GroveTree 10001
+{
+  Health 10000
+  Radius 32
+  Height 128
+  Mass 100000
+  +SOLID
+  States
+  {
+  Spawn:
+    TREE A -1
+  }
+}
+
+ACTOR GroveTree2 10002
+{
+  Health 10000
+  Radius 16
+  Height 64
+  Mass 100000
+  +SOLID
+  States
+  {
+  Spawn:
+    TREE B -1
+  }
+}
+
+ACTOR GroveTree3 10003
+{
+  Health 10000
+  Radius 64
+  Height 64
+  Mass 100000
+  +SOLID
+  States
+  {
+  Spawn:
+    TREE C -1
+  }
+}
+
+ACTOR GroveTree4 10004
+{
+  Health 10000
+  Radius 16
+  Height 64
+  Mass 100000
+  +SOLID
+  States
+  {
+  Spawn:
+    TREE D -1
+  }
+}

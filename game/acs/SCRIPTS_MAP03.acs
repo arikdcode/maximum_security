@@ -1,0 +1,1085 @@
+
+#include "zcommon.acs"
+
+int cover = 0; //false means behind cover in this case
+int hit = 0;
+int potshot = 0;
+int weapons_taken = 0;
+int base_alert = 0;
+int chained = 1;
+int Office_Open = 0;
+int Bunker_Open = 0;
+int guard_friendly = 0;
+int bunker2_open = 0;
+int master_isdead = 0;
+script "sky" OPEN
+{
+	changesky("OSKY2B","OSKY2B");
+}
+
+
+
+/*SCRIPT "FriendHelga_Enter" ENTER
+{
+	GiveInventory("FriendHelgaProtection", 0x7FFFFFFD);
+}
+
+SCRIPT "FriendHelga _Respawn" RESPAWN
+{
+	GiveInventory("FriendHelgaProtection", 0x7FFFFFFD);
+}
+
+SCRIPT "FriendHelga_Return" RETURN
+{
+	GiveInventory("FriendHelgaProtection", 0x7FFFFFFD);
+}*/
+
+script 99 (void) //radius quake
+{
+Radius_Quake(2,5,0,3,0);
+}
+
+script 1 (void) //crackshot - toggle sniper
+{
+	//if (cover == 1) cover = 0;
+	//else
+	 cover = 1;
+
+	//log(s:"cover = ", i:cover);
+
+	while (cover)
+	{
+
+		delay (random(250, 500));
+		if (!CheckActorFloorTexture(0,"0ROCKR01") && !CheckActorFloorTexture(0,"F_SKY1"))
+		{
+			cover = 0;
+			//log(s:"Floor changed cover, cover = ", i:cover);
+			break;
+		}
+		playsound(0,"SNIPE",CHAN_AUTO,1.0, ATTN_NONE);
+		potshot = 1;
+		hit = random(0,10);
+		if (hit > 3)
+		{
+			delay(10);
+			damageactor(0, 0,16,16,random(20,60),MOD_UNKNOWN);
+			playsound(0,"IMPACT",CHAN_AUTO,1.0, ATTN_NONE);
+		}
+		else playsound(0,"RICOCHET",CHAN_AUTO,1.0, ATTN_NONE);
+	}
+}
+
+script 2 (void)
+{
+	cover = 0;  //cover to zero? Redundant?
+}
+
+script 3 (void) // master dies
+
+{
+	DropItem (23, "IronKey", 1, 256);
+	DropItem (23, "SUPERSHOTGUN", 1, 256);
+	Thing_SetConversation(39, 20);
+	master_isdead = 1;
+	SetMusicVolume(0.8);
+				delay(15);
+				SetMusicVolume(0.6);
+				delay(15);
+				SetMusicVolume(0.5);
+				delay(15);
+				SetMusicVolume(0.4);
+				delay(15);
+				SetMusicVolume(0.2);
+				delay(15);
+				SetMusic("",0);
+				SetmUsicVolume(1.0);
+	log(s:"The Master has died.");
+}
+
+script 4 (void) //open gate in cave
+{
+
+	Line_SetBlocking(19,0,BLOCKF_EVERYTHING);
+	playsound(0,"GATEOPEN",CHAN_AUTO,1.0, ATTN_NONE);
+	SetLineTexture(19,SIDE_FRONT,TEXTURE_MIDDLE,"-");
+	SetLineTexture(19,SIDE_BACK,TEXTURE_MIDDLE,"-");
+
+}
+
+script 5 (void) //piss off the gaurds
+{
+	if (!base_alert)
+	{
+		Thing_Activate(18); //generic gaurds
+		Thing_Activate(19); //guard captain
+		Thing_Activate(23); //boss
+		Thing_Activate(36); //receptionist monk Right
+		Thing_Activate(37); //receptionist monk left
+		Thing_Activate(38); //Cook monk
+		Thing_SetConversation(39, 19); //Ellie talks about attack
+		Thing_Activate(39); //Ellie
+		Thing_SetGoal(39,83,0,1); //Ellie runs for her life!
+		Thing_Activate(50); //clerk guard
+		Thing_Activate(53); //Zombies
+		Thing_Activate(54); //Demons
+		Thing_Activate(68); //Bunker Guard 2
+		NoiseAlert(0,68);
+		SetActorProperty(54,APROP_Friendly,0); //demons
+		if (CheckActorProperty(68,APROP_Friendly,0)) SetActorProperty(68,APROP_Health,80); //set guard health to standard amount if not an ally
+
+		Line_SetBlocking(65,0,BLOCKF_MONSTERS); //secret cave line allow monsters to pass
+
+		Floor_RaiseByValue(82,16,64); //open front door
+
+
+		Floor_LowerToLowest(60,16);//turrets revealed
+		if (!Office_Open) Ceiling_RaiseByValue(63,32,224); //raise bars manager's office
+		Office_Open = 1;
+
+
+
+		Thing_Remove(49);
+		Thing_Spawn(51,3,180,52);
+		SetActorProperty(25,APROP_Friendly,0); //patrolling guard
+		SetActorProperty(40,APROP_Friendly,0); //patrolling monk library
+		SetActorProperty(72,APROP_Friendly,0); //patrolling guards
+
+		log(s:"Guess we're doing this the hard way.");
+
+		SetMusic("SOULRIPP",0); //combat music
+		base_alert = 1;
+	}
+}
+
+script 6 (void) //take player's stuff away
+{
+	if (!weapons_taken && base_alert) log(s:"No point dropping off my weapons now.");
+	else if (weapons_taken && base_alert) log(s:"Damnit, it's locked tight.");
+	else if (weapons_taken && base_alert) log(s:"Damnit, it's locked tight.");
+	if (!weapons_taken && !base_alert)
+	{
+	weapons_taken = 1;
+	ClearInventory();
+	GiveInventory("fist", 1);
+	Floor_RaiseByValue(82,16,64); //open front door
+	SetActorProperty(19,APROP_Friendly,1);
+	thing_activate(19);
+	Thing_SetConversation(19,4);
+	delay(10);
+	Thing_SetGoal(19,20,0,0);
+	delay(70);
+	thing_Deactivate(19);
+	SetActorProperty(19,APROP_Friendly,0);
+	}
+
+}
+
+script "patrolShotGun" OPEN //set gaurds patrolling
+{
+	Thing_SetGoal(25,26,0,0);
+	Thing_SetGoal(40,41,0,0);
+	Thing_SetGoal(72,77,0,0);
+	Thing_destroy(164);
+}
+
+script "compwave" OPEN //set floors moving
+{
+	Floor_Waggle(28,56,10,0,0);
+	Ceiling_Waggle(28,56,10,0,0);
+
+	//Lava Floors
+	floor_waggle(116,16,35,0,0);
+	floor_waggle(117,16,35,20,0);
+}
+
+script 7 (void) //Give Helga follower upon Release
+{
+	  /*  // Only if the player does not already have a TID.
+    if(ActivatorTID() == 0)
+    {
+        int ptid = ScriptCall("Actor", "FindUniqueTid", 0, 0);
+        Thing_ChangeTID(0, ptid);
+        Log(s:"TID changed to ", d:ptid); // Print a message.
+    }*/
+    ScriptCall("MyWorldHandler", "GiveHelga");
+}
+
+script 8 (void) //remove Helga follower upon dismiss
+{
+
+    ScriptCall("MyWorldHandler", "RemoveHelga");
+}
+
+script 9 (void) //unchain helga if iron key
+{
+	if (!CheckInventory("IronKey") && chained)
+	{
+		StartConversation(3,YES);
+	}
+	if (CheckInventory("ironkey") && chained)
+	{
+		StartConversation (29, No);
+		thing_remove(3);
+		delay(35);
+		ScriptCall("MyWorldHandler", "GiveHelga");
+
+		chained = 0;
+
+	}
+}
+
+script 10 (void) //move buggy gaurd
+{
+	SetActorProperty(19,APROP_Friendly,1);
+	thing_activate(19);
+	Thing_SetConversation(19,4);
+	delay(10);
+	Thing_SetGoal(19,20,0,0);
+	delay(70);
+	thing_Deactivate(19);
+	SetActorProperty(19,APROP_Friendly,0);
+}
+
+script 11 (void) //Check safe key copper
+{
+	if (CheckInventory("CopperMetalKey")) Floor_LowerToLowest(35,64);
+	else log(s:"You need a copper safe key to open this.");
+}
+
+script 12 (void) //speak to clerk
+{
+	StartConversation(36,YES);
+}
+
+script 13 (void) //speak to clerk 2
+{
+	StartConversation(37,YES);
+}
+
+script 14 (void) //steal grunt's food
+{
+	if (!base_alert) PlaySound(18,"grunt/sight",CHAN_AUTO,1.0,0,0);
+}
+
+script 15 (void) //eat poison stew
+{
+	DamageActor(0,0,39,39,20,MOD_POISON);
+	playsound(0,"GULP",CHAN_AUTO,1.0,0,0);
+}
+
+script 16 (void) //eat good stuff
+{
+	HealThing(20,110);
+	playsound(0,"BITE",CHAN_AUTO,1.0,0,0);
+}
+
+script 17 (void) //open bunker 01
+{
+	if (checkinventory("BlueCard") && !Bunker_Open) Floor_LowerToLowest(56,64);
+	Bunker_Open = 1;
+}
+
+script 18 (void) //open bunker 01 with computer
+{
+	if (checkinventory("BlueCard") && base_alert)
+	{
+		Floor_LowerToLowest(56,64);
+		log(s:"The bunker is open.");
+		Bunker_Open = 1;
+	}
+	else if (checkinventory("BlueCard") && !base_alert) log(s:"It might piss them off if I use this in front of them...");
+	else log(s:"Looks like I need a keycard to access the bunker.");
+}
+
+script 19 (void) //raise bars in Master's office
+{
+	if (!Office_Open) Ceiling_RaiseByValue(63,32,224);
+	Office_Open = 1;
+}
+
+script 20 (void) //bunker 02 door with base alert condition
+{
+	if (base_alert) Polyobj_DoorSlide(6,32,64,120,210);
+}
+
+
+script 21 (void) //bunker 02 door without condition
+{
+	if (weapons_taken) Polyobj_DoorSlide(6,32,64,120,210);
+}
+
+script 22 (void)  //open creepy bunker o2 inner door
+{
+	if (!bunker2_open)
+	{
+	PlaySound(67,"BEEPYES",CHAN_AUTO,1.0,FALSE,0,0);
+	delay(15);
+	Floor_LowerByValue(66,2,120);
+	bunker2_open = 1;
+	thing_activate(67);
+	delay(470);
+	thing_Deactivate(67);
+
+	Line_SetBlocking(69,0,BLOCKF_PLAYERS);
+	}
+	else PlaySound(67,"BEEPNO",CHAN_AUTO,1.0,FALSE,0,0);
+}
+
+script 23 (void) //make guard friendly
+{
+	SetActorProperty(68,APROP_Friendly,1);
+}
+
+script 24 (void)  //close creepy bunker inner door behind your soon to be screwed ass
+{
+	if (bunker2_open)
+	{
+	Floor_RaiseByValue(66,2,120);
+	Line_SetBlocking(69,1,BLOCKF_PLAYERS);
+	thing_activate(67);
+	delay(470);
+	thing_Deactivate(67);
+	bunker2_open = 0;
+
+	}
+}
+
+script 25 (void)  //Ellie hides
+{
+	Thing_Deactivate(39);
+}
+
+script 26 (void)  //Ellie flees
+{
+	Thing_Activate(39);
+}
+
+
+int catacombs = 0;
+
+script 27 (void) //catacombs entrance switch and light
+{
+	switch(catacombs)
+	{
+		case 0:
+		SetMusic("CATACOMB",0);
+		catacombs = 1;
+		break;
+
+		case 1:
+		SetMusic("",0);
+		catacombs = 0;
+		break;
+
+	}
+
+}
+int fake_trapped = 0;
+script 28 (void) //fake death corridor
+{
+	if (!fake_trapped)
+	{
+	Sector_SetColor(89,255,100,100);
+	Sector_SetColor(90,255,100,100);
+	Sector_SetColor(91,255,100,100);
+	Sector_SetColor(92,255,100,100);
+	Sector_SetColor(93,255,100,100);
+	Sector_SetColor(94,255,100,100);
+	Sector_SetColor(95,255,100,100);
+	Sector_SetColor(106,255,100,100);
+
+	Floor_RaiseAndCrush(89,16,100,0);
+	delay(60);
+	Floor_RaiseAndCrush(90,16,100,0);
+	delay(60);
+	Floor_RaiseAndCrush(91,16,100,0);
+	delay(60);
+	Floor_RaiseAndCrush(92,16,100,0);
+	delay(60);
+	Floor_RaiseAndCrush(93,16,100,0);
+	delay(60);
+	Floor_RaiseAndCrush(94,16,100,0);
+	delay(60);
+	Floor_RaiseByValue(95,4,64);
+	Radius_Quake(6,120,0,64,0);
+	delay(180);
+	Floor_lowerByValue(95,4,64);
+	delay(60);
+	Door_Open(88,4,0);
+
+	Sector_SetColor(89,255,255,255);
+	Sector_SetColor(90,255,255,255);
+	Sector_SetColor(91,255,255,255);
+	Sector_SetColor(92,255,255,255);
+	Sector_SetColor(93,255,255,255);
+	Sector_SetColor(94,255,255,255);
+	Sector_SetColor(95,255,255,255);
+	Sector_SetColor(106,255,255,255);
+
+	Floor_LowerToLowest(89,8);
+	Floor_LowerToLowest(90,8);
+	Floor_LowerToLowest(91,8);
+	Floor_LowerToLowest(92,8);
+	Floor_LowerToLowest(93,8);
+	Floor_LowerToLowest(94,8);
+	Floor_LowerToLowest(95,8);
+	fake_trapped = 1;
+	}
+	else Door_Open(88,4,0);
+
+}
+int  trap_on = 1;
+int red97 = 1;
+script "colorTrap" ENTER //forcefield puzzle (red/blue))
+{
+	while(trap_on)
+	{
+		Sector_SetColor(97,255,100,100,0);
+		ChangeCeiling(97,"0LGHTE06");
+		Sector_SetDamage(97,20,15,8, 256);
+		Sector_SetColor(98,100,100,255,0);
+		ChangeCeiling(98,"0LGHTE05");
+		Sector_SetDamage(98,0,15,8, 256);
+		PlaySound(99,"STONESTP",CHAN_AUTO,1.0,FALSE,ATTN_NORM);
+		delay(35);
+
+		Sector_SetColor(100,100,100,255,0);
+		ChangeCeiling(100,"0LGHTE05");
+		Sector_SetDamage(100,0,15,8, 256);
+		PlaySound(152,"STONESTP",CHAN_AUTO,1.0,FALSE,ATTN_NORM);
+
+		delay(35);
+		Sector_SetColor(100,255,100,100,0);
+		ChangeCeiling(100,"0LGHTE06");
+		Sector_SetDamage(100,20,15,8, 256);
+		PlaySound(152,"STONESTP",CHAN_AUTO,1.0,FALSE,ATTN_NORM);
+
+
+
+		Sector_SetColor(98,255,100,100,0);
+		ChangeCeiling(98,"0LGHTE06");
+		Sector_SetDamage(98,20,15,8,256);
+		Sector_SetColor(97,100,100,255,0);
+		ChangeCeiling(97,"0LGHTE05");
+		Sector_SetDamage(97,0,15,8,256);
+		PlaySound(99,"STONESTP",CHAN_AUTO,1.0,FALSE,ATTN_NORM);
+		delay(70);
+
+	}
+}
+
+script 29 (void) //Forcefield control broken message
+{
+	log(s:"Looks like the control for the forcefield is broken...");
+}
+
+script 30 (void) //gold skull trap lava reveal
+{
+	Door_Close(88,64,0);
+	Radius_Quake(10,35,0,128,0);
+	Ceiling_RaiseToNearest(103,128);
+	Thing_activate(104);
+	PlaySound(0,"RILED",CHAN_AUTO,1.0,0,0);
+}
+
+int pit113 = 1;
+int pit114 = 1;
+int pit115 = 1;
+script 31 (void) //pitfall113
+{
+	if(pit113)
+	{
+	playsound(0,"CRACKLE",CHAN_AUTO,1.0,0,0);
+	delay(25);
+	playsound(0,"conbreak",CHAN_AUTO,1.0,0,0);
+	Floor_LowerInstant(113,0,256);
+	Sector_SetDamage(113,1000,17,1,256);
+	Light_LowerByValue(113,64);
+	pit113 = 0;
+	}
+
+	delay(20);
+	if((getactorZ(0)>>16) < -192) playsound(0,"WILHELM",CHAN_AUTO,1.0,0,0);
+}
+
+script 32 (void) //pitfall114
+{
+	if(pit114)
+	{
+	playsound(0,"CRACKLE",CHAN_AUTO,1.0,0,0);
+	delay(25);
+	playsound(0,"conbreak",CHAN_AUTO,1.0,0,0);
+	Floor_LowerInstant(114,0,256);
+	Sector_SetDamage(114,1000,17,1,256);
+	Light_LowerByValue(114,64);
+	pit114 = 0;
+	}
+
+
+	delay(20);
+	if((getactorZ(0)>>16) < -128) playsound(0,"WILHELM",CHAN_AUTO,1.0,0,0);
+}
+
+script 33 (void) //pitfall115
+{
+	if(pit115)
+	{
+	playsound(0,"CRACKLE",CHAN_AUTO,1.0,0,0);
+	delay(5);
+	playsound(0,"conbreak",CHAN_AUTO,1.0,0,0);
+	Floor_LowerInstant(115,0,256);
+	Sector_SetDamage(115,1000,17,1,256);
+	Light_LowerByValue(115,32);
+	pit115 = 0;
+	}
+
+	delay(20);
+	if((getactorZ(0)>>16) < -129) playsound(0,"WILHELM",CHAN_AUTO,1.0,0,0);
+}
+
+script 35 (void) //ghosts rush release
+{
+	ThrustThing (0, 100, 1, 118);
+}
+
+script 36 (void) //secret Kro bakul tomb trigger
+{
+	Floor_LowerByValue(120,512,32);
+	playsound(123,"conbreak",CHAN_AUTO,1.0,0,0);
+	delay(35) ;
+	TeleportOther(121,122,0);
+	playsound(123,"UndeadWarrior/Sight",CHAN_AUTO,1.0,0,0);
+	Thing_Deactivate(121);
+	delay(35);
+	StartConversation(121,1);
+
+}
+
+script 37 (void) //piss off ghost! I mean piss off the death knight
+{
+	Thing_activate(121);
+	TeleportOther(121,124,0);
+}
+int deathknight_sent = 0; //temporary for boss testing as 1, otherwise zero
+ script 38 (void) //Send warrior to final chamber to fight.
+{
+	GiveInventory("SilveryKey", 1);
+
+	Delay(35);
+	Thing_activate(121);
+	TeleportOther(121,125,1);
+	Thing_remove(121);
+	deathknight_sent = 1;
+	int x = GetActorX(169);
+	int y = GetActorY(169);
+	int z = GetActorZ(169);
+
+		//Thing_remove(169);
+	spawn("KnightSaberIdle",x,y,z,169,180);
+}
+
+script 39 (void) //fancy tomb traps
+{
+	Ceiling_RaiseByValue(134,16,72);
+	Door_open(133,16,0);
+	Thing_activate(131);
+	Radius_Quake(2,35,0,128,0);
+	Floor_RaiseByValue(135,16,32);
+	Floor_RaiseByValue(136,16,64);
+	NoiseAlert(0,149);
+}
+
+script 40 (void) //Lava wall collapse tomb room
+{
+	FloorAndCeiling_LowerByValue(154,64,64);
+
+	Radius_Quake(4,70,0,128,0);
+	Light_RaiseByValue(153,24);
+	Ceiling_RaiseByValue(153,512,16);
+	ChangeCeiling(153,"OROCKM02");
+	PlaySound(0,"LANDSLIDE",CHAN_AUTO,1.0,0,0);
+	Thing_Activate(156);
+	door_open(155,2048,0);
+}
+
+script 41 (void) //crackshot - toggle sniper in temple
+{
+	 cover = 1;
+
+	//log(s:"cover = ", i:cover);
+
+	while (cover)
+	{
+
+		delay (random(200, 400));
+		if (!CheckActorFloorTexture(0,"0ROCKR01") && !CheckActorFloorTexture(0,"0BSKTB05") && !CheckActorFloorTexture(0,"OBRCKQ14") && !CheckActorFloorTexture(0,"0BRCKG02") && !CheckActorFloorTexture(0,"F_SKY1"))
+
+		{
+			cover = 0;
+			//log(s:"Floor changed cover, cover = ", i:cover);
+			break;
+		}
+		playsound(0,"SNIPE",CHAN_AUTO,1.0, ATTN_NONE);
+		potshot = 1;
+		hit = random(0,10);
+		if (hit > 4)
+		{
+			delay(10);
+			damageactor(0, 0,161,161,random(20,60),MOD_UNKNOWN);
+			playsound(0,"IMPACT",CHAN_AUTO,1.0, ATTN_NONE);
+		}
+		else playsound(0,"RICOCHET",CHAN_AUTO,1.0, ATTN_NONE);
+	}
+}
+int web = 1;
+script 42 (void)//web smash
+{
+	if(web)
+	{
+	SetLineTexture(158,SIDE_FRONT,TEXTURE_MIDDLE,"BLUD0743");
+	PlaySound(0,"TEAR",CHAN_AUTO,1.0,0,0);
+	delay(10);
+	SetLineTexture(158,SIDE_FRONT,TEXTURE_MIDDLE,"BLUD0744");
+	SetLineTexture(158,SIDE_Back,TEXTURE_MIDDLE,"BLUD0744");
+	Line_SetBlocking(158,0,BLOCKF_PLAYERS);
+	web = 0;
+	}
+
+
+}
+
+script 43 (void)//web burn
+{
+	if(web)
+	{
+	SetLineTexture(158,SIDE_FRONT,TEXTURE_MIDDLE,"WEBBRN_1");
+	PlaySound(0,"TEAR",CHAN_AUTO,1.0,0,0);
+	delay(6);
+	SetLineTexture(158,SIDE_FRONT,TEXTURE_MIDDLE,"WEBBRN_2");
+	delay(15);
+	SetLineTexture(158,SIDE_FRONT,TEXTURE_MIDDLE,"WEBBRN_3");
+	delay(15);
+	SetLineTexture(158,SIDE_FRONT,TEXTURE_MIDDLE,"WEBBRN_4");
+	SetLineTexture(158,SIDE_Back,TEXTURE_MIDDLE,"WEBBRN_4");
+	Line_SetBlocking(158,0,BLOCKF_PLAYERS);
+	web = 0;
+	}
+}
+
+script 44 (void) //wrong Door
+{
+	log(s:"Hmm...Not this one...");
+}
+
+script 45 (void) //door is opened elsewhere
+{
+	log(s:"This door is opened elsewhere.");
+}
+
+int lavapit1 = 1;
+script 46 (void) //lava pitfall 1
+{
+	if (lavapit1)
+	{
+	playsound(0,"CRACKLE",CHAN_AUTO,1.0,0,0);
+	delay(15);
+	playsound(0,"conbreak",CHAN_AUTO,1.0,0,0);
+	FloorAndCeiling_LowerByValue(163,96,264);
+	Light_RaiseByValue(162,32);
+
+	//log(i:GetActorFloorZ(0) >> 16);
+	lavapit1 = 0;
+	}
+	delay(20);
+	if((getactorZ(0)>>16) < -16) playsound(0,"WILHELM",CHAN_AUTO,1.0,0,0);
+}
+
+script 47 (void) //intercom
+{
+Thing_SetConversation(68,22);
+StartConversation(68,1);
+delay(35);
+Thing_SetConversation(68,18);
+}
+
+script 48 (void) //start torches
+{
+	if(CheckInventory("SilveryKey")) Thing_Activate(159);
+}
+
+int lavapit2 = 1;
+script 49 (void) //lava pitfall 2
+{
+	if (lavapit2)
+	{
+	playsound(0,"CRACKLE",CHAN_AUTO,1.0,0,0);
+	delay(35);
+	playsound(0,"conbreak",CHAN_AUTO,1.0,0,0);
+	FloorAndCeiling_LowerByValue(167,32,8);
+	//Light_RaiseByValue(162,32);
+
+	//log(i:GetActorFloorZ(0) >> 16);
+	lavapit2 = 0;
+	}
+	//delay(20);
+	//if((getactorZ(0)>>16) < -16) playsound(0,"WILHELM",CHAN_AUTO,1.0,0,0);
+}
+
+script 50 (void) //death knight intro battle
+{
+	if (deathknight_sent)
+
+	{
+		int x = GetActorX(169);
+		int y = GetActorY(169);
+		int z = GetActorZ(169);
+
+		PlaySound(169,"SaberLight",CHAN_AUTO,1.0,0,0);
+		//PlaySound(169,"DUEL",CHAN_AUTO,1.0,0,0);
+		SetMusic("");
+
+		delay(22);
+		Thing_remove(169);
+
+
+		spawn("KnightSaberIgnite",x,y,z,169,270);
+		PlaySound(169,"Duel",CHAN_AUTO,1.0,0,0);
+		delay(140);
+		Line_SetBlocking(219,0,BLOCKF_PLAYERS);
+
+
+
+	}
+}
+
+int deathknight_alive = 1;
+int stage1 = 1;
+int stage2 = 1;
+int stage3 = 1;
+int stage4 = 1;
+script 51 (void) //death knight Spawn and fight
+{
+	if (deathknight_sent && deathknight_alive)
+
+	{
+		StartConversation(171,1);
+		stopsound(169,chan_auto);
+		int x = GetActorX(169);
+		int y = GetActorY(169);
+		int z = GetActorZ(169);
+		thing_remove(171);
+
+		Thing_remove(169);
+		spawn("DeathKnightBoss",x,y,z,169,180);
+		delay(15);
+		Thing_Activate(172);
+		Light_RaiseByValue(170,100);
+		SetMusic("SYNTDUES");
+		floor_lowerbyValue(173,16,32);
+
+
+		while(deathknight_alive)
+		{
+			while (GetActorProperty(169,APROP_Health) > 4000) delay(70); //stage 0
+			if(stage1) //stage1
+			{
+				//log(s:"Stage 1");
+				Door_close(160, 32,0);
+				thing_deactivate(169);
+				SetLineTexture(176,SIDE_FRONT,TEXTURE_MIDDLE,"OBASEL3A");
+				SetLineTexture(178,SIDE_BACK,TEXTURE_TOP,"OBASEL3A");
+
+				Light_RaiseByValue(170,48);
+				Light_Glow(174,256,112,35);
+				changefloor(174,"0CONCH01");
+				Floor_LowerByValue(174,64,9);
+				PlaySound(0,"CRACKLE",CHAN_AUTO,1.0,0,0);
+				radius_quake(2,70,0,512,0);
+				delay(140);
+				Floor_LowerByValue(174,256,1024);
+				PlaySound(0,"CONBREAK",CHAN_AUTO,1.0,0,0);
+				sector_setdamage(174,1000,17,1,256);
+				delay(35);
+
+				Ceiling_RaiseByValue(170,64,1024);
+				delay(70);
+				Floor_RaiseByValue(175,64,512);
+				delay(70);
+				Floor_RaiseToLowestCeiling(177,32);
+				Sector_SetDamage(177,20,15,16,256);
+
+				ACS_Execute(52,0); //trigger lightning script
+
+				ACS_Execute(54,0); //spawn health and ammo
+				delay(35);
+				thing_activate(169);
+				teleportOther(169,183,0);
+				delay(145);
+				ChangeCeiling(174,"0LLLLA03");
+
+				while (GetActorProperty(169,APROP_Health) > 3000)
+				{
+					delay(35);
+					if((getactorZ(0)>>16) < -96 && (GetActorProperty(0,APROP_Health)) > 0) playsound(0,"WILHELM",CHAN_AUTO,1.0,0,0);
+				}
+				stage1 = 0;
+			}
+
+			if(stage2) //stage2
+			{
+			//log(s:"Stage 2");
+
+
+				thing_deactivate(169);
+				changefloor(184,"0GRATC01");
+				Floor_RaiseByValue(184,8,32);
+				Ceiling_RaiseByValue(170,32,512);
+				delay(35);
+				ACS_Execute(53,0); //spawn items
+				Floor_LowerByValue(185,8,8);
+				Floor_LowerByValue(186,8,16);
+				Floor_LowerByValue(187,8,24);
+				Floor_LowerByValue(188,8,32);
+				Floor_LowerByValue(189,8,40);
+				Floor_LowerByValue(190,8,48);
+				changefloor(185,"0LLLLA04");
+				changefloor(186,"0LLLLA04");
+				changefloor(187,"0LLLLA04");
+				changefloor(188,"0LLLLA04");
+				changefloor(189,"0LLLLA04");
+				changefloor(190,"0LLLLA04");
+				delay(35);
+				NoiseAlert(0,195);
+				Floor_LowerToLowest(177, 64);
+				delay(70);
+				Floor_RaiseToLowestCeiling(196,32);
+				teleportOther(169,183,0);
+				thing_activate(169);
+				teleportOther(169,183,0);
+				Floor_RaiseByValue(202,16,64);
+
+
+
+				while (GetActorProperty(169,APROP_Health) > 2000)
+				{
+					delay(35);
+					if((getactorZ(0)>>16) < 300 && (GetActorProperty(0,APROP_Health)) > 0) playsound(0,"WILHELM",CHAN_AUTO,1.0,0,0);
+				}
+				stage2 = 0; //stop lightning script
+
+				}
+
+			if (stage3) //stage 3
+
+			{
+				//log(s:"Stage 3");
+				thing_deactivate(169);
+				SetMusicVolume(0.8);
+				delay(15);
+				SetMusicVolume(0.6);
+				delay(15);
+				SetMusicVolume(0.4);
+				delay(15);
+				SetMusicVolume(0.2);
+				delay(15);
+
+
+				NoiseAlert(0,203);
+
+				SetMusic("DOPHONIC");
+				delay(5);
+				SetMusicVolume(1.0);
+
+				Ceiling_RaiseByValue(170,32,512);
+				delay(35);
+				Floor_RaiseByValue(185,8,16);
+				Floor_RaiseByValue(186,8,24);
+				Floor_RaiseByValue(187,8,32);
+				Floor_RaiseByValue(188,8,40);
+				Floor_RaiseByValue(189,8,48);
+				Floor_RaiseByValue(190,8,52);
+
+				delay(35); //pitfall 2
+				changefloor(184,"0CONCH01");
+				Floor_LowerByValue(174,64,8);
+				radius_quake(1,10,0,512,0);
+				PlaySound(0,"CRACKLE",CHAN_AUTO,1.0,0,0);
+				delay(35);
+				radius_quake(1,10,0,512,0);
+				PlaySound(0,"CRACKLE",CHAN_AUTO,1.0,0,0);
+				delay(35);
+				radius_quake(1,10,0,512,0);
+				PlaySound(0,"CRACKLE",CHAN_AUTO,1.0,0,0);
+				delay(35);
+				Floor_LowerByValue(184,32,512);
+				radius_quake(2,35,0,512,0);
+				delay(35);
+				Sector_SetDamage(184,1000,17,1,256);
+				thing_Activate(169);
+				teleportOther(169,183,0);
+				NoiseAlert(0,217);
+
+
+				while (GetActorProperty(169,APROP_Health) > 1000)
+				{
+					delay(35);
+					if((getactorZ(0)>>16) < 300 && (GetActorProperty(0,APROP_Health)) > 0) playsound(0,"WILHELM",CHAN_AUTO,1.0,0,0);
+				}
+				stage3 = 0;
+			}
+
+			if (stage4)
+
+			{
+				//log(s:"Stage 4");
+				ACS_Execute(53,0); //spawn items final zone
+				Thing_spawn(218,25,0,800); //soulspheres
+				thing_deactivate(169);
+				changefloor(209,"0CONCH01");
+				changefloor(225,"0CONCH01");
+				Floor_LowerByValue(209,64,8);
+				PlaySound(0,"CRACKLE",CHAN_AUTO,1.0,0,0);
+				radius_quake(1,10,0,512,0);
+				delay(35);
+				PlaySound(0,"CRACKLE",CHAN_AUTO,1.0,0,0);
+				radius_quake(1,10,0,512,0);
+				delay(35);
+				PlaySound(0,"CRACKLE",CHAN_AUTO,1.0,0,0);
+				radius_quake(1,10,0,512,0);
+				delay(35);
+				Floor_LowerByValue(209,32,512);
+				Floor_LowerByValue(225,32,512);
+				radius_quake(2,35,0,512,0);
+				teleportOther(169,183,0);
+
+				delay(35);
+				Sector_SetDamage(209,1000,17,1,256);
+				Sector_SetDamage(225,1000,17,1,256);
+				thing_Activate(169);
+				teleportOther(169,183,0);
+				while (GetActorProperty(169,APROP_Health) > 2)
+				{
+					delay(35);
+					if((getactorZ(0)>>16) < 300 && (GetActorProperty(0,APROP_Health)) > 0) playsound(0,"WILHELM",CHAN_AUTO,1.0,0,0);
+				}
+
+				stage4 = 0;
+				//log(s:"Stage 4 = 0");
+			}
+
+			if(GetActorProperty(169,APROP_Health) > 1) delay(70);
+			else
+			{
+				deathknight_alive = 0;
+				SetMusicVolume(0.8);
+				delay(35);
+				SetMusicVolume(0.6);
+				delay(35);
+				SetMusicVolume(0.4);
+				delay(35);
+				SetMusicVolume(0.2);
+				delay(35);
+				SetMusic("CATACOMB");
+				delay(35);
+				SetMusicVolume(1.0);
+
+				log(s:"Rest in peace... Kro-Bakul.");
+
+				Floor_LowerToLowest(196, 64);
+				//teleportOther(169,183,0);
+
+				delay(140);
+				Floor_RaiseByvalue(210,8,16);
+				changefloor(210,"GATE1");
+				SetLineSpecial(211,70,212,0);
+				Sector_SetDamage(175,0,0,0,0);
+				Sector_SetDamage(225,0,0,0,0);
+				door_open(224,16,0);
+
+			}
+				x = GetActorX(223);
+				y = GetActorY(223);
+				z = GetActorZ(223);
+				spawn("RSWORD",x,y,z,0,0);
+
+
+
+		}
+	}
+	//log(s:"Terminate script");
+}
+
+script 52 (void) //lightning
+{
+	int first;
+	int second;
+	int third;
+	int fourth;
+
+	while(stage2)
+	{
+		delay(70);
+	first = random(0,9);
+	second = random(0,9);
+	third = random(0,9);
+	fourth = random(0,9);
+	if (first > 6) thing_activate(179);
+	delay(10);
+	if (second > 6) thing_activate(180);
+	delay (15);
+	if (third > 6) thing_activate(181);
+	delay(10);
+	if (fourth > 6) thing_activate(182);
+	delay (35);
+	}
+
+	Thing_Deactivate(179);
+	Thing_Deactivate(180);
+	Thing_Deactivate(181);
+	Thing_Deactivate(182);
+}
+
+script 53 (void) //spawn things boss fight
+{
+
+	Thing_spawn(197,132,0,800); //megasphere
+	Thing_spawn(198,144,0,800); //backpack
+	Thing_spawn(199,29,0,800); //rocketlauncher
+	Thing_spawn(200,24,0,800); //medkit
+	Thing_spawn(203,143,0,800); //shellbox
+	Thing_spawn(203,141,0,800); //rockets
+}
+
+script 54 (void) //spawn things earlier boss fight
+{
+
+	Thing_spawn(197,24,0,800); //medkit
+	Thing_spawn(198,139,0,800); //ammobox
+	Thing_spawn(199,68,0,800); //greenarmor
+	Thing_spawn(200,24,0,800); //medkit
+	Thing_spawn(203,143,0,800); //shellbox
+	Thing_spawn(203,24,0,800); //medkit
+}
+
+script 55 (void) //spawn things end boss fight
+{
+
+	Thing_spawn(213,134,0,800); //berserk
+	Thing_spawn(214,139,0,800); //ammobox
+	Thing_spawn(215,68,0,800); //greenarmor
+	Thing_spawn(216,143,0,800); //shellbox
+}
+
+script 56 (void) //secret wall in temple opening snipe corridor
+{
+	Ceiling_RaiseByValue(220,16,120);
+	delay(70);
+	Floor_LowerToLowest(220,16);
+}
+
+script 57 (void) //grand mausoleum door
+{
+	Floor_LowerToNearest(130,8);
+	playsound(226,"CONSCRAPE",CHAN_AUTO,1.0,0,0);
+}
