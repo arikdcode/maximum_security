@@ -1887,169 +1887,169 @@ Frame CFX4F { Light ThrallShot15 }
 
 BrightMap Sprite CULTA1C1
 {
-Map "Sprites/Brightmaps/Cultist/BMCULTA1"
+Map "Sprites/Brightmaps/Cultist/BMCULTA1.png"
 DisableFullBright
 }
 
 BrightMap Sprite CULTA2C8
 {
-Map "Sprites/Brightmaps/Cultist/BMCULTA2"
+Map "Sprites/Brightmaps/Cultist/BMCULTA2.png"
 DisableFullBright
 }
 
 BrightMap Sprite CULTA3C7
 {
-Map "Sprites/Brightmaps/Cultist/BMCULTA3"
+Map "Sprites/Brightmaps/Cultist/BMCULTA3.png"
 DisableFullBright
 }
 
 BrightMap Sprite CULTA7C3
 {
-Map "Sprites/Brightmaps/Cultist/BMCULTA7"
+Map "Sprites/Brightmaps/Cultist/BMCULTA7.png"
 DisableFullBright
 }
 
 BrightMap Sprite CULTA8C2
 {
-Map "Sprites/Brightmaps/Cultist/BMCULTA8"
+Map "Sprites/Brightmaps/Cultist/BMCULTA8.png"
 DisableFullBright
 }
 
 BrightMap Sprite CULTB1D1
 {
-Map "Sprites/Brightmaps/Cultist/BMCULTB1"
+Map "Sprites/Brightmaps/Cultist/BMCULTB1.png"
 DisableFullBright
 }
 
 BrightMap Sprite CULTB2D8
 {
-Map "Sprites/Brightmaps/Cultist/BMCULTB2"
+Map "Sprites/Brightmaps/Cultist/BMCULTB2.png"
 DisableFullBright
 }
 
 BrightMap Sprite CULTB3D7
 {
-Map "Sprites/Brightmaps/Cultist/BMCULTB3"
+Map "Sprites/Brightmaps/Cultist/BMCULTB3.png"
 DisableFullBright
 }
 
 BrightMap Sprite CULTB7D3
 {
-Map "Sprites/Brightmaps/Cultist/BMCULTB7"
+Map "Sprites/Brightmaps/Cultist/BMCULTB7.png"
 DisableFullBright
 }
 
 BrightMap Sprite CULTB8D2
 {
-Map "Sprites/Brightmaps/Cultist/BMCULTB8"
+Map "Sprites/Brightmaps/Cultist/BMCULTB8.png"
 DisableFullBright
 }
 
 BrightMap Sprite CULTE1
 {
-Map "Sprites/Brightmaps/Cultist/BMCULTE1"
+Map "Sprites/Brightmaps/Cultist/BMCULTE1.png"
 DisableFullBright
 }
 
 BrightMap Sprite CULTE2
 {
-Map "Sprites/Brightmaps/Cultist/BMCULTE2"
+Map "Sprites/Brightmaps/Cultist/BMCULTE2.png"
 DisableFullBright
 }
 
 BrightMap Sprite CULTE3
 {
-Map "Sprites/Brightmaps/Cultist/BMCULTE3"
+Map "Sprites/Brightmaps/Cultist/BMCULTE3.png"
 DisableFullBright
 }
 
 BrightMap Sprite CULTE7
 {
-Map "Sprites/Brightmaps/Cultist/BMCULTE7"
+Map "Sprites/Brightmaps/Cultist/BMCULTE7.png"
 DisableFullBright
 }
 
 BrightMap Sprite CULTE8
 {
-Map "Sprites/Brightmaps/Cultist/BMCULTE8"
+Map "Sprites/Brightmaps/Cultist/BMCULTE8.png"
 DisableFullBright
 }
 
 BrightMap Sprite CULTF1
 {
-Map "Sprites/Brightmaps/Cultist/BMCULTF1"
+Map "Sprites/Brightmaps/Cultist/BMCULTF1.png"
 DisableFullBright
 }
 
 BrightMap Sprite CULTF2
 {
-Map "Sprites/Brightmaps/Cultist/BMCULTF2"
+Map "Sprites/Brightmaps/Cultist/BMCULTF2.png"
 DisableFullBright
 }
 
 BrightMap Sprite CULTF3
 {
-Map "Sprites/Brightmaps/Cultist/BMCULTF3"
+Map "Sprites/Brightmaps/Cultist/BMCULTF3.png"
 DisableFullBright
 }
 
 BrightMap Sprite CULTF4
 {
-Map "Sprites/Brightmaps/Cultist/BMCULTF4"
+Map "Sprites/Brightmaps/Cultist/BMCULTF4.png"
 DisableFullBright
 }
 
 BrightMap Sprite CULTF5
 {
-Map "Sprites/Brightmaps/Cultist/BMCULTF5"
+Map "Sprites/Brightmaps/Cultist/BMCULTF5.png"
 DisableFullBright
 }
 
 BrightMap Sprite CULTF6
 {
-Map "Sprites/Brightmaps/Cultist/BMCULTF6"
+Map "Sprites/Brightmaps/Cultist/BMCULTF6.png"
 DisableFullBright
 }
 
 BrightMap Sprite CULTF7
 {
-Map "Sprites/Brightmaps/Cultist/BMCULTF7"
+Map "Sprites/Brightmaps/Cultist/BMCULTF7.png"
 DisableFullBright
 }
 
 BrightMap Sprite CULTF8
 {
-Map "Sprites/Brightmaps/Cultist/BMCULTF8"
+Map "Sprites/Brightmaps/Cultist/BMCULTF8.png"
 DisableFullBright
 }
 
 BrightMap Sprite CULTG1
 {
-Map "Sprites/Brightmaps/Cultist/BMCULTG1"
+Map "Sprites/Brightmaps/Cultist/BMCULTG1.png"
 DisableFullBright
 }
 
 BrightMap Sprite CULTG6
 {
-Map "Sprites/Brightmaps/Cultist/BMCULTG6"
+Map "Sprites/Brightmaps/Cultist/BMCULTG6.png"
 DisableFullBright
 }
 
 BrightMap Sprite CULTG7
 {
-Map "Sprites/Brightmaps/Cultist/BMCULTG7"
+Map "Sprites/Brightmaps/Cultist/BMCULTG7.png"
 DisableFullBright
 }
 
 BrightMap Sprite CULTG8
 {
-Map "Sprites/Brightmaps/Cultist/BMCULTG8"
+Map "Sprites/Brightmaps/Cultist/BMCULTG8.png"
 DisableFullBright
 }
 
 BrightMap Sprite CULTH0
 {
-Map "Sprites/Brightmaps/Cultist/BMCULTH0"
+Map "Sprites/Brightmaps/Cultist/BMCULTH0.png"
 DisableFullBright
 }
 

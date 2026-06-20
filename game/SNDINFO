@@ -2,44 +2,44 @@
 
 Bar/Break      FBRBRK
 //Break Wall
-CONBREAK  "sounds/effects/CONBREAK"
+CONBREAK  "sounds/effects/CONBREAK.mp3"
 //stone pusher
-CONSCRAPE "sounds/effects/CONSCRAPE"
+CONSCRAPE "sounds/effects/CONSCRAPE.wav"
 //glass crash
-GLASSHAT "sounds/effects/GLASSHAT"
+GLASSHAT "sounds/effects/GLASSHAT.mp3"
 //doors
-PSIDOORS "sounds/effects/PSIDOORS"
-STONESTP "sounds/effects/STONESTP"
+PSIDOORS "sounds/effects/PSIDOORS.mp3"
+STONESTP "sounds/effects/STONESTP.mp3"
 //break metal
-METALBREAK "sounds/effects/METALBREAK"
+METALBREAK "sounds/effects/METALBREAK.mp3"
 //crackle
-CRACKLE "sounds/effects/CRACKLE"
-WILHELM "sounds/effects/WILHELM"
-SHAKE "sounds/effects/SHAKE"
+CRACKLE "sounds/effects/CRACKLE.wav"
+WILHELM "sounds/effects/WILHELM.mp3"
+SHAKE "sounds/effects/SHAKE.flac"
 //fireplace
-FIREPLACE "sounds/effects/FIREPLACE"
+FIREPLACE "sounds/effects/FIREPLACE.mp3"
 $alias Fireloop	FIREPLACE		 
 $ambient 1 Fireloop point continuous 1.0
 
 //Ambient
-DUNGEON1 "sounds/ambient/DUNGEONAMB1"
+DUNGEON1 "sounds/ambient/DUNGEONAMB1.ogg"
 $alias DUNGLOOP	DUNGEON1		 
 $ambient 2 DUNGLOOP surround continuous 1.0
-WATERDRP "sounds/ambient/WATERAMB1"
+WATERDRP "sounds/ambient/WATERAMB1.flac"
 $alias WTRLOOP	WATERDRP		 
 $ambient 3 WTRLOOP point random 5 20 1.0
-BIRDAMB1 "sounds/ambient/BIRDSAMB1"
+BIRDAMB1 "sounds/ambient/BIRDSAMB1.ogg"
 $alias BIRDLOOP	BIRDAMB1		 
 $ambient 4 BIRDLOOP point random 10 20 1.0
-WATERFAL "Sounds/Effects/WATERFAL"
+WATERFAL "Sounds/Effects/WATERFAL.ogg"
 $ambient 5 WATERFAL point continuous 1.0
-GENERATR "sounds/ambient/GENERATR"
+GENERATR "sounds/ambient/GENERATR.mp3"
 $ambient 6 GENERATR point continuous 1.0
 
 //Monster and horror
-GROWLACT "sounds/HORROR/GROWLACT"
-SNARLACT "sounds/HORROR/SNARLACT"
-MUSICBOX "Music/MUSICBOX"
+GROWLACT "sounds/HORROR/GROWLACT.mp3"
+SNARLACT "sounds/HORROR/SNARLACT.mp3"
+MUSICBOX "Music/MUSICBOX.ogg"
 $alias Musicloop	MUSICBOX
 $ambient 7 Musicloop point continuous 0.3
 
@@ -51,104 +51,104 @@ $ambient 8 Windloop point continuous 1.0
 $ambient 9 CRYSTALS point continuous 1.0
 
 //whispers
-WHISPERS "sounds/effects/WHISPERS"
-WHISPERL "sounds/effects/WHISPERL"
+WHISPERS "sounds/effects/WHISPERS.mp3"
+WHISPERL "sounds/effects/WHISPERL.mp3"
 $ambient 10 Whispers point random 5 20 1.0
 $ambient 11 Whisperl point continuous 1.0
 
-LAVA "Sounds/AMBIENT/LAVALOOP"
+LAVA "Sounds/AMBIENT/LAVALOOP.wav"
 $alias Lavaloop	LAVA		 
 $ambient 12 Lavaloop point continuous 1.0
-ELECLOOP "Sounds/Ambient/ELECLOOP"
+ELECLOOP "Sounds/Ambient/ELECLOOP.mp3"
 $alias Electric	ELECLOOP		 
 $ambient 13 Electric point continuous 1.0
 
 //sci fi
-SCISTIN "Sounds/Effects/SCISTIN"
-SCIHUM "Sounds/Effects/SCIHUM"	
+SCISTIN "Sounds/Effects/SCISTIN.ogg"
+SCIHUM "Sounds/Effects/SCIHUM.wav"	
 $alias SciHumming	SCIHUM		 
 $ambient 14 SciHumming point continuous 1.0	
 
 //Ambient Ghosts
-GHOST1 "sounds/GHOSTS/GHOST1"
-GHOST2 "sounds/GHOSTS/GHOST2"
-GHOST3 "sounds/GHOSTS/GHOST3"
-GHOST4 "sounds/GHOSTS/GHOST4"
-GHOST5 "sounds/GHOSTS/GHOST5"
-GHOST6 "sounds/GHOSTS/GHOST6"
-RILED "sounds/GHOSTS/RILED"
+GHOST1 "sounds/GHOSTS/GHOST1.wav"
+GHOST2 "sounds/GHOSTS/GHOST2.mp3"
+GHOST3 "sounds/GHOSTS/GHOST3.mp3"
+GHOST4 "sounds/GHOSTS/GHOST4.mp3"
+GHOST5 "sounds/GHOSTS/GHOST5.mp3"
+GHOST6 "sounds/GHOSTS/GHOST6.ogg"
+RILED "sounds/GHOSTS/RILED.mp3"
 $random GHOSTS { GHOST1 GHOST2 GHOST3 GHOST4 GHOST5 GHOST6 }
 $alias GHOSTLOOP GHOSTS		 
 $ambient 15 GHOSTLOOP point random 10 30 1.0
 
 $random ROCKFALL { ROCKFAL1 ROCKFAL2 ROCKFAL3 ROCKFAL4 ROCKFAL5 }
-ROCKFAL1 "sounds/AMBIENT/ROCKFALL"
-ROCKFAL2 "sounds/effects/AMB2"
-ROCKFAL3 "sounds/effects/AMB4"
-ROCKFAL4 "sounds/effects/AMB11"
-ROCKFAL5 "sounds/effects/SORDBON"
+ROCKFAL1 "sounds/AMBIENT/ROCKFALL.wav"
+ROCKFAL2 "sounds/effects/AMB2.lmp"
+ROCKFAL3 "sounds/effects/AMB4.lmp"
+ROCKFAL4 "sounds/effects/AMB11.lmp"
+ROCKFAL5 "sounds/effects/SORDBON.lmp"
 $alias ROCKLOOP ROCKFALL
 $ambient 16 ROCKLOOP point random 10 60 1.0
 
-CRICKAMB "Sounds/AMBIENT/CRICKAMB"
+CRICKAMB "Sounds/AMBIENT/CRICKAMB.ogg"
 $alias Cricloop	CRICKAMB		 
 $ambient 17 Cricloop point continuous 1.0
 
-DRVELOOP "Sounds/AMBIENT/DRVELOOP"		 
+DRVELOOP "Sounds/AMBIENT/DRVELOOP.flac"		 
 $ambient 18 DRVELOOP point continuous 1.0
 
-EAT1 "Sounds/AMBIENT/EAT1"
-EAT2 "Sounds/AMBIENT/EAT2"
-EAT3 "Sounds/AMBIENT/EAT3"
-EAT4 "Sounds/AMBIENT/EAT4"
-EAT5 "Sounds/AMBIENT/EAT5"
+EAT1 "Sounds/AMBIENT/EAT1.mp3"
+EAT2 "Sounds/AMBIENT/EAT2.mp3"
+EAT3 "Sounds/AMBIENT/EAT3.mp3"
+EAT4 "Sounds/AMBIENT/EAT4.mp3"
+EAT5 "Sounds/AMBIENT/EAT5.mp3"
 $random EATERS { EAT1 EAT2 EAT3 EAT4 EAT5 }
 $ambient 19 EATERS point random 5 10 0.4
 
 //custom Undead Warrior
 monsters/KNIGHTACTIVE "Sounds/UndeadWarrior/KGSIT"
-monsters/KNIGHTATTK "Sounds/UndeadWarrior/KGTATK"
-monsters/KNIGHTSTRIKE "Sounds/UndeadWarrior/KGTAT2"
-SaberLight "Sounds/UndeadKnight/SABRLIGT"
-DUEL "Sounds/Effects/Duel"
+monsters/KNIGHTATTK "Sounds/UndeadWarrior/KGTATK.lmp"
+monsters/KNIGHTSTRIKE "Sounds/UndeadWarrior/KGTAT2.lmp"
+SaberLight "Sounds/UndeadKnight/SABRLIGT.mp3"
+DUEL "Sounds/Effects/Duel.mp3"
 
-LANDSLIDE "Sounds/Effects/LANDSLIDE"
+LANDSLIDE "Sounds/Effects/LANDSLIDE.wav"
 
 
 
 
 
 //Ghoul remix
-Ghoul/ZOMB1 "sounds/Ghoul/ZOMB1"
-Ghoul/ZOMB2 "sounds/Ghoul/ZOMB2"
-Ghoul/ZOMB3 "sounds/Ghoul/ZOMB3"
+Ghoul/ZOMB1 "sounds/Ghoul/ZOMB1.mp3"
+Ghoul/ZOMB2 "sounds/Ghoul/ZOMB2.mp3"
+Ghoul/ZOMB3 "sounds/Ghoul/ZOMB3.mp3"
 $random Ghoul/ZOMBIE {Ghoul/ZOMB1 Ghoul/ZOMB2 Ghoul/ZOMB3}
 
 //FUSEBOX
-FUSEBOX "sounds/effects/FUSE"
+FUSEBOX "sounds/effects/FUSE.mp3"
 
-TYPE1 "sounds/effects/TYPE1"
-TYPE2 "sounds/effects/TYPE2"
-SNIFF "sounds/effects/SNIFF"
+TYPE1 "sounds/effects/TYPE1.mp3"
+TYPE2 "sounds/effects/TYPE2.mp3"
+SNIFF "sounds/effects/SNIFF.mp3"
 
 //beeps
-BEEPYES "sounds/Effects/BEEPYES"
-BEEPNO "sounds/Effects/BEEPNO"
+BEEPYES "sounds/Effects/BEEPYES.mp3"
+BEEPNO "sounds/Effects/BEEPNO.mp3"
 
 //eating
-GULP "sounds/effects/GULP"
-BITE "sounds/effects/BITE"
+GULP "sounds/effects/GULP.mp3"
+BITE "sounds/effects/BITE.mp3"
 
 //keyfall
-KEYFALL "Sounds/effects/KEYFALL"
+KEYFALL "Sounds/effects/KEYFALL.mp3"
 
-TEAR "Sounds/effects/Tear"
+TEAR "Sounds/effects/Tear.mp3"
 
 //GateOepn
-GATEOPEN "Sounds/effects/GATEOPEN"
+GATEOPEN "Sounds/effects/GATEOPEN.mp3"
 
 //Achtung alarm
-ACHTUNG "sounds/effects/ACHTUNG"
+ACHTUNG "sounds/effects/ACHTUNG.mp3"
 //strobelights
 Strobelight/Alarm	DSKLAXON
 $attenuation Strobelight/Alarm 3
@@ -164,17 +164,17 @@ SAKO/BOLT DSBSAKO
 
 
 //sniper
-SNIPE1 "sounds/effects/snipe1"
-SNIPE2 "sounds/effects/snipe2"
-SNIPE3 "sounds/effects/snipe3"
+SNIPE1 "sounds/effects/snipe1.mp3"
+SNIPE2 "sounds/effects/snipe2.mp3"
+SNIPE3 "sounds/effects/snipe3.mp3"
 $random SNIPE { SNIPE1 SNIPE2 SNIPE3 }
-RICOCHET1 "sounds/effects/RICOCHET1"
-RICOCHET2 "sounds/effects/RICOCHET2"
-RICOCHET3 "sounds/effects/RICOCHET3"
+RICOCHET1 "sounds/effects/RICOCHET1.mp3"
+RICOCHET2 "sounds/effects/RICOCHET2.mp3"
+RICOCHET3 "sounds/effects/RICOCHET3.mp3"
 $random RICOCHET { RICOCHET1 RICOCHET2 RICOCHET3 }
-AHPISS "sounds/effects/AHPISS"
-ALERT  "sounds/effects/ALERT"
-IMPACT1 "sounds/effects/impact1"
+AHPISS "sounds/effects/AHPISS.mp3"
+ALERT  "sounds/effects/ALERT.mp3"
+IMPACT1 "sounds/effects/impact1.mp3"
 
 
 
@@ -183,17 +183,17 @@ $random Ghoul/ZOMBIE {Ghoul/ZOMB1 Ghoul/ZOMB2 Ghoul/ZOMB3}
 
 
 //phone
-PHONRING "sounds/effects/PHONRING"
+PHONRING "sounds/effects/PHONRING.mp3"
 //Doors
-DOORSQEK "SOUNDS/Doors/DOORSQEK"
-DOORCLOS "SOUNDS/Doors/DOORCLOS"
+DOORSQEK "SOUNDS/Doors/DOORSQEK.mp3"
+DOORCLOS "SOUNDS/Doors/DOORCLOS.mp3"
 
 //Creepy Laugh
-CREEPLAF "sounds/effects/CREEPLAF"
-DSVILACT "sounds/effects/DSVILACT"
+CREEPLAF "sounds/effects/CREEPLAF.mp3"
+DSVILACT "sounds/effects/DSVILACT.wav"
 
 //Eyeless Jack Scream
-JACKSCRM "sounds/effects/JACKSCRM"
+JACKSCRM "sounds/effects/JACKSCRM.mp3"
 
 //TitanHammer_Modified
 hamfall hamfall
@@ -341,7 +341,7 @@ $limit zombiescientist/grenbounce 0
 $limit zombiescientist/grenexplode 0
 
 //seeyou
-SEEYOU "sounds/effects/SEEYOU"
+SEEYOU "sounds/effects/SEEYOU.mp3"
 
 
 
@@ -583,8 +583,8 @@ $volume World/Bubbles 0.5
 
 
 //Whirr mechanical
-WHIRR "sounds/effects/WHIRR"
-WHIRSTOP "sounds/effects/WHIRSTOP"
+WHIRR "sounds/effects/WHIRR.mp3"
+WHIRSTOP "sounds/effects/WHIRSTOP.mp3"
 
 //Imp Warlord
 $RANDOM implord/macehit { implord/macehit1 implord/macehit2 }
@@ -657,8 +657,8 @@ monster/hlnatk                  dshlnatk
 monster/hlnexp                  dshlnexp
 
 //Pageflip
-PAGEFLP "Sounds/EFFECTS/PAGEFLIP"
-PAGEFLP2 "Sounds/EFFECTS/PAGEFLP2"
+PAGEFLP "Sounds/EFFECTS/PAGEFLIP.mp3"
+PAGEFLP2 "Sounds/EFFECTS/PAGEFLP2.mp3"
 
 /*
 menu/activate		PAGEFLP2
