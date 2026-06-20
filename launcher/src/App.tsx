@@ -6,6 +6,8 @@ interface GameBuild {
   version: string;
   label: string;
   channel: string;
+  dev?: boolean;       // editable game/ folder build, loaded live with no install
+  gamePath?: string;   // absolute path to the folder GZDoom should load
   windows: {
     url: string;
     size_bytes: number;
@@ -80,6 +82,11 @@ function App() {
   const [isBusy, setIsBusy] = useState<boolean>(false);
   const [isIgniting, setIsIgniting] = useState<boolean>(false);
 
+  // FX Toggles
+  const [enableFire, setEnableFire] = useState<boolean>(false);
+  const [enableKlaxon, setEnableKlaxon] = useState<boolean>(true);
+  const [enableSparks, setEnableSparks] = useState<boolean>(false);
+
   // New state for launch controls
   const [showLaunchControls, setShowLaunchControls] = useState<boolean>(false);
   const [saveFiles, setSaveFiles] = useState<string[]>([]);
@@ -113,8 +120,14 @@ function App() {
       setManifest(data);
 
       if (data && data.game_builds && data.game_builds.length > 0) {
+        // Keep the current selection if it still exists; otherwise default to the
+        // last build (the editable game/ folder dev build on Linux).
         const latest = data.game_builds[data.game_builds.length - 1];
-        setSelectedVersion(latest.version);
+        setSelectedVersion((prev) =>
+          prev && data.game_builds.some((b: GameBuild) => b.version === prev)
+            ? prev
+            : latest.version
+        );
       }
 
       // Load saves
@@ -234,12 +247,14 @@ function App() {
 
   const launchGame = async (options: any = {}) => {
     if (!selectedVersion) return;
+    const build = getBuildByVersion(selectedVersion);
     setIsBusy(true);
     setStatus("Launching...");
 
     try {
       await window.api.launchGame({
         version: selectedVersion,
+        devPath: build?.dev ? build.gamePath : undefined,
         ...options
       });
 
@@ -255,7 +270,11 @@ function App() {
     }
   };
 
-  const isInstalled = (v: string) => installedVersions.includes(v);
+  const isInstalled = (v: string) => {
+    const build = getBuildByVersion(v);
+    if (build?.dev) return true; // folder dev build is always ready to launch
+    return installedVersions.includes(v);
+  };
 
   // Difficulty levels: 0=Baby, 1=Easy, 2=Normal, 3=Hard, 4=Nightmare
   const difficulties = [
@@ -273,13 +292,44 @@ function App() {
     >
       <div className="absolute inset-0 bg-black/60 z-0"></div>
 
-      {/* Flame Overlay */}
-      <div className="absolute inset-0 z-0 pointer-events-none opacity-40 mix-blend-color-dodge">
-         <div
-           className="w-full h-full bg-cover opacity-60 animate-hell-fire"
-           style={{ backgroundImage: `url(${flameGif})` }}
-         ></div>
+      {/* FX Toggles */}
+      <div className="absolute top-2 right-2 z-50 flex gap-2 opacity-50 hover:opacity-100 transition-opacity">
+        <button
+          onClick={() => setEnableFire(!enableFire)}
+          className={`text-[10px] px-2 py-1 border rounded uppercase tracking-wider ${enableFire ? 'bg-red-900/50 border-red-500 text-white' : 'bg-black/50 border-gray-800 text-gray-600'} transition-all`}
+        >
+          Fire
+        </button>
+        <button
+          onClick={() => setEnableKlaxon(!enableKlaxon)}
+          className={`text-[10px] px-2 py-1 border rounded uppercase tracking-wider ${enableKlaxon ? 'bg-red-900/50 border-red-500 text-white' : 'bg-black/50 border-gray-800 text-gray-600'} transition-all`}
+        >
+          Klaxon
+        </button>
+        <button
+          onClick={() => setEnableSparks(!enableSparks)}
+          className={`text-[10px] px-2 py-1 border rounded uppercase tracking-wider ${enableSparks ? 'bg-red-900/50 border-red-500 text-white' : 'bg-black/50 border-gray-800 text-gray-600'} transition-all`}
+        >
+          Sparks
+        </button>
       </div>
+
+      {/* Klaxon Light */}
+      {enableKlaxon && (
+        <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+          <div className="klaxon-beam"></div>
+        </div>
+      )}
+
+      {/* Flame Overlay */}
+      {enableFire && (
+        <div className="absolute inset-0 z-0 pointer-events-none opacity-40 mix-blend-color-dodge">
+           <div
+             className="w-full h-full bg-cover opacity-60 animate-hell-fire"
+             style={{ backgroundImage: `url(${flameGif})` }}
+           ></div>
+        </div>
+      )}
 
       <div className="relative z-10 w-full max-w-4xl p-8">
         {/* Header */}
@@ -299,7 +349,17 @@ function App() {
             {/* Version Selector */}
             <div className="bg-black/40 border border-white/10 rounded-lg backdrop-blur-sm h-[200px] relative flex flex-col">
               {/* demonic-flare class removed for now, but can be re-added: className="... demonic-flare ..." */}
-              <h3 className="text-gray-400 text-xs uppercase tracking-wider mb-3 font-bold p-4 pb-0">Select Version</h3>
+              <div className="flex items-center justify-between p-4 pb-0 mb-3">
+                <h3 className="text-gray-400 text-xs uppercase tracking-wider font-bold">Select Version</h3>
+                <button
+                  onClick={() => { if (!isBusy) loadData(); }}
+                  disabled={isBusy}
+                  title="Re-scan builds, saves, and config without restarting"
+                  className={`text-gray-500 hover:text-red-400 transition-all text-sm leading-none ${isBusy ? 'opacity-30 cursor-not-allowed' : 'hover:rotate-180 duration-500'}`}
+                >
+                  ⟳
+                </button>
+              </div>
               <div className="space-y-2 overflow-y-auto custom-scrollbar flex-1 p-4 pt-0">
                 {manifest?.game_builds?.slice().reverse().map((build: GameBuild) => (
                   <div
@@ -369,7 +429,7 @@ function App() {
           </div>
 
           {/* Right Col: Action Panel */}
-          <div className="flex flex-col bg-black/60 border border-white/10 rounded-lg p-6 backdrop-blur-sm h-[450px] demonic-flare">
+          <div className={`flex flex-col bg-black/60 border border-white/10 rounded-lg p-6 backdrop-blur-sm h-[450px] ${enableSparks ? 'demonic-flare' : ''}`}>
             {selectedVersion && isInstalled(selectedVersion) ? (
               <>
                 {!showLaunchControls ? (

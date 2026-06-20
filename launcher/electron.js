@@ -213,22 +213,53 @@ ipcMain.handle('fetch-manifest', async () => {
     const response = await axios.get(MANIFEST_URL);
     const manifest = response.data;
 
-    // Inject local dev build on Linux
+    // Inject local dev builds on Linux.
+    // We expose two kinds of dev build:
+    //  1. A packaged PK3 (newest in assets/) - exercises the install/copy path.
+    //  2. The editable game/ source folder - loaded live by GZDoom, no copy.
+    // The folder build is pushed LAST so it becomes the default selection, since
+    // it's what gets used ~99% of the time during development.
     if (process.platform === 'linux') {
-      const localAssetPath = path.resolve(__dirname, '..', 'assets');
-      // Assume latest PK3 name from existing manifest version for simplicity, or list dir?
-      // Actually, user has Maximum_Security_v0.3b.pk3 in assets/
-      // Let's just inject a 'Dev' build
-      const devBuild = {
-        version: '0.4b-dev',
-        label: 'Local Dev Build',
-        channel: 'dev',
-        windows: {
-          url: `local://${path.join(localAssetPath, 'Maximum_Security_v0.4b.pk3')}`,
-          size_bytes: 0 // Ignored
+      const repoRoot = path.resolve(__dirname, '..');
+      const localAssetPath = path.join(repoRoot, 'assets');
+
+      // 1. Packaged PK3 build (optional, for testing the built artifact)
+      try {
+        const pk3s = fs.readdirSync(localAssetPath)
+          .filter((f) => /^Maximum_Security_v.*\.pk3$/i.test(f))
+          .sort((a, b) => a.localeCompare(b, undefined, { numeric: true, sensitivity: 'base' }));
+        const latest = pk3s[pk3s.length - 1];
+        if (latest) {
+          const versionLabel = latest.replace(/^Maximum_Security_v/i, '').replace(/\.pk3$/i, '');
+          manifest.game_builds.push({
+            version: `${versionLabel}-pk3`,
+            label: `Local PK3 (${latest})`,
+            channel: 'dev',
+            windows: {
+              url: `local://${path.join(localAssetPath, latest)}`,
+              size_bytes: 0 // Ignored
+            }
+          });
         }
-      };
-      manifest.game_builds.push(devBuild);
+      } catch (e) {
+        console.error('Failed to inject local pk3 build:', e);
+      }
+
+      // 2. Editable source folder build (default) - GZDoom loads game/ directly.
+      const gameFolder = path.join(repoRoot, 'game');
+      if (fs.existsSync(path.join(gameFolder, 'MAPINFO'))) {
+        manifest.game_builds.push({
+          version: 'dev',
+          label: 'Local Dev (game/ folder)',
+          channel: 'dev',
+          dev: true,
+          gamePath: gameFolder,
+          windows: {
+            url: `folder://${gameFolder}`,
+            size_bytes: 0 // Ignored
+          }
+        });
+      }
     }
 
     return manifest;
@@ -280,6 +311,11 @@ ipcMain.handle('get-saves', async () => {
 
 ipcMain.handle('download-game', async (event, url, version) => {
   const win = BrowserWindow.getFocusedWindow();
+
+  // Folder dev builds load in place and need no install/copy.
+  if (url.startsWith('folder://')) {
+    return { status: 'complete', path: url.replace('folder://', '') };
+  }
 
   // Create version-specific folder: game/0.3b
   const versionDir = path.join(GAME_BASE_DIR, version);
@@ -488,7 +524,7 @@ ipcMain.handle('download-gzdoom', async () => {
 });
 
 ipcMain.handle('launch-game', async (event, args) => {
-  // args: { version: string }
+  // args: { version: string, devPath?: string, ... }
   const version = args.version;
   const versionDir = path.join(GAME_BASE_DIR, version);
 
@@ -508,38 +544,54 @@ ipcMain.handle('launch-game', async (event, args) => {
     }
   }
 
-  // 2. Locate IWAD
-  // Logic: GZDoom needs to know where the IWAD is.
-  // We will force it to look in the version directory, but we also need to make sure it exists there.
-  let iwadPath = path.join(versionDir, 'DOOM2.WAD');
+  // 2. Determine IWAD + game target (folder dev build vs installed pk3)
+  let iwadPath;
+  let gameTarget; // file (pk3) or folder GZDoom loads via -file
+  let launchCwd;
 
-  // Fallback: Check if user put it in base dir but it wasn't copied yet
-  if (!fs.existsSync(iwadPath)) {
+  if (args.devPath) {
+    // Editable source folder: load it live, no copy. IWAD comes straight from assets/.
+    gameTarget = args.devPath;
+    if (!fs.existsSync(gameTarget)) {
+      throw new Error("MISSING_GAME_FILES");
+    }
+    const devAssetWad = path.join(__dirname, '..', 'assets', 'DOOM2.WAD');
+    const baseIwad = path.join(GAME_BASE_DIR, 'DOOM2.WAD');
+    iwadPath = fs.existsSync(devAssetWad) ? devAssetWad : baseIwad;
+    if (!fs.existsSync(iwadPath)) {
+      console.error(`IWAD missing at ${devAssetWad} and ${baseIwad}`);
+      throw new Error("MISSING_IWAD");
+    }
+    launchCwd = path.dirname(gameTarget);
+  } else {
+    // Installed pk3 build: resolve IWAD inside the version dir (copy if needed).
+    iwadPath = path.join(versionDir, 'DOOM2.WAD');
+    if (!fs.existsSync(iwadPath)) {
       const baseIwad = path.join(GAME_BASE_DIR, 'DOOM2.WAD');
       if (fs.existsSync(baseIwad)) {
-          fs.copyFileSync(baseIwad, iwadPath); // Lazy copy
+        fs.copyFileSync(baseIwad, iwadPath); // Lazy copy
       } else {
-          // One last check: is it in the root assets? (Dev environment specific)
-          const devAssetWad = path.join(__dirname, '..', 'assets', 'DOOM2.WAD');
-          if (isDev && fs.existsSync(devAssetWad)) {
-             fs.copyFileSync(devAssetWad, iwadPath);
-          } else {
-             console.error(`IWAD missing at ${iwadPath} and ${baseIwad}`);
-             throw new Error("MISSING_IWAD");
-          }
+        const devAssetWad = path.join(__dirname, '..', 'assets', 'DOOM2.WAD');
+        if (isDev && fs.existsSync(devAssetWad)) {
+          fs.copyFileSync(devAssetWad, iwadPath);
+        } else {
+          console.error(`IWAD missing at ${iwadPath} and ${baseIwad}`);
+          throw new Error("MISSING_IWAD");
+        }
       }
-  }
+    }
 
-  // 3. Identify Game PK3
-  const pk3Path = path.join(versionDir, `Maximum_Security_v${version}.pk3`);
-  if (!fs.existsSync(pk3Path)) {
+    gameTarget = path.join(versionDir, `Maximum_Security_v${version}.pk3`);
+    if (!fs.existsSync(gameTarget)) {
       throw new Error("MISSING_GAME_FILES");
+    }
+    launchCwd = versionDir;
   }
 
-  // 4. Launch
+  // 3. Launch
   const launchArgs = [
     '-iwad', iwadPath,
-    '-file', pk3Path,
+    '-file', gameTarget,
     '-savedir', SAVES_DIR,
     '-config', CONFIG_PATH
   ];
@@ -564,7 +616,7 @@ ipcMain.handle('launch-game', async (event, args) => {
 
   const child = spawn(gzdoomExe, launchArgs, {
     detached: true,
-    cwd: versionDir,
+    cwd: launchCwd,
     stdio: ['ignore', 'pipe', 'pipe'] // Capture stdout/stderr for debugging
   });
 

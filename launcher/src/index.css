@@ -213,4 +213,35 @@
   .animate-hell-fire {
     animation: hell-breathe 8s ease-in-out infinite;
   }
+
+  /* Klaxon Light */
+  .klaxon-beam {
+    /* Much wider, softer gradient for a wash effect rather than a beam */
+    background: conic-gradient(
+      from 0deg,
+      transparent 0deg,
+      rgba(255, 0, 0, 0) 100deg,
+      rgba(200, 0, 0, 0.1) 140deg,
+      rgba(255, 0, 0, 0.4) 180deg,
+      rgba(200, 0, 0, 0.1) 220deg,
+      rgba(255, 0, 0, 0) 260deg,
+      transparent 360deg
+    );
+    position: absolute;
+    /* Center off-screen (above) */
+    top: -160%;
+    left: -100%;
+    width: 300%;
+    height: 300%;
+    animation: klaxon-spin 8s linear infinite; /* Slower sweep */
+    transform-origin: center;
+    mix-blend-mode: color-dodge;
+    pointer-events: none;
+    filter: blur(60px); /* Heavy blur for atmospheric look */
+  }
+
+  @keyframes klaxon-spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
 }
